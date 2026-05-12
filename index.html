@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Blog</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Georgia, serif;
+      background: #fff;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 1px solid #ddd;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+    header h1 a {
+      text-decoration: none;
+      color: #222;
+    }
+
+    nav {
+      margin-top: 8px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: #000;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      max-width: 640px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* POST LIST */
+    .post-list {
+      list-style: none;
+    }
+
+    .post-list li {
+      border-bottom: 1px solid #eee;
+      padding: 20px 0;
+    }
+
+    .post-list li:last-child {
+      border-bottom: none;
+    }
+
+    .post-date {
+      font-size: 0.85rem;
+      color: #999;
+      margin-bottom: 4px;
+    }
+
+    .post-title a {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #222;
+      text-decoration: none;
+    }
+
+    .post-title a:hover {
+      text-decoration: underline;
+    }
+
+    .post-excerpt {
+      margin-top: 6px;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #ddd;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1><a href="index.html">My Blog</a></h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <ul class="post-list">
+
+      <li>
+        <p class="post-date">May 12, 2026</p>
+        <p class="post-title"><a href="posts/post-2.html">What I learned this week</a></p>
+        <p class="post-excerpt">A short reflection on the things I discovered, read, and thought about over the past few days.</p>
+      </li>
+
+      <li>
+        <p class="post-date">May 5, 2026</p>
+        <p class="post-title"><a href="posts/post-1.html">Hello, world</a></p>
+        <p class="post-excerpt">My very first blog post. Why I decided to start writing online and what I hope to share here.</p>
+      </li>
+
+    </ul>
+  </main>
+
+  <footer>
+    © 2026 My Blog
+  </footer>
+
+</body>
+</html>
