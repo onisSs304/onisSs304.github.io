@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Gaussian Integral – My Math Blog</title>
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       font-family: Georgia, serif;
@@ -17,18 +22,53 @@
       line-height: 1.8;
     }
 
-    header { border-bottom: 1px solid #2a2a2a; padding: 20px 0; text-align: center; }
-    header h1 { font-size: 1.8rem; }
-    header h1 a { text-decoration: none; color: #ffffff; }
-    nav { margin-top: 8px; }
-    nav a { margin: 0 12px; text-decoration: none; color: #aaaaaa; font-size: 0.95rem; }
-    nav a:hover { color: #ffffff; }
+    header {
+      border-bottom: 1px solid #2a2a2a;
+      padding: 20px 0;
+      text-align: center;
+    }
 
-    main { max-width: 680px; margin: 40px auto; padding: 0 20px; }
+    header h1 {
+      font-size: 1.8rem;
+    }
 
-    .post-meta { font-size: 0.85rem; color: #666666; margin-bottom: 12px; }
+    header h1 a {
+      text-decoration: none;
+      color: #ffffff;
+    }
 
-    h2 { font-size: 1.7rem; margin-bottom: 20px; color: #ffffff; }
+    nav {
+      margin-top: 8px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #aaaaaa;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    main {
+      max-width: 680px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .post-meta {
+      font-size: 0.85rem;
+      color: #666666;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
 
     .section-label {
       display: inline-block;
@@ -44,9 +84,16 @@
       margin-top: 28px;
     }
 
-    h3 { font-size: 1.15rem; margin-bottom: 10px; color: #ffffff; }
+    h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
 
-    p { margin-bottom: 14px; color: #cccccc; }
+    p {
+      margin-bottom: 14px;
+      color: #cccccc;
+    }
 
     .theorem {
       background: #1a1a1a;
@@ -66,9 +113,17 @@
       color: #cccccc;
     }
 
-    .proof p { color: #cccccc; margin-top: 12px; }
+    .proof p {
+      color: #cccccc;
+      margin-top: 12px;
+    }
 
-    .proof-end { text-align: right; font-size: 1.1rem; color: #666666; margin-top: 8px; }
+    .proof-end {
+      text-align: right;
+      font-size: 1.1rem;
+      color: #666666;
+      margin-top: 8px;
+    }
 
     .toc {
       background: #161616;
@@ -78,22 +133,57 @@
       border-radius: 4px;
       font-size: 0.9rem;
     }
-    .toc p { font-weight: bold; margin-bottom: 8px; color: #ffffff; }
-    .toc ol { padding-left: 18px; }
-    .toc li { margin-bottom: 4px; }
-    .toc a { color: #7eb8f7; text-decoration: none; }
-    .toc a:hover { text-decoration: underline; }
 
-    .back-link { display: inline-block; margin-top: 40px; font-size: 0.9rem; color: #7eb8f7; text-decoration: none; }
-    .back-link:hover { color: #ffffff; }
+    .toc p {
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
 
-    footer { border-top: 1px solid #2a2a2a; text-align: center; padding: 20px; font-size: 0.85rem; color: #555555; margin-top: 60px; }
+    .toc ol {
+      padding-left: 18px;
+    }
+
+    .toc li {
+      margin-bottom: 4px;
+    }
+
+    .toc a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
+
+    footer {
+      border-top: 1px solid #2a2a2a;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #555555;
+      margin-top: 60px;
+    }
   </style>
 </head>
+
 <body>
 
   <header>
-    <h1><a href="../index.html">My Math Blog</a></h1>
+    <h1><a href="../index.html">Onis's Blog</a></h1>
     <nav>
       <a href="../index.html">Home</a>
       <a href="../about.html">About</a>
@@ -133,7 +223,7 @@
       <div class="theorem">
         <strong>Theorem.</strong> The Gaussian integral satisfies:
         \[
-          \int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
+        \int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
         \]
       </div>
     </div>
@@ -144,21 +234,22 @@
 
       <div class="proof">
         \[
-          I^2 = \left( \int_{-\infty}^{\infty} e^{-x^2} \, dx \right)
-                \left( \int_{-\infty}^{\infty} e^{-y^2} \, dy \right)
-              = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-(x^2 + y^2)} \, dx \, dy
+        I^2 = \left( \int_{-\infty}^{\infty} e^{-x^2} \, dx \right)
+        \left( \int_{-\infty}^{\infty} e^{-y^2} \, dy \right)
+        = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-(x^2 + y^2)} \, dx \, dy
         \]
-        <p>Switching to polar coordinates with \( x = r\cos\theta \), \( y = r\sin\theta \), and \( dx\,dy = r\,dr\,d\theta \):</p>
+        <p>Switching to polar coordinates with \( x = r\cos\theta \), \( y = r\sin\theta \), and \( dx\,dy =
+          r\,dr\,d\theta \):</p>
         \[
-          I^2 = \int_0^{2\pi} \int_0^{\infty} e^{-r^2} \, r \, dr \, d\theta
+        I^2 = \int_0^{2\pi} \int_0^{\infty} e^{-r^2} \, r \, dr \, d\theta
         \]
         <p>The angular part gives a factor of \( 2\pi \). For the radial part, substituting \( u = r^2 \):</p>
         \[
-          \int_0^{\infty} e^{-r^2} r \, dr = \frac{1}{2} \int_0^{\infty} e^{-u} \, du = \frac{1}{2}
+        \int_0^{\infty} e^{-r^2} r \, dr = \frac{1}{2} \int_0^{\infty} e^{-u} \, du = \frac{1}{2}
         \]
         <p>Therefore:</p>
         \[
-          I^2 = 2\pi \cdot \frac{1}{2} = \pi
+        I^2 = 2\pi \cdot \frac{1}{2} = \pi
         \]
         <p>Since \( I > 0 \), we conclude \( I = \sqrt{\pi} \).</p>
         <div class="proof-end">□</div>
@@ -169,7 +260,7 @@
       <span class="section-label">Remarks</span>
       <p>A useful generalization: for any \( a > 0 \),
         \[
-          \int_{-\infty}^{\infty} e^{-ax^2} \, dx = \sqrt{\frac{\pi}{a}}
+        \int_{-\infty}^{\infty} e^{-ax^2} \, dx = \sqrt{\frac{\pi}{a}}
         \]
         which follows by the substitution \( u = \sqrt{a}\, x \).
       </p>
@@ -177,7 +268,7 @@
         This directly gives the normalization of the Gaussian (normal) distribution.
         If \( X \sim \mathcal{N}(0, \sigma^2) \), then its density integrates to 1 because:
         \[
-          \int_{-\infty}^{\infty} \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{x^2}{2\sigma^2}} dx = 1
+        \int_{-\infty}^{\infty} \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{x^2}{2\sigma^2}} dx = 1
         \]
       </p>
     </div>
@@ -187,8 +278,9 @@
   </main>
 
   <footer>
-    © 2026 My Math Blog
+    © 2026 Onis's Blog
   </footer>
 
 </body>
+
 </html>
