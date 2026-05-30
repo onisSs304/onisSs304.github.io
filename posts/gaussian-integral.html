@@ -4,71 +4,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Gaussian Integral – My Math Blog</title>
+  <title>The Gaussian Integral – Onis's Blog</title>
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: Georgia, serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #1a1a1a;
       color: #e8e8e8;
       line-height: 1.8;
     }
 
+    /* HEADER */
     header {
-      border-bottom: 1px solid #2a2a2a;
+      border-bottom: 1px solid #1a3a3a;
       padding: 20px 0;
       text-align: center;
+      background: #0d2626;
     }
+    header h1 { font-size: 1.8rem; }
+    header h1 a { text-decoration: none; color: #ffffff; }
+    nav { margin-top: 8px; }
+    nav a { margin: 0 12px; text-decoration: none; color: #aaaaaa; font-size: 0.95rem; }
+    nav a:hover { color: #ffffff; }
 
-    header h1 {
-      font-size: 1.8rem;
-    }
-
-    header h1 a {
-      text-decoration: none;
-      color: #ffffff;
-    }
-
-    nav {
-      margin-top: 8px;
-    }
-
-    nav a {
-      margin: 0 12px;
-      text-decoration: none;
-      color: #aaaaaa;
-      font-size: 0.95rem;
-    }
-
-    nav a:hover {
-      color: #ffffff;
-    }
-
-    main {
-      max-width: 680px;
+    /* PAGE LAYOUT */
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1100px;
       margin: 40px auto;
       padding: 0 20px;
     }
 
-    .post-meta {
-      font-size: 0.85rem;
-      color: #666666;
-      margin-bottom: 12px;
+    /* MAIN CONTENT */
+    main {
+      flex: 1;
+      max-width: 680px;
+      min-width: 0;
     }
 
-    h2 {
-      font-size: 1.7rem;
-      margin-bottom: 20px;
-      color: #ffffff;
-    }
+    .post-meta { font-size: 0.85rem; color: #666666; margin-bottom: 12px; }
+    h2 { font-size: 1.7rem; margin-bottom: 28px; color: #ffffff; }
 
     .section-label {
       display: inline-block;
@@ -76,7 +58,7 @@
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: #0d0d0d;
+      color: #1a1a1a;
       background: #e8e8e8;
       padding: 2px 8px;
       border-radius: 2px;
@@ -84,19 +66,10 @@
       margin-top: 28px;
     }
 
-    h3 {
-      font-size: 1.15rem;
-      margin-bottom: 10px;
-      color: #ffffff;
-    }
-
-    p {
-      margin-bottom: 14px;
-      color: #cccccc;
-    }
+    p { margin-bottom: 14px; color: #cccccc; }
 
     .theorem {
-      background: #1a1a1a;
+      background: #222222;
       border-left: 3px solid #e8e8e8;
       padding: 16px 20px;
       margin: 20px 0;
@@ -105,57 +78,15 @@
     }
 
     .proof {
-      background: #161616;
+      background: #1f1f1f;
       border-left: 3px solid #444444;
       padding: 16px 20px;
       margin: 20px 0;
       border-radius: 0 4px 4px 0;
       color: #cccccc;
     }
-
-    .proof p {
-      color: #cccccc;
-      margin-top: 12px;
-    }
-
-    .proof-end {
-      text-align: right;
-      font-size: 1.1rem;
-      color: #666666;
-      margin-top: 8px;
-    }
-
-    .toc {
-      background: #161616;
-      border: 1px solid #2a2a2a;
-      padding: 16px 20px;
-      margin-bottom: 32px;
-      border-radius: 4px;
-      font-size: 0.9rem;
-    }
-
-    .toc p {
-      font-weight: bold;
-      margin-bottom: 8px;
-      color: #ffffff;
-    }
-
-    .toc ol {
-      padding-left: 18px;
-    }
-
-    .toc li {
-      margin-bottom: 4px;
-    }
-
-    .toc a {
-      color: #7eb8f7;
-      text-decoration: none;
-    }
-
-    .toc a:hover {
-      text-decoration: underline;
-    }
+    .proof p { color: #cccccc; margin-top: 12px; }
+    .proof-end { text-align: right; font-size: 1.1rem; color: #666666; margin-top: 8px; }
 
     .back-link {
       display: inline-block;
@@ -164,11 +95,37 @@
       color: #7eb8f7;
       text-decoration: none;
     }
+    .back-link:hover { color: #ffffff; }
 
-    .back-link:hover {
-      color: #ffffff;
+    /* STICKY TOC SIDEBAR */
+    .toc {
+      width: 200px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 40px;
+      background: #222222;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-size: 0.85rem;
     }
 
+    .toc-title {
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .toc ol { padding-left: 16px; }
+    .toc li { margin-bottom: 6px; line-height: 1.4; }
+    .toc a { color: #7eb8f7; text-decoration: none; }
+    .toc a:hover { color: #ffffff; }
+    .toc a.active { color: #ffffff; font-weight: bold; }
+
+    /* FOOTER */
     footer {
       border-top: 1px solid #2a2a2a;
       text-align: center;
@@ -190,97 +147,119 @@
     </nav>
   </header>
 
-  <main>
+  <div class="page-wrapper">
 
-    <p class="post-meta">May 12, 2026</p>
-    <h2>The Gaussian Integral</h2>
+    <!-- MAIN CONTENT -->
+    <main>
+      <p class="post-meta">May 12, 2026</p>
+      <h2>The Gaussian Integral</h2>
 
-    <div class="toc">
-      <p>Contents</p>
+      <div id="intro">
+        <span class="section-label">Introduction</span>
+        <p>
+          The Gaussian integral is one of the most beautiful results in analysis.
+          It connects the exponential function \( e^{-x^2} \) — which has no elementary antiderivative —
+          to the constant \( \sqrt{\pi} \), bridging real analysis and geometry.
+        </p>
+        <p>
+          It appears everywhere: probability theory (the normal distribution),
+          physics (quantum mechanics, statistical mechanics), and signal processing.
+        </p>
+      </div>
+
+      <div id="theorem">
+        <span class="section-label">Theorem</span>
+        <div class="theorem">
+          <strong>Theorem.</strong> The Gaussian integral satisfies:
+          \[
+            \int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
+          \]
+        </div>
+      </div>
+
+      <div id="proof">
+        <span class="section-label">Proof</span>
+        <p>Let \( I = \displaystyle\int_{-\infty}^{\infty} e^{-x^2} \, dx \). We compute \( I^2 \) by writing:</p>
+        <div class="proof">
+          \[
+            I^2 = \left( \int_{-\infty}^{\infty} e^{-x^2} \, dx \right)
+                  \left( \int_{-\infty}^{\infty} e^{-y^2} \, dy \right)
+                = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-(x^2 + y^2)} \, dx \, dy
+          \]
+          <p>Switching to polar coordinates with \( x = r\cos\theta \), \( y = r\sin\theta \), and \( dx\,dy = r\,dr\,d\theta \):</p>
+          \[
+            I^2 = \int_0^{2\pi} \int_0^{\infty} e^{-r^2} \, r \, dr \, d\theta
+          \]
+          <p>The angular part gives a factor of \( 2\pi \). For the radial part, substituting \( u = r^2 \):</p>
+          \[
+            \int_0^{\infty} e^{-r^2} r \, dr = \frac{1}{2} \int_0^{\infty} e^{-u} \, du = \frac{1}{2}
+          \]
+          <p>Therefore:</p>
+          \[
+            I^2 = 2\pi \cdot \frac{1}{2} = \pi
+          \]
+          <p>Since \( I > 0 \), we conclude \( I = \sqrt{\pi} \).</p>
+          <div class="proof-end">□</div>
+        </div>
+      </div>
+
+      <div id="remarks">
+        <span class="section-label">Remarks</span>
+        <p>A useful generalization: for any \( a > 0 \),
+          \[
+            \int_{-\infty}^{\infty} e^{-ax^2} \, dx = \sqrt{\frac{\pi}{a}}
+          \]
+          which follows by the substitution \( u = \sqrt{a}\, x \).
+        </p>
+        <p>
+          This directly gives the normalization of the Gaussian (normal) distribution.
+          If \( X \sim \mathcal{N}(0, \sigma^2) \), then its density integrates to 1 because:
+          \[
+            \int_{-\infty}^{\infty} \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{x^2}{2\sigma^2}} dx = 1
+          \]
+        </p>
+      </div>
+
+      <a class="back-link" href="../index.html">← Back to all posts</a>
+    </main>
+
+    <!-- STICKY TOC SIDEBAR -->
+    <aside class="toc">
+      <div class="toc-title">Contents</div>
       <ol>
         <li><a href="#intro">Introduction</a></li>
         <li><a href="#theorem">Theorem</a></li>
         <li><a href="#proof">Proof</a></li>
         <li><a href="#remarks">Remarks</a></li>
       </ol>
-    </div>
+    </aside>
 
-    <div id="intro">
-      <span class="section-label">Introduction</span>
-      <p>
-        The Gaussian integral is one of the most beautiful results in analysis.
-        It connects the exponential function \( e^{-x^2} \) — which has no elementary antiderivative —
-        to the constant \( \sqrt{\pi} \), bridging real analysis and geometry.
-      </p>
-      <p>
-        It appears everywhere: probability theory (the normal distribution),
-        physics (quantum mechanics, statistical mechanics), and signal processing.
-      </p>
-    </div>
-
-    <div id="theorem">
-      <span class="section-label">Theorem</span>
-      <div class="theorem">
-        <strong>Theorem.</strong> The Gaussian integral satisfies:
-        \[
-        \int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
-        \]
-      </div>
-    </div>
-
-    <div id="proof">
-      <span class="section-label">Proof</span>
-      <p>Let \( I = \displaystyle\int_{-\infty}^{\infty} e^{-x^2} \, dx \). We compute \( I^2 \) by writing:</p>
-
-      <div class="proof">
-        \[
-        I^2 = \left( \int_{-\infty}^{\infty} e^{-x^2} \, dx \right)
-        \left( \int_{-\infty}^{\infty} e^{-y^2} \, dy \right)
-        = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-(x^2 + y^2)} \, dx \, dy
-        \]
-        <p>Switching to polar coordinates with \( x = r\cos\theta \), \( y = r\sin\theta \), and \( dx\,dy =
-          r\,dr\,d\theta \):</p>
-        \[
-        I^2 = \int_0^{2\pi} \int_0^{\infty} e^{-r^2} \, r \, dr \, d\theta
-        \]
-        <p>The angular part gives a factor of \( 2\pi \). For the radial part, substituting \( u = r^2 \):</p>
-        \[
-        \int_0^{\infty} e^{-r^2} r \, dr = \frac{1}{2} \int_0^{\infty} e^{-u} \, du = \frac{1}{2}
-        \]
-        <p>Therefore:</p>
-        \[
-        I^2 = 2\pi \cdot \frac{1}{2} = \pi
-        \]
-        <p>Since \( I > 0 \), we conclude \( I = \sqrt{\pi} \).</p>
-        <div class="proof-end">□</div>
-      </div>
-    </div>
-
-    <div id="remarks">
-      <span class="section-label">Remarks</span>
-      <p>A useful generalization: for any \( a > 0 \),
-        \[
-        \int_{-\infty}^{\infty} e^{-ax^2} \, dx = \sqrt{\frac{\pi}{a}}
-        \]
-        which follows by the substitution \( u = \sqrt{a}\, x \).
-      </p>
-      <p>
-        This directly gives the normalization of the Gaussian (normal) distribution.
-        If \( X \sim \mathcal{N}(0, \sigma^2) \), then its density integrates to 1 because:
-        \[
-        \int_{-\infty}^{\infty} \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{x^2}{2\sigma^2}} dx = 1
-        \]
-      </p>
-    </div>
-
-    <a class="back-link" href="../index.html">← Back to all posts</a>
-
-  </main>
+  </div>
 
   <footer>
     © 2026 Onis's Blog
   </footer>
 
-</body>
+  <!-- Highlight active TOC section on scroll -->
+  <script>
+    const sections = document.querySelectorAll('#intro, #theorem, #proof, #remarks');
+    const tocLinks = document.querySelectorAll('.toc a');
 
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 100) {
+          current = section.id;
+        }
+      });
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
 </html>
