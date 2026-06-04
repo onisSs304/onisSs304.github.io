@@ -9,7 +9,11 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -25,11 +29,30 @@
       text-align: center;
       background: #0d2626;
     }
-    header h1 { font-size: 1.8rem; }
-    header h1 a { text-decoration: none; color: #ffffff; }
-    nav { margin-top: 8px; }
-    nav a { margin: 0 12px; text-decoration: none; color: #aaaaaa; font-size: 0.95rem; }
-    nav a:hover { color: #ffffff; }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+    header h1 a {
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    nav {
+      margin-top: 8px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #aaaaaa;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
 
     /* PAGE LAYOUT */
     .page-wrapper {
@@ -49,8 +72,17 @@
       min-width: 0;
     }
 
-    .post-meta { font-size: 0.85rem; color: #666666; margin-bottom: 12px; }
-    h2 { font-size: 1.7rem; margin-bottom: 28px; color: #ffffff; }
+    .post-meta {
+      font-size: 0.85rem;
+      color: #666666;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 28px;
+      color: #ffffff;
+    }
 
     .section-label {
       display: inline-block;
@@ -66,13 +98,20 @@
       margin-top: 28px;
     }
 
-    p { margin-bottom: 14px; color: #cccccc; }
+    p {
+      margin-bottom: 14px;
+      color: #cccccc;
+    }
 
-    ul, ol {
+    ul,
+    ol {
       margin: 0 0 14px 24px;
       color: #cccccc;
     }
-    li { margin-bottom: 6px; }
+
+    li {
+      margin-bottom: 6px;
+    }
 
     /* PROBLEM BOX */
     .problem {
@@ -84,6 +123,7 @@
       border-radius: 0 4px 4px 0;
       color: #e8e8e8;
     }
+
     .problem-title {
       font-weight: bold;
       font-size: 0.8rem;
@@ -111,8 +151,18 @@
       border-radius: 0 4px 4px 0;
       color: #cccccc;
     }
-    .proof p { color: #cccccc; margin-top: 12px; }
-    .proof-end { text-align: right; font-size: 1.1rem; color: #666666; margin-top: 8px; }
+
+    .proof p {
+      color: #cccccc;
+      margin-top: 12px;
+    }
+
+    .proof-end {
+      text-align: right;
+      font-size: 1.1rem;
+      color: #666666;
+      margin-top: 8px;
+    }
 
     .remark {
       background: #1f1f1f;
@@ -131,7 +181,10 @@
       color: #7eb8f7;
       text-decoration: none;
     }
-    .back-link:hover { color: #ffffff; }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
 
     /* STICKY TOC SIDEBAR */
     .toc {
@@ -145,6 +198,7 @@
       padding: 16px 18px;
       font-size: 0.85rem;
     }
+
     .toc-title {
       font-weight: bold;
       color: #ffffff;
@@ -153,11 +207,29 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
     }
-    .toc ol { padding-left: 16px; }
-    .toc li { margin-bottom: 6px; line-height: 1.4; }
-    .toc a { color: #7eb8f7; text-decoration: none; }
-    .toc a:hover { color: #ffffff; }
-    .toc a.active { color: #ffffff; font-weight: bold; }
+
+    .toc ol {
+      padding-left: 16px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .toc a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      color: #ffffff;
+    }
+
+    .toc a.active {
+      color: #ffffff;
+      font-weight: bold;
+    }
 
     /* FOOTER */
     footer {
@@ -174,11 +246,13 @@
       margin: 24px 0;
       text-align: center;
     }
+
     .figure img {
       max-width: 100%;
       border-radius: 4px;
       border: 1px solid #2a2a2a;
     }
+
     .figure figcaption {
       margin-top: 8px;
       font-size: 0.85rem;
@@ -209,7 +283,8 @@
       <div id="intro">
         <span class="section-label">Introduction</span>
         <p>
-          Recently, I had the chance to visit the blog of Nor (you should follow him if you enjoy Maths
+          Recently, I had the chance to visit the <a href="https://nor-blog.pages.dev/">Nor 's Blog</a> (you should
+          follow him if you enjoy Maths
           and competitive programming) and saw a Maths Olympiad problem solved using martingales. I took
           a martingale class last semester so it raised in me a strong interest. It has been a long time
           since I seriously tackled a Maths Olympiad problem, so I felt a bit confused when dealing with
@@ -220,7 +295,7 @@
           <div class="problem-title">Problem Statement — USA TST 2018/2</div>
           Find all functions \( f : \mathbb{Z}^2 \to [0,1] \) such that for any integers \( x \) and \( y \),
           \[
-            f(x,y) = \frac{f(x-1,y) + f(x,y-1)}{2}.
+          f(x,y) = \frac{f(x-1,y) + f(x,y-1)}{2}.
           \]
         </div>
       </div>
@@ -240,10 +315,10 @@
         <p>
           More formally, using i.i.d. \( (\epsilon_n)_n \) valued in \( \{-1, 1\} \):
           \[
-            \mathbb{P}(\epsilon_n = 1) = p, \quad \mathbb{P}(\epsilon_n = -1) = 1 - p
+          \mathbb{P}(\epsilon_n = 1) = p, \quad \mathbb{P}(\epsilon_n = -1) = 1 - p
           \]
           \[
-            X_n = X_{n-1} + \epsilon_n, \quad X_0 = a \in \mathbb{Z}
+          X_n = X_{n-1} + \epsilon_n, \quad X_0 = a \in \mathbb{Z}
           \]
         </p>
         <p>
@@ -251,7 +326,8 @@
           Viewed as a Markov chain, random walks are irreducible with the following dichotomy:
         </p>
         <ul>
-          <li>For \( \mathbb{Z} \) and \( \mathbb{Z}^2 \), the walk is <em>recurrent</em> — it returns to its starting point infinitely often with probability 1.</li>
+          <li>For \( \mathbb{Z} \) and \( \mathbb{Z}^2 \), the walk is <em>recurrent</em> — it returns to its starting
+            point infinitely often with probability 1.</li>
           <li>For \( \mathbb{Z}^d \) with \( d \geq 3 \), the walk is <em>transient</em>.</li>
         </ul>
         <p>
@@ -260,7 +336,8 @@
           with respect to a filtration \( (\mathcal{F}_n)_n \) if:
         </p>
         <ul>
-          <li>\( (X_n)_n \) is adapted to \( (\mathcal{F}_n)_n \), i.e. \( X_n \) is \( \mathcal{F}_n \)-measurable.</li>
+          <li>\( (X_n)_n \) is adapted to \( (\mathcal{F}_n)_n \), i.e. \( X_n \) is \( \mathcal{F}_n \)-measurable.
+          </li>
           <li>\( X_n \in L^1 \), i.e. \( \mathbb{E}[|X_n|] < +\infty \).</li>
           <li>\( \mathbb{E}[X_{n+1} \mid \mathcal{F}_n] = X_n \).</li>
         </ul>
@@ -273,8 +350,8 @@
           Why is the original problem related to random walks? For a 1-d random walk on \( \mathbb{Z} \),
           if \( f \) is bounded and measurable, by independence:
           \[
-            \mathbb{E}[f(X_n)] = \mathbb{E}[f(X_{n-1} + \epsilon_n)]
-            = \frac{\mathbb{E}[f(X_{n-1}+1)] + \mathbb{E}[f(X_{n-1}-1)]}{2}
+          \mathbb{E}[f(X_n)] = \mathbb{E}[f(X_{n-1} + \epsilon_n)]
+          = \frac{\mathbb{E}[f(X_{n-1}+1)] + \mathbb{E}[f(X_{n-1}-1)]}{2}
           \]
           This mirrors our functional equation exactly.
         </p>
@@ -283,10 +360,10 @@
           \( (x, y-1) \) is a down move. We model \( Z_n = (X_n, Y_n) \) as a random walk with two
           possibilities (left/down), using i.i.d. \( (\epsilon_n)_n \) valued in \( \{(0,-1),(-1,0)\} \):
           \[
-            \mathbb{P}(\epsilon_n = (0,-1)) = \mathbb{P}(\epsilon_n = (-1,0)) = \frac{1}{2}
+          \mathbb{P}(\epsilon_n = (0,-1)) = \mathbb{P}(\epsilon_n = (-1,0)) = \frac{1}{2}
           \]
           \[
-            Z_n = Z_{n-1} + \epsilon_n, \quad Z_0 = (x,y) \in \mathbb{Z}^2
+          Z_n = Z_{n-1} + \epsilon_n, \quad Z_0 = (x,y) \in \mathbb{Z}^2
           \]
         </p>
         <p>
@@ -297,20 +374,22 @@
 
         <figure class="figure">
           <img src="03-06-26.png" alt="Change of Z_n after a left/down move" />
-          <figcaption>Figure 1. The change of \( Z_n \) after a left or down move, projected onto antidiagonal lines.</figcaption>
+          <figcaption>Figure 1. The change of \( Z_n \) after a left or down move, projected onto antidiagonal lines.
+          </figcaption>
         </figure>
 
         <div class="theorem">
-          <strong>Claim.</strong> If \( f \) satisfies the functional equation, then \( (f(Z_n))_n \) is a martingale with respect to the natural filtration.
+          <strong>Claim.</strong> If \( f \) satisfies the functional equation, then \( (f(Z_n))_n \) is a martingale
+          with respect to the natural filtration.
         </div>
 
         <div class="proof">
           <p>The first two martingale conditions are easily verified. For the third:</p>
           \begin{align*}
-            \mathbb{E}[f(Z_{n+1}) \mid \mathcal{F}_n]
-            &= \mathbb{E}[f(Z_n + \epsilon_{n+1}) \mid \mathcal{F}_n] \\
-            &= \frac{f(X_n-1, Y_n) + f(X_n, Y_n-1)}{2} \\
-            &= f(X_n, Y_n) = f(Z_n)
+          \mathbb{E}[f(Z_{n+1}) \mid \mathcal{F}_n]
+          &= \mathbb{E}[f(Z_n + \epsilon_{n+1}) \mid \mathcal{F}_n] \\
+          &= \frac{f(X_n-1, Y_n) + f(X_n, Y_n-1)}{2} \\
+          &= f(X_n, Y_n) = f(Z_n)
           \end{align*}
           <div class="proof-end">□</div>
         </div>
@@ -324,11 +403,11 @@
           Let \( (Z_n)_n \) and \( (Z'_n)_n \) be two random walks starting at \( (x,y) \) and \( (x',y') \)
           respectively. Then:
           \[
-            \mathbb{E}[f(Z_n)] = f(x,y), \quad \mathbb{E}[f(Z'_n)] = f(x',y')
+          \mathbb{E}[f(Z_n)] = f(x,y), \quad \mathbb{E}[f(Z'_n)] = f(x',y')
           \]
           We estimate:
           \[
-            |f(x,y) - f(x',y')| = |\mathbb{E}[f(Z_n) - f(Z'_n)]| \leq \mathbb{E}[|f(Z_n) - f(Z'_n)|]
+          |f(x,y) - f(x',y')| = |\mathbb{E}[f(Z_n) - f(Z'_n)]| \leq \mathbb{E}[|f(Z_n) - f(Z'_n)|]
           \]
           Since \( K_n = X_n - Y_n \) is a recurrent 1-d random walk and the condition \( x + y = x' + y' \)
           ensures the two walks stay on the same antidiagonal sum, they will meet at a finite time almost
@@ -336,20 +415,21 @@
 
         <figure class="figure">
           <img src="03-06-26(1).png" alt="Two random walks meeting" />
-          <figcaption>Figure 2. For each move, \( X_n + Y_n = X'_n + Y'_n \) is preserved — the two walks eventually meet.</figcaption>
+          <figcaption>Figure 2. For each move, \( X_n + Y_n = X'_n + Y'_n \) is preserved — the two walks eventually
+            meet.</figcaption>
         </figure>
 
-          Therefore:
-          \[
-            \lim_{n \to \infty} \mathbb{E}[|f(Z_n) - f(Z'_n)|] = 0
-          \]
-          This gives \( f(x,y) = f(x',y') \), so <strong>\( f \) is constant on lines \( x + y = k \)</strong>.
+        Therefore:
+        \[
+        \lim_{n \to \infty} \mathbb{E}[|f(Z_n) - f(Z'_n)|] = 0
+        \]
+        This gives \( f(x,y) = f(x',y') \), so <strong>\( f \) is constant on lines \( x + y = k \)</strong>.
         </p>
 
         <p>It remains to show \( f \) is constant across different lines. Using the functional equation:</p>
         <div class="theorem">
           \[
-            f(x+1, y) = \frac{f(x, y) + f(x+1, y-1)}{2} = \frac{f(x,y) + f(x,y)}{2} = f(x,y)
+          f(x+1, y) = \frac{f(x, y) + f(x+1, y-1)}{2} = \frac{f(x,y) + f(x,y)}{2} = f(x,y)
           \]
         </div>
         <p>
@@ -372,7 +452,7 @@
         <div class="remark">
           <strong>Remark 2.</strong> A more direct approach considers:
           \[
-            |f(x+1, y-1) - f(x,y)| \approx \frac{\binom{n}{\lfloor n/2 \rfloor}}{2^{n-1}}
+          |f(x+1, y-1) - f(x,y)| \approx \frac{\binom{n}{\lfloor n/2 \rfloor}}{2^{n-1}}
           \]
           which can be approximated by Stirling's formula and shown to converge to 0 as \( n \to \infty \).
         </div>
@@ -419,4 +499,5 @@
   </script>
 
 </body>
+
 </html>
