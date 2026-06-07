@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Survey on Universal Approximation Theorem – Onis's Blog</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e8e8e8;
+      line-height: 1.8;
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 1px solid #1a3a3a;
+      padding: 20px 0;
+      text-align: center;
+      background: #0d2626;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+    header h1 a {
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    nav {
+      margin-top: 8px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #aaaaaa;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    /* PAGE LAYOUT */
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      flex: 1;
+      max-width: 680px;
+      min-width: 0;
+    }
+
+    .post-meta {
+      font-size: 0.85rem;
+      color: #666666;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 28px;
+      color: #ffffff;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin: 28px 0 12px 0;
+      color: #dddddd;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1a1a1a;
+      background: #e8e8e8;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      margin-top: 28px;
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: #cccccc;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 14px 24px;
+      color: #cccccc;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* THEOREM BOX */
+    .theorem {
+      background: #222222;
+      border-left: 3px solid #e8e8e8;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #e8e8e8;
+    }
+
+    .theorem-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #aaaaaa;
+      margin-bottom: 8px;
+    }
+
+    /* DEFINITION BOX */
+    .definition {
+      background: #1e2233;
+      border-left: 3px solid #7eb8f7;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .definition-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7eb8f7;
+      margin-bottom: 8px;
+    }
+
+    /* REMARK BOX */
+    .remark {
+      background: #1f1f1f;
+      border-left: 3px solid #888;
+      padding: 14px 18px;
+      margin: 14px 0;
+      border-radius: 0 4px 4px 0;
+      color: #bbbbbb;
+      font-size: 0.95rem;
+    }
+
+    /* BIBLIOGRAPHY */
+    .bibliography {
+      list-style: none;
+      padding-left: 0;
+      color: #bbbbbb;
+      font-size: 0.92rem;
+    }
+
+    .bibliography li {
+      margin-bottom: 10px;
+      padding-left: 28px;
+      text-indent: -28px;
+      line-height: 1.6;
+    }
+
+    .bibliography a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .bibliography a:hover {
+      text-decoration: underline;
+    }
+
+    /* INLINE CITATION */
+    a.cite {
+      color: #7eb8f7;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+
+    a.cite:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
+
+    /* STICKY TOC SIDEBAR */
+    .toc {
+      width: 200px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 40px;
+      background: #222222;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-size: 0.85rem;
+    }
+
+    .toc-title {
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .toc ol {
+      padding-left: 16px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .toc a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      color: #ffffff;
+    }
+
+    .toc a.active {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #2a2a2a;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #555555;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="../index.html">Onis's Blog</a></h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="page-wrapper">
+
+    <!-- MAIN CONTENT -->
+    <main>
+      <p class="post-meta">June 7, 2026</p>
+      <h2>A Survey on Universal Approximation Theorem: View from the Depth</h2>
+
+      <!-- INTRODUCTION -->
+      <div id="intro">
+        <span class="section-label">Introduction</span>
+        <p>
+          In this post, I want to discover the Universal Approximation Theorem, a foundational result
+          in approximation theory and deep learning. Broadly speaking, this theorem states that even
+          relatively simple feedforward neural networks, under mild assumptions on the activation function,
+          can approximate any continuous function on a compact domain to arbitrary accuracy. This result
+          provides a theoretical justification for the expressive power of neural networks and explains
+          why they are capable of modeling highly complex nonlinear relationships.
+        </p>
+        <p>
+          We will only focus on the expressive power of feedforward neural networks. Additionally, it can
+          be considered as an extension of my latest research project on Deep Learning Theory and
+          Optimization. Furthermore, I only consider networks with one hidden layer and arbitrary width.
+        </p>
+      </div>
+
+      <!-- GENERAL RESULTS -->
+      <div id="general">
+        <span class="section-label">General Results</span>
+        <p>We begin with the most well-known result:</p>
+
+        <div class="theorem">
+          <div class="theorem-label">Theorem 1 <a class="cite" href="#ref-cybenko1989">[Cybenko, 1989]</a></div>
+          Let \( \sigma \) be any continuous discriminatory function, meaning that for any measure \( \mu \) such that
+          \[
+          \int \sigma(w^T x + \theta)\, d\mu(x) = 0, \quad \forall\, w \in \mathbb{R}^d,\, \theta \in \mathbb{R}
+          \implies \mu = 0,
+          \]
+          the set of functions
+          \[
+          x \in [0,1]^d \mapsto \sum_{i=1}^N v_i \sigma(w_i^T x + b_i)
+          \]
+          where \( N \in \mathbb{N},\, w_i \in \mathbb{R}^d,\, b_i \in \mathbb{R} \), is dense in \( C([0,1]^d,
+          \mathbb{R}) \).
+        </div>
+
+        <p>
+          One may feel more familiar with the assumption that \( \sigma \) is a sigmoidal function, i.e.
+          \( \sigma(x) \xrightarrow{x \to -\infty} 0 \) and \( \sigma(x) \xrightarrow{x \to +\infty} 1 \).
+          A sigmoidal function is also discriminatory, so the theorem still holds. Roughly speaking, for
+          any continuous function \( f \) and any \( \epsilon > 0 \), there exist
+          \( N \in \mathbb{N},\, (w_i),\, (v_i),\, (b_i) \) such that:
+          \[
+          \left| f(x) - \sum_{i=1}^N v_i \sigma(w_i^T x + b_i) \right| \leq \epsilon,
+          \quad \forall\, x \in [0,1]^d
+          \]
+        </p>
+        <p>
+          Many subsequent works pushed in this direction: <a class="cite" href="#ref-hornik1991">[Hornik, 1991]</a>
+          on approximating \( L^p \) functions, and <a class="cite" href="#ref-funahashi1989">[Funahashi, 1989]</a>
+          on approximation by bounded, monotone increasing continuous activation functions.
+          Based on these results, the most general version of the Universal Approximation Theorem was
+          proven by Leshno, Lin, Pinkus, and Schocken in 1993:
+        </p>
+
+        <div class="theorem">
+          <div class="theorem-label">Theorem 2 <a class="cite" href="#ref-leshno1993">[Leshno et al., 1993]</a></div>
+          Let \( \sigma \) be a locally bounded piecewise continuous function. Then the set of functions
+          \[
+          x \in [0,1]^d \mapsto \sum_{i=1}^N v_i \sigma(w_i^T x + b_i)
+          \]
+          is dense in \( C([0,1]^d, \mathbb{R}) \) <strong>if and only if</strong> \( \sigma \) is not a polynomial.
+          Therefore, popular activation functions such as ReLU, tanh, sigmoid, etc. all possess
+          universal approximation capacity.
+        </div>
+
+        <p>
+          The breakthrough of this theorem is that it unifies all previous results into a single necessary
+          and sufficient condition on the activation function. Furthermore, dropping the continuity
+          assumption does not significantly affect the universal approximation property.
+        </p>
+      </div>
+
+      <!-- FIXED WEIGHTS -->
+      <div id="fixed">
+        <span class="section-label">Fixed Weights</span>
+        <p>
+          Until now, we have discussed neural networks with arbitrary weights. We now analyze the situation
+          where the weights are fixed, examining whether neural nets can still serve as universal approximators.
+          When all weights are fixed, the approximation capacity is significantly limited.
+        </p>
+        <p>
+          In general, it seems impossible to approximate an arbitrary continuous function over \( \mathbb{R} \)
+          by a neural network with sigmoidal activation and fixed weights. For example, \( f(x) = x \) satisfies
+          \( \lim_{x \to +\infty} f(x) = +\infty \), so it cannot be approximated uniformly. We need to either
+          restrict to a closed interval or add assumptions on \( f \) at infinity. A result of Hahm and Hong addresses
+          this:
+        </p>
+
+        <div class="theorem">
+          <div class="theorem-label">Theorem 3 <a class="cite" href="#ref-hahm2004">[Hahm & Hong, 2004]</a></div>
+          Let \( f \) be a continuous function on a closed interval of \( \mathbb{R} \) such that
+          \( \lim_{|x| \to \infty} f(x) = 0 \). If \( \sigma \) is a bounded, measurable sigmoidal function,
+          then for sufficiently small \( \epsilon \), there exist constants \( v_i, b_i \) and positive integers
+          \( K, N \) such that:
+          \[
+          \left| f(x) - \sum_{i=1}^N v_i \sigma(Kx + b_i) \right| < \epsilon, \quad x \in \mathbb{R} \] </div>
+
+            <div class="remark">
+              <strong>Remark.</strong> This result generalizes to approximation of continuous functions on a compact set
+              with a similar conclusion.
+            </div>
+
+            <p>
+              From the proof, the weights depend strictly on the functional properties of the activation function.
+              For instance, if \( \sigma \) is the Heaviside function \( \sigma(x) = \mathbf{1}_{x \geq 0}(x) \),
+              the weight \( K \) can be any positive number. In contrast, for \( \sigma(x) = \frac{1}{1+e^{-x}} \),
+              \( K \) must be sufficiently large.
+            </p>
+
+            <div class="remark">
+              <strong>Remark.</strong> <a class="cite" href="#ref-xu2013">[Xu, 2013]</a> used even, \( 2\pi \)-periodic
+              continuous activation functions to approximate \( 2\pi \)-periodic continuous functions — and hence
+              any continuous function on \( [-\pi, \pi] \).
+            </div>
+
+            <h3>Limitation of Fixed-Weight Networks</h3>
+            <p>
+              All results discussed so far apply only to univariate functions. The results of
+              <a class="cite" href="#ref-hahm2004">[Hahm & Hong, 2004]</a> and
+              <a class="cite" href="#ref-xu2013">[Xu, 2013]</a> do not extend to multivariate functions.
+              Consider a one-hidden-layer network with fixed weights:
+              \[
+              h(x) = \sum_{i=1}^r c_i \sigma(\langle w_i, x \rangle + b_i)
+              \]
+              This is a ridge function — a function of \( \langle w_i, x \rangle \), not of \( x \) directly.
+              The set \( \mathbf{H} \) of all such functions is not dense in \( C(Q, \mathbb{R}) \) for a compact
+              \( Q \subset \mathbb{R}^d \). Hence approximation of all continuous multivariate functions is impossible,
+              as shown in Theorem 5.1 of <a class="cite" href="#ref-lin1993">[Lin & Pinkus, 1993]</a>.
+            </p>
+        </div>
+
+        <!-- RANDOM WEIGHTS -->
+        <div id="random">
+          <span class="section-label">Random Weights and Biases</span>
+          <p>
+            This section covers the part I wanted to explore in my project but could not due to time constraints.
+            The intuition: let \( N \) be the number of neurons; in each neuron, we randomly choose the weight
+            and bias. The only remaining parameter to learn is the output weight in the linear layer.
+          </p>
+          <p>
+            The most impressive approach comes from the Random Vector Functional Link (RVFL) network.
+            For any \( f \in C([a,b]^d, \mathbb{R}) \), there exists a limit-integral representation:
+            \[
+            f(x) = \lim_{L \to a} \int_V T[f(\lambda)] G_{\lambda, L}(x)\, d\lambda
+            \]
+            Approximating this via Monte Carlo sampling with \( (\lambda_1, \ldots, \lambda_n) \) i.i.d. uniform on \( V
+            \):
+            \[
+            f(x) \approx \frac{|V|}{n} \sum_{k=1}^n T[f(\lambda_k)] G_{\lambda_k, l}(x)
+            = \sum_{k=1}^n a_k G_{\lambda_k, l}(x)
+            \]
+            If \( G_{\lambda, l} \) is regarded as an activation function, we have approximated \( f \) by a
+            single hidden-layer network with random weights and biases:
+            \[
+            f_n(x) = \sum_{k=1}^n a_k g(w_k x + b_k)
+            \]
+          </p>
+
+          <h3>Rigorous Theory</h3>
+
+          <div class="theorem">
+            <div class="theorem-label">Theorem 4 <a class="cite" href="#ref-boris1995">[Igelnik & Pao, 1995]</a></div>
+            Let \( f_n(x) = \sum_{k=1}^n a_k g(w_k x + b_k) \) where \( \lambda_n = (w_1, \ldots, w_n, b_1, \ldots, b_n)
+            \)
+            follows some probability measure. For any compact \( K \subset [0,1]^d \) and any absolutely integrable
+            activation function \( g \), there exists a sequence of RVFL networks \( (f_n)_n \) and probability
+            measures \( \mu_n \) such that:
+            \[
+            \lim_{n \to \infty} \mathbb{E}\left[ \int_K (f(x) - f_n(x))^2\, dx \right] = 0
+            \]
+          </div>
+
+          <div class="remark">
+            <strong>Remark 1.</strong> The probability measure for \( \lambda_n \) is specified in the original paper.
+            The remaining parameters lie in the linear layer — in learning theory terms, we only need to learn
+            the linear coefficients, while weights and biases are drawn from a probability measure.
+          </div>
+
+          <div class="remark">
+            <strong>Remark 2.</strong> The distribution for weights and biases must be continuous. A discrete
+            distribution leads to the same limitations as fixed-weight networks.
+          </div>
+
+          <p>
+            Understanding this, <a class="cite" href="#ref-huang2006">[Huang et al., 2006]</a> introduced a new
+            gradient algorithm that works well in random networks and overcomes the memory usage of backpropagation.
+            For a more mathematical treatment using functional analysis,
+            <a class="cite" href="#ref-ariel2023">[Neufeld & Schmocker, 2023]</a> extends these results to
+            \( L^p \) function approximation with non-polynomial activation functions.
+          </p>
+
+          <h3>Random Weights and Learned Biases</h3>
+          <p>
+            A recent work <a class="cite" href="#ref-lajoie2025">[Lajoie & Mazzucato, 2025]</a> addresses the
+            large neuron count required by fully random networks, proving universal approximation with random
+            weights and learnable biases under hard constraints on the activation function.
+          </p>
+
+          <div class="definition">
+            <div class="definition-label">Definition</div>
+            An activation function \( \sigma \) is a <em>\( \gamma \)-bounding activation</em> if it allows
+            universal approximation even when individual parameters are bounded by \( \gamma \). ReLU and the
+            Heaviside step function are \( \gamma \)-parameter bounding for any \( \gamma > 0 \).
+
+            Furthermore, \( \sigma \) is a <em>bias-learning activation</em> if it is continuous and there
+            exists \( r \in \mathbb{R} \) such that \( \sigma(x) = 0 \) for all \( x < r \). </div>
+
+              <p>
+                Let \( p_R \) denote the uniform distribution on \( [-R, R] \) with \( R > \gamma \). The main result
+                is:
+              </p>
+
+              <div class="theorem">
+                <div class="theorem-label">Theorem 5 <a class="cite" href="#ref-lajoie2025">[Lajoie & Mazzucato,
+                    2025]</a></div>
+                Assume \( \sigma \) is \( \gamma \)-bias-learning and \( h : U \to \mathbb{R}^l \) is continuous on a
+                compact \( U \subset \mathbb{R}^d \). Then for any \( \varepsilon > 0 \) and \( \delta \in (0,1) \),
+                there exist a hidden-layer width \( m \in \mathbb{N} \) and bias vector \( b \in \mathbb{R}^m \) such
+                that, with probability at least \( 1 - \delta \), a neural network with each weight sampled from
+                \( p_R \) approximates \( h \) with error less than \( \varepsilon \).
+              </div>
+
+              <div class="remark">
+                <strong>Remark 3.</strong> A natural open question: does this theorem hold for bounded sigmoidal
+                activations, which are among the most popular and widely used in learning tasks?
+              </div>
+          </div>
+
+          <!-- CONCLUSION -->
+          <div id="conclusion">
+            <span class="section-label">Conclusion</span>
+            <p>
+              Together, we have surveyed one of the most fundamental theorems in machine learning across several
+              settings: the general case, fixed weights, and random weights. While perhaps less immediately
+              applicable, these results deepen our understanding of why neural networks work. In practice,
+              networks with arbitrary depth and bounded width are often preferred for learning problems.
+            </p>
+            <p>
+              Beyond the works highlighted here, many other magnificent papers have studied the approximation
+              capacities of neural networks. Since this is a small personal survey, I cannot cover all of them.
+            </p>
+          </div>
+
+          <!-- BIBLIOGRAPHY -->
+          <div id="bibliography">
+            <span class="section-label">References</span>
+            <ol class="bibliography">
+              <li id="ref-cybenko1989">
+                [1] Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function.
+                <em>Mathematics of Control, Signals and Systems</em>.
+                <a href="https://link.springer.com/article/10.1007/BF02551274" target="_blank">↗ Link</a>
+              </li>
+              <li id="ref-hornik1991">
+                [2] Hornik, K. (1991). Approximation capabilities of multilayer feedforward networks.
+                <em>Neural Networks</em>.
+                <a href="https://web.njit.edu/~usman/courses/cs677/hornik-nn-1991.pdf" target="_blank">↗ Link</a>
+              </li>
+              <li id="ref-funahashi1989">
+                [3] Funahashi, K. (1989). On the approximate realization of continuous mappings by neural networks.
+                <em>Neural Networks</em>.
+                <a href="https://www.sciencedirect.com/science/article/pii/0893608089900038" target="_blank">↗ Link</a>
+              </li>
+              <li id="ref-leshno1993">
+                [4] Leshno, M., Lin, V. Ya., Pinkus, A., & Schocken, S. (1993). Multilayer feedforward networks
+                with non-polynomial activation function can approximate any function.
+                <em>Neural Networks</em>.
+                <a href="https://archive.nyu.edu/bitstream/2451/14329/1/IS-92-13.pdf" target="_blank">↗ Link</a>
+              </li>
+              <li id="ref-hahm2004">
+                [5] Hahm, N., & Hong, B. (2004). An approximation by neural networks with a fixed weight.
+                <em>Computers & Mathematics with Applications</em>.
+                <a href="https://www.sciencedirect.com/science/article/pii/S0898122104840252" target="_blank">↗ Link</a>
+              </li>
+              <li id="ref-xu2013">
+                [6] Xu, S. (2013). Approximation by neural network with scattered data.
+                <em>Applied Mathematics and Computation</em>.
+                <a href="https://www.sciencedirect.com/science/article/pii/S0096300313008631" target="_blank">↗ Link</a>
+              </li>
+              <li id="ref-lin1993">
+                [7] Lin, V. Ya., & Pinkus, A. (1993). Fundamentality of ridge functions.
+                <em>Journal of Approximation Theory</em>.
+                <a href="https://www.sciencedirect.com/science/article/pii/S0021904583711044" target="_blank">↗ Link</a>
+              </li>
+              <li id="ref-boris1995">
+                [8] Igelnik, B., & Pao, Y.-H. (1995). Stochastic choice of basis functions in adaptive function
+                approximation and the functional-link net.
+                <em>IEEE Transactions on Neural Networks</em>.
+                <a href="https://www.deepscn.com/pdfs/Igelnik%20and%20Pao_1995.pdf" target="_blank">↗ Link</a>
+              </li>
+              <li id="ref-huang2006">
+                [9] Huang, G.-B., Zhu, Q.-Y., & Siew, C.-K. (2006). Extreme learning machine: Theory and applications.
+                <em>Neurocomputing</em>.
+                <a href="https://www.sciencedirect.com/science/article/abs/pii/S0925231206000385" target="_blank">↗
+                  Link</a>
+              </li>
+              <li id="ref-ariel2023">
+                [10] Neufeld, A., & Schmocker, P. (2023). Universal approximation property of random neural networks.
+                <a href="https://personal.ntu.edu.sg/ariel.neufeld/RandomNN.pdf" target="_blank">↗ Link</a>
+              </li>
+              <li id="ref-lajoie2025">
+                [11] Lajoie, G., & Mazzucato, L. (2025). Expressivity of neural networks with random weights
+                and learned biases. <em>ICLR 2025</em>.
+                <a href="https://arxiv.org/abs/2407.00957" target="_blank">↗ Link</a>
+              </li>
+            </ol>
+          </div>
+
+          <a class="back-link" href="../index.html">← Back to all posts</a>
+    </main>
+
+    <!-- STICKY TOC SIDEBAR -->
+    <aside class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#general">General Results</a></li>
+        <li><a href="#fixed">Fixed Weights</a></li>
+        <li><a href="#random">Random Weights</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#bibliography">References</a></li>
+      </ol>
+    </aside>
+
+  </div>
+
+  <footer>
+    © 2026 Onis's Blog
+  </footer>
+
+  <script>
+    const sections = document.querySelectorAll('#intro, #general, #fixed, #random, #conclusion, #bibliography');
+    const tocLinks = document.querySelectorAll('.toc a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 100) {
+          current = section.id;
+        }
+      });
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>
