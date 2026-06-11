@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>are Sigmoidal Functions γ-Bounding Activations? – Onis's Blog</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e8e8e8;
+      line-height: 1.8;
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 1px solid #1a3a3a;
+      padding: 20px 0;
+      text-align: center;
+      background: #0d2626;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+    header h1 a {
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    nav {
+      margin-top: 8px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #aaaaaa;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    /* PAGE LAYOUT */
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      flex: 1;
+      max-width: 680px;
+      min-width: 0;
+    }
+
+    .post-meta {
+      font-size: 0.85rem;
+      color: #666666;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 28px;
+      color: #ffffff;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1a1a1a;
+      background: #e8e8e8;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      margin-top: 28px;
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: #cccccc;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 14px 24px;
+      color: #cccccc;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* THEOREM BOX */
+    .theorem {
+      background: #222222;
+      border-left: 3px solid #e8e8e8;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #e8e8e8;
+    }
+
+    .theorem-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #aaaaaa;
+      margin-bottom: 8px;
+    }
+
+    /* DEFINITION BOX */
+    .definition {
+      background: #1e2233;
+      border-left: 3px solid #7eb8f7;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .definition-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7eb8f7;
+      margin-bottom: 8px;
+    }
+
+    /* LEMMA BOX */
+    .lemma {
+      background: #1e261e;
+      border-left: 3px solid #7ecf7e;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .lemma-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7ecf7e;
+      margin-bottom: 8px;
+    }
+
+    /* PROOF BOX */
+    .proof {
+      background: #1f1f1f;
+      border-left: 3px solid #444444;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .proof p {
+      color: #cccccc;
+      margin-top: 10px;
+    }
+
+    .proof-end {
+      text-align: right;
+      font-size: 1.1rem;
+      color: #666666;
+      margin-top: 8px;
+    }
+
+    /* REMARK BOX */
+    .remark {
+      background: #1f1f1f;
+      border-left: 3px solid #888;
+      padding: 14px 18px;
+      margin: 14px 0;
+      border-radius: 0 4px 4px 0;
+      color: #bbbbbb;
+      font-size: 0.95rem;
+    }
+
+    /* CONTRIBUTIONS LIST */
+    .contributions {
+      background: #1e2233;
+      border: 1px solid #2a3a4a;
+      border-radius: 4px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+
+    .contributions ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #cccccc;
+    }
+
+    .contributions li {
+      margin-bottom: 6px;
+    }
+
+    /* BIBLIOGRAPHY */
+    .bibliography {
+      list-style: none;
+      padding-left: 0;
+      color: #bbbbbb;
+      font-size: 0.92rem;
+    }
+
+    .bibliography li {
+      margin-bottom: 10px;
+      padding-left: 28px;
+      text-indent: -28px;
+      line-height: 1.6;
+    }
+
+    .bibliography a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .bibliography a:hover {
+      text-decoration: underline;
+    }
+
+    a.cite {
+      color: #7eb8f7;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+
+    a.cite:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
+
+    /* STICKY TOC SIDEBAR */
+    .toc {
+      width: 200px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 40px;
+      background: #222222;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-size: 0.85rem;
+    }
+
+    .toc-title {
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .toc ol {
+      padding-left: 16px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .toc a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      color: #ffffff;
+    }
+
+    .toc a.active {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #2a2a2a;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #555555;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="../index.html">onis's blog</a></h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="page-wrapper">
+
+    <!-- MAIN CONTENT -->
+    <main>
+      <p class="post-meta">June 11, 2026</p>
+      <h2>are Sigmoidal Functions \( \gamma \)-Bounding Activations?</h2>
+
+      <!-- INTRODUCTION -->
+      <div id="intro">
+        <span class="section-label">Introduction</span>
+        <p>
+          In the <a class="cite" href="universal-approximation.html">last post</a>, we saw that
+          <a class="cite" href="#ref-lajoie2025">[Lajoie & Mazzucato, 2025]</a> demonstrated the expressive
+          power of networks with random weights and learned biases — but their main theorem only works under
+          hard constraints on the activation function: \( \gamma \)-bounding and bias-learning activations.
+          In their work, only ReLU and the Heaviside step function were shown to satisfy these conditions.
+          This post is dedicated to answering the open question raised in Remark 3 of the previous post.
+        </p>
+
+        <p><strong>My contributions:</strong></p>
+        <div class="contributions">
+          <ul>
+            <li>Proved that bounded, continuous sigmoidal functions are \( \gamma \)-bounding activations.</li>
+            <li>Introduced the definition of <em>quasi bias-learning</em> functions and showed that they
+              still satisfy the universal approximation theorem.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SIGMOIDAL ARE GAMMA-BOUNDING -->
+      <div id="sigma-gamma">
+        <span class="section-label">Sigmoidal Functions are \( \gamma \)-Bounding Activations</span>
+        <p>We first recall the definition of a \( \gamma \)-bounding activation:</p>
+
+        <div class="definition">
+          <div class="definition-label">Definition</div>
+          An activation function \( \sigma \) is a <em>\( \gamma \)-bounding activation</em> if it allows
+          universal approximation even when the individual parameters (matrix and vector parameters) are
+          bounded by \( \gamma \). ReLU and the Heaviside step function are \( \gamma \)-parameter bounding
+          activations for any \( \gamma > 0 \).
+        </div>
+
+        <p>
+          To prove this property for sigmoidal functions, we first show it for the Heaviside function,
+          then use the universal approximation theorem to approximate sigmoidal functions by Heaviside functions.
+        </p>
+
+        <p>Let \( \phi \) denote the Heaviside function:</p>
+        \[
+        \phi(x) = \mathbf{1}_{x \geq 0}
+        \]
+        <p>
+          Notice that \( \phi(a(x+b)) = \phi(x+b) \). Let \( f \) be continuous on \( [0,1]^d \). By the
+          universal approximation theorem, there exist parameters \( w_i, b_i, a_i \) such that:
+          \[
+          f(x) \approx \sum_{i=1}^n a_i \phi(\langle w_i, x \rangle + b_i)
+          \]
+          Since \( n \) is finite, the \( w_i, b_i \) are real numbers, and there exists \( M \in \mathbb{R} \)
+          bounding their norms. We can find \( u \in \mathbb{R} \) such that \( M/u \leq \gamma \), so:
+          \[
+          f(x) \approx \sum_{i=1}^n a_i \phi\!\left(\left\langle u \cdot \frac{w_i}{u},\, x \right\rangle
+          + u \cdot \frac{b_i}{u}\right)
+          = \sum_{i=1}^n a_i \phi\!\left(\left\langle \frac{w_i}{u},\, x \right\rangle + \frac{b_i}{u}\right)
+          \]
+          which satisfies the \( \gamma \)-bounding condition. Thus <strong>the Heaviside function is a
+            \( \gamma \)-bounding activation</strong>.
+        </p>
+
+        <p>
+          Now let \( \sigma \) be a bounded, continuous sigmoidal function, i.e.
+          \[
+          \lim_{x \to -\infty} \sigma(x) = 0, \quad \lim_{x \to +\infty} \sigma(x) = 1.
+          \]
+          For any continuous \( f \) on \( [0,1]^d \) and \( \epsilon > 0 \), there exists a network such that:
+          \[
+          \sup_{x \in [0,1]^d} \left\| f(x) - \sum_{i=1}^n a_i \sigma(\langle w_i, x \rangle + b_i) \right\|
+          \leq \frac{\epsilon}{2}
+          \]
+          For each \( i \), let \( y_i = \langle w_i, x \rangle \) be bounded on a compact set.
+          Since \( \sigma \) is continuous on a compact set, we can approximate it by a Heaviside network:
+          there exist parameters \( w_i^{(k)}, b_i^{(k)}, N_i \) such that:
+          \[
+          \sup_{y_i} \left\| \sigma(y_i + b_i) - \sum_{k=1}^{N_i} a_i^{(k)} \phi(w_i^{(k)} \cdot y_i
+          + b_i^{(k)}) \right\| \leq \frac{\epsilon}{2n a_i}
+          \]
+          By the triangle inequality:
+          \[
+          \sup_{x \in [0,1]^d} \left\| f(x) - \sum_{i=1}^n \sum_{k=1}^{N_i}
+          a_i a_i^{(k)} \phi(w_i^{(k)} \cdot y_i + b_i^{(k)}) \right\| \leq \epsilon
+          \]
+          Therefore, a sigmoidal network can be approximated by a Heaviside network which has the
+          \( \gamma \)-bounding property. <strong>A bounded continuous sigmoidal function is a
+            \( \gamma \)-bounding activation.</strong> \( \square \)
+        </p>
+      </div>
+
+      <!-- QUASI BIAS-LEARNING -->
+      <div id="quasi">
+        <span class="section-label">Quasi Bias-Learning Functions</span>
+        <p>We first recall the definition of a bias-learning activation:</p>
+
+        <div class="definition">
+          <div class="definition-label">Definition — Bias-Learning Activation</div>
+          \( \sigma \) is called a <em>bias-learning activation</em> if it is continuous and there exists
+          \( r \in \mathbb{R} \) such that \( \sigma(x) = 0 \) for all \( x < r \). </div>
+
+            <p>We extend this to a more general notion:</p>
+
+            <div class="definition">
+              <div class="definition-label">Definition — Quasi Bias-Learning Activation</div>
+              \( \sigma \) is called a <em>quasi bias-learning activation</em> if it is continuous and for any
+              \( \mu > 0 \) there exists \( r \in \mathbb{R} \) such that \( \sigma(x) < \mu \) for all \( x < r \).
+                </div>
+
+                <p>
+                  Therefore, a bounded continuous sigmoidal function \( \sigma \) is both a \( \gamma \)-bounding
+                  activation and a quasi bias-learning function.
+                </p>
+
+                <p>
+                  Let \( p_R \) denote the uniform distribution on \( [-R, R] \) with \( R > \gamma \). The main result
+                  is:
+                </p>
+
+                <div class="theorem">
+                  <div class="theorem-label">Theorem 1</div>
+                  Assume \( \sigma \) is a \( \gamma \)-bounding and quasi bias-learning activation, and let
+                  \( h : U \to \mathbb{R} \) be continuous on a compact \( U \subset \mathbb{R}^d \). Then for
+                  any \( \varepsilon > 0 \) and \( \delta \in (0,1) \), there exist a hidden-layer width
+                  \( m \in \mathbb{N} \) and bias vector \( b \in \mathbb{R}^m \) such that, with probability
+                  at least \( 1 - \delta \), a single hidden-layer neural network with each weight sampled from
+                  \( p_R \) approximates \( h \) with error less than \( \varepsilon \).
+                </div>
+
+                <p>
+                  We reuse the proof technique from <a class="cite" href="#ref-lajoie2025">[Lajoie & Mazzucato,
+                    2025]</a>
+                  based on <em>masked neural networks</em>. Let \( M \in \{0,1\}^m \) be a mask; a masked neural
+                  network is:
+                  \[
+                  y_m^M = \sum_{k=1}^m M_i a_i \sigma(\langle w_i, x \rangle + b_i)
+                  \]
+                  Let \( y_N(x, \theta) = \sum_{i=1}^N a_i \sigma(\langle w_i, x \rangle + b_i) \). For any
+                  \( \epsilon > 0 \), there exist \( n \) and parameters \( \theta^\star \) such that:
+                  \[
+                  \sup_{x \in U} \| h(x) - y_n(x, \theta^\star) \| \leq \epsilon
+                  \]
+                  The parameters \( \theta = (a_1, \ldots, a_n, w_1, \ldots, w_n, b_1, \ldots, b_n) \) can be
+                  concatenated into a vector in \( \mathbb{R}^p \) with \( p = n(n+d+2) \).
+                </p>
+
+                <div class="remark">
+                  <strong>Remark 1.</strong> \( \theta^\star \) is deterministic, whereas \( \theta^M \) contains
+                  a random component from the \( w_i \) sampled from the uniform distribution.
+                </div>
+
+                <div class="lemma">
+                  <div class="lemma-label">Lemma 1 — Lemma 3 of <a class="cite" href="#ref-lajoie2025">[Lajoie &
+                      Mazzucato, 2025]</a></div>
+                  For \( \theta^\star \) defined above and arbitrary \( \varepsilon > 0 \), \( \delta \in (0,1) \),
+                  we can find \( m > n \) such that with probability at least \( 1 - \delta \):
+                  there exists \( M \in \{0,1\}^m \) with only \( n \) non-zero elements such that
+                  \[
+                  |\theta_i^\star - \theta_i^M| < \varepsilon \quad \forall\, i \in \{1, \ldots, p\}. \] </div>
+
+                    <div class="lemma">
+                      <div class="lemma-label">Lemma 2 — Lemma 1 of <a class="cite" href="#ref-lajoie2025">[Lajoie &
+                          Mazzucato, 2025]</a></div>
+                      Let \( h : U \to \mathbb{R} \) be continuous on compact \( U \subset \mathbb{R}^d \). For any
+                      \( \varepsilon > 0 \) and \( \delta \in (0,1) \), there exists a layer width \( m \in \mathbb{N}
+                      \)
+                      such that with probability at least \( 1 - \delta \): there exists \( M \in \{0,1\}^m \)
+                      satisfying:
+                      \[
+                      \sup_{x \in U} \| h(x) - y_m^M(x) \| \leq \varepsilon.
+                      \]
+                    </div>
+
+                    <p>The main proof idea proceeds in four steps:</p>
+                    <ol>
+                      <li><strong>First</strong>, establish the existence of a deterministic neural network with learned
+                        weights and biases.</li>
+                      <li><strong>Second</strong>, for sufficiently large \( m \), assign the \( m \) weight vectors to
+                        a uniform distribution.</li>
+                      <li><strong>Third</strong>, since the distribution is uniform, some weights among the \( m \) will
+                        lie in the confidence interval of the "good" weights.</li>
+                      <li><strong>Finally</strong>, mask the unnecessary weights using the quasi bias-learning property.
+                      </li>
+                    </ol>
+
+                    <div class="proof">
+                      <div class="theorem-label">Proof of Theorem 1</div>
+                      <p>
+                        Let \( \epsilon > 0 \) and \( \delta \in (0,1) \). By Lemma 2, there exists \( m \in \mathbb{N}
+                        \)
+                        such that with probability at least \( 1-\delta \), there exists \( M \in \{0,1\}^m \) with:
+                        \[
+                        \sup_{x \in U} \| h(x) - y_m^M(x) \| \leq \epsilon/2
+                        \]
+                        Let \( \mathcal{S} = \{i : M_i = 1\} \) so \( |\mathcal{S}| = n \). We write:
+                        \[
+                        y(x) = \sum_{i \in \mathcal{S}} a_i \sigma(\langle w_i, x \rangle + b_i)
+                        + \sum_{i \notin \mathcal{S}} a_i \sigma(\langle w_i, x \rangle + b_i)
+                        \]
+                        Since \( \sigma \) is quasi bias-learning and the inputs are bounded, for each
+                        \( i \notin \mathcal{S} \) we can choose \( b_i \) such that:
+                        \[
+                        |a_i \sigma(\langle w_i, x \rangle + b_i)| = \frac{\epsilon}{2(m-n)}
+                        \]
+                        For \( i \in \mathcal{S} \), we keep \( b_i \) unchanged. Then:
+                        \[
+                        y(x) = \sum_{i \in \mathcal{S}} a_i \sigma(\langle w_i, x \rangle + b_i) + \frac{\epsilon}{2}
+                        \]
+                        By the triangle inequality:
+                        \begin{align*}
+                        \sup_{x \in U} \| h(x) - y(x) \|
+                        &\leq \sup_{x \in U} \| h(x) - y_m^M(x) \|
+                        + \sum_{i \notin \mathcal{S}} |a_i \sigma(\langle w_i, x \rangle + b_i)| \\
+                        &\leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+                        \end{align*}
+                        Therefore, with probability \( 1 - \delta \):
+                        \[
+                        \sup_{x \in U} \| h(x) - y(x) \| \leq \epsilon
+                        \]
+                      </p>
+                      <div class="proof-end">□</div>
+                    </div>
+
+                    <div class="remark">
+                      <strong>Remark 2.</strong> The uniform distribution can be replaced by any continuous distribution
+                      on a closed interval. The uniform distribution is simply the most convenient choice.
+                    </div>
+                </div>
+
+                <!-- CONCLUSION -->
+                <div id="conclusion">
+                  <span class="section-label">Conclusion</span>
+                  <p>
+                    I extended the results of <a class="cite" href="#ref-lajoie2025">[Lajoie & Mazzucato, 2025]</a>
+                    to a broader class of activation functions — specifically bounded continuous sigmoidal functions —
+                    and proved the universal approximation theorem for these functions via the quasi bias-learning
+                    notion.
+                  </p>
+                  <p>
+                    However, the same limitations from the original paper remain. In particular, my proof for sigmoidal
+                    functions relies strictly on continuity. One natural direction for improvement would be to replace
+                    continuous functions by \( L^p \) functions — but this remains an open question.
+                  </p>
+                </div>
+
+                <!-- BIBLIOGRAPHY -->
+                <div id="bibliography">
+                  <span class="section-label">References</span>
+                  <ol class="bibliography">
+                    <li id="ref-lajoie2025">
+                      [1] Lajoie, G., & Mazzucato, L. (2025). Expressivity of neural networks with random weights
+                      and learned biases. <em>ICLR 2025</em>.
+                      <a href="https://arxiv.org/abs/2407.00957" target="_blank">↗ Link</a>
+                    </li>
+                  </ol>
+                </div>
+
+                <a class="back-link" href="../index.html">← Back to all posts</a>
+    </main>
+
+    <!-- STICKY TOC SIDEBAR -->
+    <aside class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#sigma-gamma">\( \gamma \)-Bounding</a></li>
+        <li><a href="#quasi">Quasi Bias-Learning</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#bibliography">References</a></li>
+      </ol>
+    </aside>
+
+  </div>
+
+  <footer>
+    © 2026 onis's blog
+  </footer>
+
+  <script>
+    const sections = document.querySelectorAll('#intro, #sigma-gamma, #quasi, #conclusion, #bibliography');
+    const tocLinks = document.querySelectorAll('.toc a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 100) {
+          current = section.id;
+        }
+      });
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>
