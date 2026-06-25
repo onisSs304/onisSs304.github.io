@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Steepest Descent: View from Schatten Norm – onis's blog</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e8e8e8;
+      line-height: 1.8;
+    }
+
+    header {
+      border-bottom: 1px solid #1a3a3a;
+      padding: 20px 0;
+      text-align: center;
+      background: #0d2626;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+    header h1 a {
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    nav {
+      margin-top: 8px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #aaaaaa;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    main {
+      flex: 1;
+      max-width: 680px;
+      min-width: 0;
+    }
+
+    .post-meta {
+      font-size: 0.85rem;
+      color: #666666;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 28px;
+      color: #ffffff;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      margin: 28px 0 12px 0;
+      color: #dddddd;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1a1a1a;
+      background: #e8e8e8;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      margin-top: 28px;
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: #cccccc;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 14px 24px;
+      color: #cccccc;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .theorem {
+      background: #222222;
+      border-left: 3px solid #e8e8e8;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #e8e8e8;
+    }
+
+    .theorem-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #aaaaaa;
+      margin-bottom: 8px;
+    }
+
+    .definition {
+      background: #1e2233;
+      border-left: 3px solid #7eb8f7;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .definition-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7eb8f7;
+      margin-bottom: 8px;
+    }
+
+    .lemma {
+      background: #1e261e;
+      border-left: 3px solid #7ecf7e;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .lemma-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7ecf7e;
+      margin-bottom: 8px;
+    }
+
+    .algorithm {
+      background: #1a1a2e;
+      border: 1px solid #3a3a5a;
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin: 20px 0;
+      color: #cccccc;
+      font-size: 0.95rem;
+    }
+
+    .algorithm-title {
+      font-weight: bold;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #a0a0e0;
+      margin-bottom: 14px;
+      text-align: center;
+      border-bottom: 1px solid #3a3a5a;
+      padding-bottom: 10px;
+    }
+
+    .algorithm ol {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+
+    .algorithm li {
+      margin-bottom: 8px;
+    }
+
+    .algorithm .stage {
+      font-weight: bold;
+      color: #a0a0e0;
+      margin: 12px 0 6px 0;
+    }
+
+    .remark {
+      background: #1f1f1f;
+      border-left: 3px solid #888;
+      padding: 14px 18px;
+      margin: 14px 0;
+      border-radius: 0 4px 4px 0;
+      color: #bbbbbb;
+      font-size: 0.95rem;
+    }
+
+    .figure {
+      margin: 24px 0;
+      text-align: center;
+    }
+
+    .figure img {
+      max-width: 100%;
+      border-radius: 4px;
+      border: 1px solid #2a2a2a;
+    }
+
+    .figure figcaption {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: #888888;
+      font-style: italic;
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    .bibliography {
+      list-style: none;
+      padding-left: 0;
+      color: #bbbbbb;
+      font-size: 0.92rem;
+    }
+
+    .bibliography li {
+      margin-bottom: 10px;
+      padding-left: 28px;
+      text-indent: -28px;
+      line-height: 1.6;
+    }
+
+    .bibliography a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .bibliography a:hover {
+      text-decoration: underline;
+    }
+
+    a.cite {
+      color: #7eb8f7;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+
+    a.cite:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
+
+    .toc {
+      width: 200px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 40px;
+      background: #222222;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-size: 0.85rem;
+    }
+
+    .toc-title {
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .toc ol {
+      padding-left: 16px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .toc a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      color: #ffffff;
+    }
+
+    .toc a.active {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    footer {
+      border-top: 1px solid #2a2a2a;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #555555;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="../index.html">onis's blog</a></h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="page-wrapper">
+    <main>
+      <p class="post-meta">June 25, 2026</p>
+      <h2>steepest descent: view from schatten norm</h2>
+
+      <!-- INTRODUCTION -->
+      <div id="intro">
+        <span class="section-label">Introduction</span>
+        <p>
+          Muon <a class="cite" href="#ref-jordan2024">[Jordan et al., 2024]</a> has recently shown promising
+          performance in training neural networks. To derive its formulation, there are several theoretical
+          approaches: RMS-RMS norm-based <a class="cite" href="#ref-bernstein2025">[Bernstein, 2025]</a>
+          or Linear Minimization Oracle (my favorite one). However, in this post, I want to use the
+          Schatten norm-based approach to deduce a more general class of optimizers that interpolates
+          between Muon and classical gradient descent.
+        </p>
+        <p>
+          This post is motivated by the work of <a class="cite" href="#ref-damek2026">[Davis &amp; Drusvyatskiy,
+            2026]</a>,
+          where they derive a nuclear rank condition to determine when Spectral gradient descent (or Muon)
+          dominates gradient descent in training neural networks. Both gradient descent and spectral
+          gradient descent are special cases of Schatten norm-based optimizers.
+        </p>
+      </div>
+
+      <!-- MATHEMATICAL FORMULATION -->
+      <div id="formulation">
+        <span class="section-label">Mathematical Formulation</span>
+
+        <h3>Schatten Norm</h3>
+        <p>
+          Let \( p \) be a positive number and \( A \in \mathbb{R}^{m \times n} \). The Schatten \( p \)-norm of \( A \)
+          is defined by:
+          \[
+          \|A\|_p = \left( \sum_{i=1}^r \sigma_i(A)^p \right)^{1/p}
+          \]
+          where \( \sigma_i(A) \) are the singular values of \( A \) (\( \sigma_1 \geq \sigma_2 \geq \cdots \geq
+          \sigma_r \))
+          and \( r \) is the number of positive singular values. Notice that:
+        </p>
+        <ul>
+          <li>\( p = 1 \) corresponds to the nuclear norm (sum of all singular values).</li>
+          <li>The Schatten 2-norm is the Frobenius norm. Indeed:
+            \[
+            \|A\|_F = \sqrt{\mathrm{Tr}(A^TA)} = \sqrt{\mathrm{Tr}(VS U^T USV^T)} = \sqrt{\mathrm{Tr}(S^2)}
+            = \left(\sum_{i=1}^r \sigma_i(A)^2\right)^{1/2} = \|A\|_2
+            \]
+          </li>
+          <li>The Schatten \( \infty \)-norm is the spectral norm (largest singular value).</li>
+        </ul>
+
+        <h3>Structure of the Loss Function</h3>
+        <p>We define a loss function \( \mathcal{L} : \mathbb{R}^{m \times n} \to \mathbb{R} \). The only assumption we
+          need for further analysis is \( L \)-smoothness.</p>
+
+        <div class="definition">
+          <div class="definition-label">Definition — \( L \)-Smoothness</div>
+          A differentiable function \( \mathcal{L} : \mathbb{R}^{m \times n} \to \mathbb{R} \) is \( L \)-smooth
+          if \( \nabla \mathcal{L} \) is \( L \)-Lipschitz:
+          \[
+          \forall\, U, V \in \mathrm{dom}(\mathcal{L}): \|\nabla \mathcal{L}(U) - \nabla \mathcal{L}(V)\|_F \leq L\|U -
+          V\|_F
+          \]
+        </div>
+
+        <h3>Choice of Update Rule</h3>
+        <p>There are several ways to deduce a descent direction. The main principle is to find \( \Delta W \) such that
+          \( \mathcal{L}(W + \Delta W) < \mathcal{L}(W) \):</p>
+            <ul>
+              <li>
+                <strong>Taylor expansion:</strong> Using the smoothness of the loss function:
+                \[
+                \mathcal{L}(W + \Delta W) = \mathcal{L}(W) + \langle \nabla \mathcal{L}(W), \Delta W \rangle_F
+                + \frac{1}{2}\langle \Delta W, \nabla^2 \mathcal{L}(W) \Delta W \rangle + \cdots
+                \]
+                Dropping higher-order terms and optimizing gives \( \Delta W^\star = -\nabla^2 \mathcal{L}(W)^{-1}
+                \nabla \mathcal{L}(W) \),
+                but computing the Hessian inverse is prohibitively expensive in practice.
+              </li>
+              <li>
+                <strong>\( L \)-smoothness upper bound:</strong>
+                <div class="theorem" style="margin-top:10px;">
+                  <div class="theorem-label">Proposition</div>
+                  Let \( \mathcal{L} \) be \( L \)-smooth. Then:
+                  \[
+                  \mathcal{L}(W + \Delta W) \leq \mathcal{L}(W) + \langle \nabla \mathcal{L}(W), \Delta W \rangle +
+                  \frac{L}{2}\|\Delta W\|_F^2
+                  \]
+                </div>
+                Minimizing this upper bound:
+                \[
+                \Delta W^\star = \arg\min_{\Delta W \in \mathbb{R}^{m \times n}} \langle \nabla \mathcal{L}(W), \Delta W
+                \rangle + \frac{L}{2}\|\Delta W\|_F^2
+                \]
+              </li>
+              <li>
+                <strong>Linear Minimization Oracle (LMO) under constraints:</strong> Similar to the above but
+                eliminating the penalty term and adding a constraint:
+                \[
+                \Delta W^\star = \arg\min_{\Delta W \in \mathcal{X}} \langle \nabla \mathcal{L}(W), \Delta W \rangle
+                \]
+              </li>
+            </ul>
+      </div>
+
+      <!-- DESCENT DIRECTION -->
+      <div id="descent">
+        <span class="section-label">Descent Direction under Schatten Norm</span>
+        <p>We now consider the LMO under Schatten \( p \)-norm constraint, which will be the foundation for further
+          analysis:</p>
+        \[
+        \Delta W^\star = \arg\min_{\|\Delta W\|_p = 1} \langle \nabla \mathcal{L}(W), \Delta W \rangle
+        \]
+        <p>We use two inequalities to find the minimum: the Von Neumann trace inequality and the Hölder inequality.</p>
+
+        <div class="lemma">
+          <div class="lemma-label">Lemma 1 — Von Neumann Trace Inequality</div>
+          Let \( U, V \in \mathbb{R}^{m \times n} \). Then:
+          \[
+          |\langle U, V \rangle| = |\mathrm{Tr}(U^T V)| \leq \sum_i \sigma_i(U)\sigma_i(V)
+          \]
+          where \( \sigma_1(U) \geq \cdots \geq \sigma_r(U) \) and \( \sigma_1(V) \geq \cdots \geq \sigma_r(V) \).
+          Equality holds when \( U \) and \( V \) share the same singular vectors.
+        </div>
+
+        <div class="lemma">
+          <div class="lemma-label">Lemma 2 — Hölder Inequality</div>
+          Let \( x, y \in \mathbb{R}^n \) with \( 1/p + 1/q = 1 \). Then:
+          \[
+          \left|\sum_{i=1}^n x_i y_i\right| \leq \left(\sum_{i=1}^n x_i^p\right)^{1/p} \left(\sum_{i=1}^n
+          y_i^q\right)^{1/q}
+          \]
+          Equality holds if and only if \( \dfrac{x_1^p}{y_1^q} = \dfrac{x_2^p}{y_2^q} = \cdots = \dfrac{x_n^p}{y_n^q}
+          \).
+        </div>
+
+        <p>Combining these two lemmas:</p>
+        \[
+        |\langle \nabla \mathcal{L}(W), \Delta W \rangle| \leq \left(\sum_i \sigma_i(\Delta W)^p\right)^{1/p}
+        \left(\sum_i \sigma_i(\nabla \mathcal{L})^q\right)^{1/q} = \|\nabla \mathcal{L}(W)\|_q
+        \]
+        <p>
+          This implies \( \langle \nabla \mathcal{L}(W), \Delta W \rangle \geq -\|\nabla \mathcal{L}(W)\|_q \)
+          when \( \|\Delta W\|_p = 1 \). The equality holds iff \( \Delta W \) shares the same singular vectors
+          with \( \nabla \mathcal{L}(W) \) and:
+          \[
+          \frac{\sigma_1(\Delta W)^p}{\sigma_1(\nabla \mathcal{L}(W))^q} = \frac{\sigma_2(\Delta W)^p}{\sigma_2(\nabla
+          \mathcal{L}(W))^q}
+          = \cdots = \frac{\sigma_r(\Delta W)^p}{\sigma_r(\nabla \mathcal{L}(W))^q}
+          \]
+          We can compute the singular values of \( \Delta W \) explicitly. Let \( a = \sigma_i(\Delta W)^p /
+          \sigma_i(\nabla \mathcal{L}(W))^q \).
+          Using the norm condition \( \|\Delta W\|_p = 1 \):
+          \[
+          \sum_{i=1}^r \sigma_i(\Delta W)^p = 1 \implies a \sum_{i=1}^r \sigma_i(\nabla \mathcal{L}(W))^q = 1
+          \implies a = \frac{1}{\|\nabla \mathcal{L}(W)\|_q^q}
+          \]
+          Therefore:
+          \[
+          \sigma_i(\Delta W) = a^{1/p} \sigma_i(\nabla \mathcal{L}(W))^{q/p}
+          = \frac{\sigma_i(\nabla \mathcal{L}(W))^{1/(p-1)}}{\|\nabla \mathcal{L}(W)\|_q^{1/(p-1)}}
+          = \frac{\sigma_i(\nabla \mathcal{L}(W))^{q-1}}{\|\nabla \mathcal{L}(W)\|_q^{q-1}}
+          \]
+          In summary, the descent direction is:
+        </p>
+
+        <div class="theorem">
+          \[
+          \Delta W^\star = \lambda U S^{q-1} V^T
+          \]
+          where \( USV^T \) is the SVD of \( \nabla \mathcal{L}(W) \), \( q \) is the dual of \( p \)
+          (i.e. \( 1/p + 1/q = 1 \)), and \( S^{q-1} \) denotes the elementwise power operator.
+        </div>
+
+        <div class="remark">
+          <strong>Remark 1.</strong> The Schatten 2-norm (\( q = 2 \)) gives \( \Delta W^\star = \lambda USV^T \) —
+          exactly classical gradient descent. The Schatten \( \infty \)-norm (\( q = 1 \)) gives
+          \( \Delta W^\star = \lambda UV^T \) — the update rule in Spectral gradient descent (Muon).
+        </div>
+
+        <p>
+          We might use a more general constraint \( \mathcal{X} = \{W \in \mathbb{R}^{m \times n} \mid \|W\|_p = a > 0\}
+          \)
+          and apply the same analysis to get:
+          \[
+          \min_{W \in \mathcal{X}} \langle \nabla \mathcal{L}(W), \Delta W \rangle = -a\|\nabla \mathcal{L}(W)\|_q
+          \]
+          The equality occurs when \( \sigma_i(\Delta W) = \dfrac{a\, \sigma_i(\nabla \mathcal{L}(W))^{q-1}}{\|\nabla
+          \mathcal{L}(W)\|_q^{q-1}} \).
+        </p>
+
+        <h3>Additional Penalty</h3>
+        <p>
+          We now add a Schatten \( p \)-norm penalty to the linear term in the LMO. This is similar to the
+          inequality obtained from the \( L \)-smoothness assumption, but replacing the Frobenius norm by
+          the Schatten norm. This approach can provide a desirable descent direction and optimal step size
+          since the optimization occurs across the global matrix space. We aim to find:
+          \[
+          \Delta W^\star = \arg\min_{\Delta W \in \mathbb{R}^{m \times n}} \langle \nabla \mathcal{L}(W), \Delta W
+          \rangle + \frac{L}{2}\|\Delta W\|_p^2
+          \]
+          Decomposing over \( a = \|\Delta W\|_p \):
+          \[
+          \min_{\Delta W} \langle \nabla \mathcal{L}(W), \Delta W \rangle + \frac{L}{2}\|\Delta W\|_p^2
+          = \min_{a \geq 0,\, \|\Delta W\|_p = a} \langle \nabla \mathcal{L}(W), \Delta W \rangle + \frac{L}{2}a^2
+          = \min_{a \geq 0} \frac{L}{2}a^2 - a\|\nabla \mathcal{L}(W)\|_q
+          \]
+          The minimum of this quadratic model is reached at \( a = \|\nabla \mathcal{L}(W)\|_q / L \). Therefore:
+          \[
+          \sigma_i(\Delta W) = \frac{a\, \sigma_i(\nabla \mathcal{L}(W))^{q-1}}{\|\nabla \mathcal{L}(W)\|_q^{q-1}}
+          = \frac{\sigma_i(\nabla \mathcal{L}(W))^{q-1}}{L \cdot \|\nabla \mathcal{L}(W)\|_q^{q-2}}
+          \]
+          which results in:
+          \[
+          \Delta W^\star = -\frac{1}{L \cdot \|\nabla \mathcal{L}(W)\|_q^{q-2}} US^{q-1}V^T
+          \]
+        </p>
+
+        <h3>Neural Network with One Layer</h3>
+        <p>
+          We now see how Schatten norm-based optimizers apply to deep learning. I consider only the one-layer
+          case; the analysis is partially based on <a class="cite" href="#ref-damek2026">[Davis &amp; Drusvyatskiy,
+            2026]</a>.
+          Let \( W \) be the weight matrix, \( A \) the input matrix, and \( f \) an \( L \)-smooth function.
+          The loss function is:
+          \[
+          \mathcal{L}(W) = f(WA)
+          \]
+          By \( L \)-smoothness:
+          \[
+          \mathcal{L}(W + \Delta W) = f(WA + \Delta WA) \leq \mathcal{L}(W)
+          + \langle \nabla \mathcal{L}(W), \Delta W \rangle + \frac{L}{2}\|\Delta WA\|_F^2
+          \]
+          We use a generalized Hölder inequality for Schatten norms:
+        </p>
+
+        <div class="lemma">
+          <div class="lemma-label">Lemma 3 — Generalized Hölder for Schatten Norms</div>
+          Let \( p, q \geq 2 \) with \( 1/p + 1/q = 1/2 \). Then:
+          \[
+          \|UV\|_2 \leq \|U\|_p \cdot \|V\|_q
+          \]
+          We call \( q \) the 2-dual of \( p \). From now, \( p' = p/(p-1) \) denotes the dual of \( p \)
+          and \( q = 2p/(p-2) \) the 2-dual of \( p \).
+        </div>
+
+        <p>
+          For \( p \geq 2 \): \( \|\Delta WA\|_F^2 \leq \|\Delta W\|_p^2 \|A\|_q^2 \).
+          Setting \( L_p = L\|A\|_q^2 \), the update rule for this sub-problem becomes:
+          \[
+          \Delta W_p = \arg\min_{\Delta W} \langle \nabla \mathcal{L}(W), \Delta W \rangle + \frac{L}{2}\|\Delta W\|_p^2
+          \|A\|_q^2
+          \]
+          \[
+          \Delta W_p = -\frac{1}{L_p \cdot \|\nabla \mathcal{L}(W)\|_{p'}^{p'-2}} US^{p'-1}V^T
+          \]
+          The guaranteed decrease of the loss function after the update:
+          \[
+          \mathcal{L}(W) - \mathcal{L}(W + \Delta W_p^\star) \geq -\langle \nabla \mathcal{L}(W), \Delta W_p^\star
+          \rangle - \frac{L_p}{2}\|\Delta W_p^\star\|_p^2
+          \]
+          We have shown that under this update rule:
+          \[
+          \langle \nabla \mathcal{L}(W), \Delta W \rangle = -\frac{\|\nabla \mathcal{L}(W)\|_{p'}^2}{L_p}
+          = -\frac{\|\nabla \mathcal{L}(W)\|_{p'}^2}{L\|A\|_q^2}
+          \]
+          Therefore:
+          \[
+          \mathcal{L}(W) - \mathcal{L}(W + \Delta W_p) \geq \frac{\|\nabla \mathcal{L}(W)\|_{p'}^2}{L\|A\|_q^2}
+          - \frac{L_p}{2}\|\Delta W_p\|_p^2 = \frac{\|\nabla \mathcal{L}(W)\|_{p'}^2}{2L\|A\|_q^2}
+          \]
+        </p>
+
+        <p>
+          <strong>Norm choices:</strong> Our goal is to find the \( p \) that gives the biggest decrease.
+          With \( p' \) and \( q \) being the dual and 2-dual of \( p \) respectively, it is natural to define
+          at each step:
+          \[
+          p^\star = \arg\max_{p \geq 2} \frac{\|\nabla \mathcal{L}(W)\|_{p'}^2}{\|A\|_q^2}
+          \]
+        </p>
+
+        <p>
+          <strong>Connection to <a class="cite" href="#ref-damek2026">[Davis &amp; Drusvyatskiy, 2026]</a>:</strong>
+          Restricting to \( p = 2 \) and \( p = \infty \) recovers their nuclear rank condition — Spectral GD
+          dominates GD when:
+          \[
+          \frac{\|\nabla \mathcal{L}(W)\|_1^2}{\|A\|_2^2} \geq \frac{\|\nabla \mathcal{L}(W)\|_2^2}{\|A\|_\infty^2}
+          \iff \frac{\|\nabla \mathcal{L}(W)\|_1^2}{\|\nabla \mathcal{L}(W)\|_2^2} \geq \frac{\|A\|_2^2}{\|A\|_\infty^2}
+          \]
+        </p>
+
+        <h3>Optimal Strategy</h3>
+        <p>
+          In the last subsection, we used a generalized Hölder inequality to deduce a descent direction under
+          the Schatten \( p \)-norm. Minimizing the resulting upper bound gives an optimal step-size solution.
+          However, this bound is not always tight, so in some experiments it does not show an outstanding
+          performance compared to GD or Spectral GD.
+        </p>
+        <p>
+          One more drawback of the previous analysis is that we only considered descent directions of the form
+          \( \Delta W = \eta \cdot US^{p'-1}V^T \) where \( 0 \leq p'-1 \leq 1 \) since \( p' \) is the dual
+          of \( p \) and \( p \geq 2 \). This limits the potential choices of optimizer. We now extend this:
+        </p>
+        <p>
+          Assume the descent direction is of the form:
+          \[
+          \Delta W = -\eta(p) \cdot US^p V^T
+          \]
+          for any \( p \), where \( USV^T \) is the SVD of \( \nabla \mathcal{L}(W) \). Instead of optimizing
+          the bound from the generalized Hölder inequality, we directly minimize:
+          \[
+          \Delta W_p = \arg\min_{\Delta W} \langle \nabla \mathcal{L}(W), \Delta W \rangle + \frac{L}{2}\|\Delta
+          WA\|_F^2
+          \]
+          With \( \Delta W = -\eta(p) \cdot US^p V^T \):
+          \[
+          -\langle \nabla \mathcal{L}(W), \Delta W \rangle = \eta(p) \cdot \mathrm{Tr}(USV^T, US^pV^T)
+          = \eta(p) \cdot \mathrm{Tr}(S^{p+1}) = \eta(p) \cdot \|\nabla \mathcal{L}(W)\|_{p+1}^{p+1}
+          \]
+          and:
+          \[
+          \|\Delta WA\|_F^2 = \eta(p)^2 \cdot \|US^pV^TA\|_F^2
+          \]
+          Therefore the decrease induced by this update rule is:
+          \[
+          \mathcal{L}(W) - \mathcal{L}(W + \Delta W) \geq \eta(p) \cdot \|\nabla \mathcal{L}(W)\|_{p+1}^{p+1}
+          - \frac{L}{2} \cdot \eta(p)^2 \cdot \|US^pV^TA\|_F^2
+          \]
+          The optimal step size is:
+          \[
+          \eta(p)^\star = \frac{\|\nabla \mathcal{L}(W)\|_{p+1}^{p+1}}{L \cdot \|US^pV^TA\|_F^2}
+          \]
+          Plugging in this optimal step size, the optimal decrease is:
+          \[
+          \mathcal{L}(W) - \mathcal{L}(W + \Delta W) \geq \frac{\|\nabla \mathcal{L}(W)\|_{p+1}^{2p+2}}{2L \cdot
+          \|US^pV^TA\|_F^2}
+          \]
+          In practice, one may not know which value of \( p \) is the best choice. So at each step, we find:
+          \[
+          p^\star = \arg\max_p \frac{\|\nabla \mathcal{L}(W)\|_{p+1}^{2p+2}}{\|US^pV^TA\|_F^2}
+          \]
+          This may not be the best long-term choice (and requires additional computation), but it always
+          ensures the biggest decrease of the loss function at each step.
+        </p>
+
+        <div class="remark">
+          <strong>Greedy search.</strong> We assign a discrete set of values for \( p \) and find the best
+          among them. In the following experiments, we focus on this strategy since we need exactness to
+          compare optimizers.
+        </div>
+
+        <div class="remark">
+          <strong>Additional assumptions.</strong> We can add assumptions on matrix \( A \) or on the
+          singular values of \( \nabla \mathcal{L}(W) \). I refer the reader to
+          <a class="cite" href="#ref-zakhar2026">[Shumaylov et al., 2026]</a> (Appendix H) for one way
+          to reduce the cost of computing \( p \) by adding such assumptions.
+        </div>
+
+        <div class="remark">
+          <strong>Calculating the singular values.</strong> In high-dimensional problems, computing the exact
+          singular values at each step can be prohibitively expensive. We can use the randomized SVD algorithm
+          of <a class="cite" href="#ref-halko2010">[Halko, Martinsson &amp; Tropp, 2010]</a>, which works
+          well when \( \min(m,n) \geq 1000 \). The tradeoff is accuracy, which is dimension-dependent.
+          Instead of all singular values, we compute only the \( k \) largest, which suffice to represent the Schatten
+          norm well.
+        </div>
+
+        <div class="algorithm">
+          <div class="algorithm-title">Prototype for Randomized SVD</div>
+          <p style="font-style:italic; color:#aaaaaa; margin-bottom:12px;">
+            Given an \( m \times n \) matrix \( A \), a target number \( k \) of singular vectors,
+            and an exponent \( q \) (e.g. \( q = 1 \) or \( q = 2 \)), this procedure computes an approximate
+            rank-\( 2k \) factorization \( U\Sigma V^* \), where \( U \) and \( V \) are orthonormal and
+            \( \Sigma \) is nonnegative diagonal.
+          </p>
+          <div class="stage">Stage A:</div>
+          <ol>
+            <li>Generate an \( n \times 2k \) Gaussian test matrix \( \Omega \).</li>
+            <li>Form \( Y = (AA^*)^q A\Omega \) by multiplying alternately with \( A \) and \( A^* \).</li>
+            <li>Construct \( Q \) whose columns form an orthonormal basis for the range of \( Y \).</li>
+          </ol>
+          <div class="stage">Stage B:</div>
+          <ol start="4">
+            <li>Form \( B = Q^* A \).</li>
+            <li>Compute the SVD of the small matrix: \( B = \tilde{U}\Sigma V^* \).</li>
+            <li>Set \( U = Q\tilde{U} \).</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- RANDOM FEATURE MODEL -->
+      <div id="experiments">
+        <span class="section-label">Random Feature Model</span>
+        <p>
+          I follow the experimental spirit of <a class="cite" href="#ref-damek2026">[Davis &amp; Drusvyatskiy,
+            2026]</a>,
+          using the quadratic loss function:
+          \[
+          \mathcal{L}(W) = \frac{1}{2n}\|WA - Y\|_F^2
+          \]
+          where \( Y = W_{\mathrm{true}}A \), so the minimum is 0. The dimensions are
+          \( W, W_{\mathrm{true}} \in \mathbb{R}^{m \times n} \) and \( A \in \mathbb{R}^{n \times m} \),
+          with every entry of \( W_{\mathrm{true}} \) drawn from the normal distribution. We consider two
+          cases for \( A \) as in <a class="cite" href="#ref-damek2026">[Davis &amp; Drusvyatskiy, 2026]</a>:
+          ReLU and SwiGLU. With update \( \Delta W \):
+          \[
+          \mathcal{L}(W + \Delta W) = \mathcal{L}(W) + \langle \nabla \mathcal{L}(W), \Delta W \rangle
+          + \frac{1}{2n}\|\Delta WA\|_F^2
+          \]
+          so it satisfies the \( L \)-smoothness assumption (\( L = 1/n \)).
+        </p>
+        <p>
+          <strong>Details of the setting:</strong> Let \( W \in \mathbb{R}^{100 \times 1000} \), \( m = 100 \),
+          \( n = 1000 \). For ReLU: \( W_1 \in \mathbb{R}^{100 \times 50} \), \( X \in \mathbb{R}^{50 \times 1000} \).
+          For SwiGLU: \( W_1, W_2 \in \mathbb{R}^{100 \times 50} \), \( X \in \mathbb{R}^{50 \times 1000} \).
+        </p>
+
+        <h3>ReLU</h3>
+        <p>
+          We have \( A = \mathrm{ReLU}(W_1X) \) where \( W_1 \) and \( X \) both have i.i.d. normal entries.
+          In the original paper, the nuclear rank condition is used to claim that Spectral GD dominates GD.
+          We now extend the analysis as in subsections 3.2 (Davis's analysis) and 3.3 (Optimal strategy),
+          shown in Figure 1.
+        </p>
+
+        <figure class="figure">
+          <img src="relu_25-06-26.png" alt="ReLU random feature model results" />
+          <img src="relu_trajec_p.png" alt="ReLU norm trajectory" style="margin-top:12px;" />
+          <figcaption>
+            <strong>Figure 1 — ReLU random feature model.</strong>
+            <strong>Above:</strong> Dashed lines describe the analysis of
+            <a class="cite" href="#ref-damek2026">[Davis &amp; Drusvyatskiy, 2026]</a>.
+            Dash-dot lines represent the update rule \( US^pV^T \) under \( p = -1, 0, 1/3, 1, 1.5, 2 \)
+            with optimal step sizes. Solid lines show the Tuned-Norm Optimizer (TNO), which changes the
+            norm at each step to ensure the largest decrease. The TNO may ensure the biggest decrease in
+            early steps, but in the long run it may not be beneficial.
+            <strong>Below:</strong> Trajectory of the norm choices in TNO.
+          </figcaption>
+        </figure>
+
+        <h3>SwiGLU</h3>
+        <p>
+          We have:
+          \[
+          A = \mathrm{SwiGLU}(W_1X, W_2X) = \mathrm{SiLU}(W_1X) \circ (W_2X),
+          \quad \mathrm{SiLU}(t) = \frac{t}{1 + e^{-t}}
+          \]
+          where \( W_1, W_2 \) are independent Gaussian weight matrices, \( \circ \) denotes the coordinatewise
+          product, and \( \mathrm{SiLU} \) is applied coordinatewise. Here the stable rank of \( A \) is relatively
+          large, which the authors use to argue that GD outperforms Spectral GD. The results are shown in Figure 2.
+        </p>
+
+        <figure class="figure">
+          <img src="swiglu_25-06-26.png" alt="SwiGLU random feature model results" />
+          <img src="swiglu_trajec_p.png" alt="SwiGLU norm trajectory" style="margin-top:12px;" />
+          <figcaption>
+            <strong>Figure 2 — SwiGLU random feature model.</strong>
+            The TNO shows excellent performance compared to other optimizers. The dynamics of the norm
+            choices is proportional to the training loss: \( p \) is relatively large to ensure a significant
+            decrease in the first 150 steps, whereas \( p \) is close to 0 later, making the update rule
+            more isotropic. However, we can see that \( US^2V^T \) has similar dynamics to the TNO.
+            Conclusion: if we know the optimal \( p \) from the beginning, we can save much time in training
+            and reach the optimal loss.
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- CONCLUSION -->
+      <div id="conclusion">
+        <span class="section-label">Conclusion</span>
+        <p>
+          Personally, this topic is very attractive and surprising — it extends the Schatten \( \infty \)-norm
+          (Muon) to a more general update rule \( US^pV^T \). Surprisingly, \( p = 2 \) in Figure 2 outperformed
+          many other optimizers (GD and Spectral GD, even with optimal step sizes). This may lead to several
+          fundamental and experimental research directions for deriving new optimizers that bring benefits to
+          training neural networks. However, there are many open points in this post:
+        </p>
+        <ul>
+          <li>How to find \( US^pV^T \) empirically without computing the SVD (see
+            <a class="cite" href="#ref-zakhar2026">[Shumaylov et al., 2026]</a> and
+            <a class="cite" href="#ref-dong2026">[Dong &amp; Sawin, 2026]</a>).
+          </li>
+          <li>Does the geometry of the loss function affect the norm choice? See
+            <a class="cite" href="#ref-pethick2026">[Pethick, 2026]</a>, who proved that the norm choice
+            is regime-dependent and validated this using many advanced tools in training neural networks
+            (I am still trying to understand these).
+          </li>
+        </ul>
+      </div>
+
+      <!-- BIBLIOGRAPHY -->
+      <div id="bibliography">
+        <span class="section-label">References</span>
+        <ol class="bibliography">
+          <li id="ref-jordan2024">
+            [1] Jordan, K., Jin, Y., Boza, V., You, J., Cesista, F., Newhouse, L., &amp; Bernstein, J. (2024).
+            Muon: An optimizer for hidden layers in neural networks.
+            <a href="https://kellerjordan.github.io/posts/muon/" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-bernstein2025">
+            [2] Bernstein, J. (2025). Deriving Muon.
+            <a href="https://jeremybernste.in/writing/deriving-muon" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-damek2026">
+            [3] Davis, D., &amp; Drusvyatskiy, D. (2026). When do spectral gradient updates help in deep learning?
+            <em>arXiv</em>.
+            <a href="https://arxiv.org/abs/2512.04299" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-zakhar2026">
+            [4] Shumaylov, Z. et al. (2026). Muon is not that special: Random or inverted spectra work just as well.
+            <em>arXiv</em>.
+            <a href="https://arxiv.org/abs/2605.11181" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-dong2026">
+            [5] Dong, Y., &amp; Sawin, W. (2026). MuonP: Muon with fractional spectral powers.
+            <em>arXiv</em>.
+            <a href="https://arxiv.org/abs/2606.13867" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-halko2010">
+            [6] Halko, N., Martinsson, P. G., &amp; Tropp, J. A. (2010). Finding structure with randomness:
+            Probabilistic algorithms for constructing approximate matrix decompositions. <em>SIAM Review</em>.
+            <a href="https://arxiv.org/abs/0909.4061" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-pethick2026">
+            [7] Pethick, T. (2026). When to use what Schatten \( p \)-norm in deep learning?
+            <em>arXiv</em>.
+            <a href="https://arxiv.org/abs/2606.15268" target="_blank">↗ Link</a>
+          </li>
+        </ol>
+      </div>
+
+      <a class="back-link" href="../index.html">← Back to all posts</a>
+    </main>
+
+    <aside class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#formulation">Formulation</a></li>
+        <li><a href="#descent">Descent Direction</a></li>
+        <li><a href="#experiments">Experiments</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#bibliography">References</a></li>
+      </ol>
+    </aside>
+  </div>
+
+  <footer>© 2026 onis's blog</footer>
+
+  <script>
+    const sections = document.querySelectorAll('#intro, #formulation, #descent, #experiments, #conclusion, #bibliography');
+    const tocLinks = document.querySelectorAll('.toc a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+      tocLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+
+</html>
