@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>momentum: acceleration for optimization algorithms – onis's blog</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e8e8e8;
+      line-height: 1.8;
+    }
+
+    header {
+      border-bottom: 1px solid #1a3a3a;
+      padding: 20px 0;
+      text-align: center;
+      background: #0d2626;
+    }
+    header h1 { font-size: 1.8rem; }
+    header h1 a { text-decoration: none; color: #ffffff; }
+    nav { margin-top: 8px; }
+    nav a { margin: 0 12px; text-decoration: none; color: #aaaaaa; font-size: 0.95rem; }
+    nav a:hover { color: #ffffff; }
+
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    main { flex: 1; max-width: 680px; min-width: 0; }
+
+    .post-meta { font-size: 0.85rem; color: #666666; margin-bottom: 12px; }
+    h2 { font-size: 1.7rem; margin-bottom: 28px; color: #ffffff; }
+    h3 { font-size: 1.15rem; margin: 28px 0 12px 0; color: #dddddd; }
+
+    .section-label {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1a1a1a;
+      background: #e8e8e8;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      margin-top: 28px;
+    }
+
+    p { margin-bottom: 14px; color: #cccccc; }
+    ul, ol { margin: 0 0 14px 24px; color: #cccccc; }
+    li { margin-bottom: 6px; }
+
+    .theorem {
+      background: #222222;
+      border-left: 3px solid #e8e8e8;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #e8e8e8;
+    }
+    .theorem-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #aaaaaa;
+      margin-bottom: 8px;
+    }
+
+    .lemma {
+      background: #1e261e;
+      border-left: 3px solid #7ecf7e;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+    .lemma-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7ecf7e;
+      margin-bottom: 8px;
+    }
+
+    .proof {
+      background: #1f1f1f;
+      border-left: 3px solid #444444;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+    .proof p { color: #cccccc; margin-top: 10px; }
+    .proof-end { text-align: right; font-size: 1.1rem; color: #666666; margin-top: 8px; }
+
+    .remark {
+      background: #1f1f1f;
+      border-left: 3px solid #888;
+      padding: 14px 18px;
+      margin: 14px 0;
+      border-radius: 0 4px 4px 0;
+      color: #bbbbbb;
+      font-size: 0.95rem;
+    }
+
+    .bibliography { list-style: none; padding-left: 0; color: #bbbbbb; font-size: 0.92rem; }
+    .bibliography li { margin-bottom: 10px; padding-left: 28px; text-indent: -28px; line-height: 1.6; }
+    .bibliography a { color: #7eb8f7; text-decoration: none; }
+    .bibliography a:hover { text-decoration: underline; }
+
+    a.cite { color: #7eb8f7; text-decoration: none; font-size: 0.9em; }
+    a.cite:hover { text-decoration: underline; }
+
+    .back-link { display: inline-block; margin-top: 40px; font-size: 0.9rem; color: #7eb8f7; text-decoration: none; }
+    .back-link:hover { color: #ffffff; }
+
+    .toc {
+      width: 200px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 40px;
+      background: #222222;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-size: 0.85rem;
+    }
+    .toc-title { font-weight: bold; color: #ffffff; margin-bottom: 10px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .toc ol { padding-left: 16px; }
+    .toc li { margin-bottom: 6px; line-height: 1.4; }
+    .toc a { color: #7eb8f7; text-decoration: none; }
+    .toc a:hover { color: #ffffff; }
+    .toc a.active { color: #ffffff; font-weight: bold; }
+
+    footer { border-top: 1px solid #2a2a2a; text-align: center; padding: 20px; font-size: 0.85rem; color: #555555; margin-top: 60px; }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="../index.html">onis's blog</a></h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="page-wrapper">
+    <main>
+      <p class="post-meta">July 4, 2026</p>
+      <h2>momentum: acceleration for optimization algorithms</h2>
+
+      <!-- INTRODUCTION -->
+      <div id="intro">
+        <span class="section-label">Introduction</span>
+        <p>
+          I have never taken seriously the definition and intuition of momentum for optimization — I have
+          just used it in practice without understanding why it works. So today, I want to revisit the
+          origin as well as the motivation for this method in the original work of
+          <a class="cite" href="#ref-polyak1962">[Polyak, 1962]</a>.
+        </p>
+        <p>
+          There are many interpretations on the Internet that this technique is like a ball rolling down a
+          hill that gathers enough momentum to overcome a plateau region and reach a global minimum instead
+          of getting stuck at a local minimum. But I still did not fully grasp this intuition, so I want
+          to use this post to clarify my understanding.
+        </p>
+      </div>
+
+      <!-- EXISTENCE AND UNIQUENESS -->
+      <div id="existence">
+        <span class="section-label">Existence and Uniqueness of Minimizers</span>
+        <p>
+          Let us make assumptions for a function \( f : \mathbb{R}^d \to \mathbb{R} \) that is coercive
+          and continuous. Such a function admits at least one global minimizer. Alternatively, if \( f \)
+          is continuous on a non-empty compact set, it also admits a global minimizer. With the additional
+          assumption of strong convexity, the global minimizer is unique. My objective here is to set up
+          a regime in which the function has at least one global minimizer for further analysis.
+        </p>
+        <p>
+          Let \( x \) be a global minimum of \( f \) on a compact set \( \mathcal{X} \subset \mathbb{R}^d \).
+          If \( f \) is differentiable, then \( \nabla f(x) = 0 \), or \( 0 \in \partial f(x) \) in the
+          non-differentiable case. Indeed, suppose \( \nabla f(x) \neq 0 \) and let \( \Delta x > 0 \) be
+          sufficiently small:
+          \[
+            f(x + \Delta x) - f(x) = \langle \nabla f(x), \Delta x \rangle + O(\|\Delta x\|^2)
+          \]
+          When \( \Delta x \neq 0 \) and \( \|\Delta x\| \to 0 \), obviously \( f(x + \Delta x) - f(x) > 0 \)
+          and \( O(\|\Delta x\|^2) \to 0 \). Setting \( \Delta x = -\nabla f(x)/n \):
+          \[
+            \langle \nabla f(x), \Delta x \rangle = -\|\nabla f(x)\|^2 / n
+          \]
+          Therefore \( \langle \nabla f(x), \Delta x \rangle + O(\|\Delta x\|^2) < 0 \) for \( n \) sufficiently
+          large, while the left-hand side is always positive — a contradiction. So we must have \( \nabla f(x) = 0 \).
+          The same analysis can be carried out in the non-differentiable case. Let \( \partial f(x) \) be the
+          subdifferential of \( f \) at \( x \):
+          \[
+            \forall\, g \in \partial f(x): f(x) \geq f(y) + \langle g, x - y \rangle
+          \]
+          then \( x \) is the global minimizer of \( f \) iff \( 0 \in \partial f(x) \).
+        </p>
+        <div class="remark">
+          <strong>Conclusion.</strong> If \( x \) is the global minimizer of \( f \), then \( \nabla f(x) = 0 \).
+          Therefore, a reasonable way to find global minima is to solve \( \nabla f(x) = 0 \). However, the
+          roots of this equation are not always global minima — they may be local minima or saddle points.
+          To ensure a global minimum, one may need second-order conditions, but we will not discuss these here.
+          We focus on iterative methods to find roots of \( \nabla f(x) = 0 \).
+        </div>
+      </div>
+
+      <!-- ITERATIVE METHODS -->
+      <div id="iterative">
+        <span class="section-label">Iterative Methods to Solve an Equation</span>
+        <p>
+          Let us consider a general equation \( P(x) = 0 \). When we talk about iterative methods, we
+          think about sequences of the form:
+          \[
+            x_n = \alpha_k x_{n-1} + \cdots + \alpha_1 x_{n-k}
+          \]
+          Let \( X^n = (x^n, x^{n+1}, \ldots, x^{n+k-1})^T \). Then \( X^{n+1} = AX^n \) where:
+          \[
+            A = \begin{pmatrix}
+              0 & 1 & \cdots & 0 \\
+              0 & 0 & \cdots & 0 \\
+              \vdots & \vdots & \ddots & \vdots \\
+              0 & 0 & \cdots & 1 \\
+              \alpha_1 & \alpha_2 & \cdots & \alpha_k
+            \end{pmatrix}
+          \]
+          Let us simplify by considering only the case \( k = 2 \). Let \( x^\star \) be the root of \( P(x) \).
+          We need to find a sequence converging to \( x^\star \):
+          \[
+            x_{n+2} - x^\star = \alpha_2(x_{n+1} - x^\star) + \alpha_1(x_n - x^\star) + x^\star(\alpha_1 + \alpha_2 - 1),
+            \quad x_0, x_1 \in \mathbb{R}
+          \]
+          If \( \alpha_1 + \alpha_2 \neq 1 \), then \( x_n - x^\star \) never converges to 0. So we need
+          \( \alpha_1 + \alpha_2 = 1 \). However, in this case:
+          \[
+            x_n - x^\star = a + b\rho^n, \quad \forall\, n
+          \]
+          and \( x_n \) converges to \( x^\star \) iff \( a = 0 \) and \( |\rho| < 1 \), which is
+          initialization-dependent. We would need another method since we have no prior knowledge of \( x^\star \).
+        </p>
+        <p>
+          In <a class="cite" href="#ref-polyak1962">[Polyak, 1962]</a>, a nonlinear term related to \( P \)
+          is added to control the convergence and the limit of the sequence. By Taylor expansion analysis:
+          \[
+            P(x) = P(x^\star) + P'(x^\star)(x - x^\star) + o(|x - x^\star|) = P'(x^\star)(x - x^\star) + o(|x - x^\star|)
+          \]
+          The new sequence is:
+          \begin{align*}
+            x_{n+2} - x^\star &= \alpha_2(x_{n+1} - x^\star) + \alpha_1(x_n - x^\star) + \beta_2 P(x_{n+1}) + \beta_1 P(x_n) \\
+            &= (x_{n+1} - x^\star)(\alpha_2 + P'(x^\star)\beta_2) + (x_n - x^\star)(\alpha_1 + P'(x^\star)\beta_1) \\
+            &\quad + o(|x_n - x^\star| + |x_{n+1} - x^\star|)
+          \end{align*}
+          Define \( y_n = x_n - x^\star \), \( X_n = (x_n, x_{n+1})^T \), \( \gamma_2 = \alpha_2 + P'(x^\star)\beta_2 \),
+          \( \gamma_1 = \alpha_1 + P'(x^\star)\beta_1 \). So \( X_{n+1} = AX_n + Y(X_n) \) where \( Y(X) \in o(\|x_n - x^\star\| + \|x_{n+1} - x^\star\|) \).
+          Since \( \alpha_1 + \alpha_2 = 1 \), the parameters to tune are \( \alpha_1, \beta_1, \beta_2 \).
+          Whatever the value of \( P'(x^\star) \), we can tune these parameters so that the eigenvalues of
+          \( A \) both lie in \( (-1, 1) \). From <a class="cite" href="#ref-polyak1962">[Polyak, 1962]</a>:
+        </p>
+
+        <div class="lemma">
+          <div class="lemma-label">Lemma</div>
+          Suppose that the linear operator \( T \) satisfies:
+          \[
+            \|T^n\| \leq C(\varepsilon)(q + \varepsilon)^n, \quad q < 1
+          \]
+          and \( \|Y(X)\| = o(\|X\|) \). Then the series \( X^{n+1} = TX^n + Y(X^n) \) approaches zero
+          with sufficiently small \( X^0 \), and \( \|X^n\| \leq C'(\varepsilon)\|X^0\|(q + \varepsilon)^n \).
+        </div>
+
+        <div class="proof">
+          <div class="theorem-label">Proof</div>
+          <p>
+            Let \( \varepsilon > 0 \) be chosen sufficiently small so that \( \rho = q + \varepsilon < 1 \).
+            The operator bound becomes \( \|T^n\| \leq C\rho^n \) where \( C = C(\varepsilon) \).
+          </p>
+          <p>
+            By the definition of little-\( o \), for any \( \delta > 0 \) there exists \( r > 0 \) such
+            that if \( \|X\| \leq r \), then \( \|Y(X)\| \leq \delta\|X\| \).
+          </p>
+          <p>Unrolling the recurrence \( X^{n+1} = TX^n + Y(X^n) \):</p>
+          \[
+            X^n = T^n X^0 + \sum_{k=0}^{n-1} T^{n-1-k} Y(X^k)
+          \]
+          <p>Taking norms and applying the triangle inequality:</p>
+          \[
+            \|X^n\| \leq \|T^n\|\|X^0\| + \sum_{k=0}^{n-1} \|T^{n-1-k}\|\|Y(X^k)\|
+            \leq C\rho^n \|X^0\| + \sum_{k=0}^{n-1} C\rho^{n-1-k}\|Y(X^k)\|
+          \]
+          <p>
+            We proceed by induction with hypothesis \( \|X^k\| \leq C'\rho_1^k\|X^0\| \) for some
+            \( \rho < \rho_1 < 1 \) and \( C' > C \). Substituting into the inequality:
+          </p>
+          \begin{align*}
+            \|X^n\| &\leq C\rho^n \|X^0\| + CC'\delta\|X^0\|\rho^{n-1} \sum_{k=0}^{n-1}\left(\frac{\rho_1}{\rho}\right)^k \\
+            &\leq C\rho^n \|X^0\| + \frac{CC'\delta}{\rho_1 - \rho}\rho_1^n \|X^0\|
+            \leq \left(C + \frac{CC'\delta}{\rho_1 - \rho}\right)\rho_1^n \|X^0\|
+          \end{align*}
+          <p>The induction is complete when:</p>
+          \[
+            \delta \leq \frac{(C' - C)(\rho_1 - \rho)}{CC'}
+          \]
+          <p>
+            Since \( \|Y(X)\| = o(\|X\|) \), we can choose \( r \) small enough to satisfy this condition.
+            Therefore \( \|X^n\| \leq C'\rho_1^n \|X^0\| \to 0 \) as \( n \to \infty \).
+          </p>
+          <div class="proof-end">□</div>
+        </div>
+
+        <p>
+          In our case, \( TX = AX \) is matrix-vector multiplication and \( A \) has eigenvalues in \( (-1, 1) \),
+          which satisfies the assumptions of the lemma. This concludes the convergence of the sequence above.
+        </p>
+        <div class="remark">
+          <strong>Conclusion.</strong> By adding the term \( P(x) \), we force the limit of \( (x_n)_n \)
+          to necessarily be a root of \( P \).
+        </div>
+        <div class="remark">
+          <strong>Connection to optimization.</strong> Setting \( \beta_1 = 0 \), \( \beta = -\beta_2 \neq 0 \),
+          \( \alpha = -\alpha_1 \), and letting \( P \) be the gradient of a function to be optimized, we get:
+          \[
+            x_{n+1} = (1 + \alpha)x_n - \alpha x_{n-1} - \beta P(x_n)
+          \]
+          which is exactly gradient descent with momentum in optimization.
+        </div>
+      </div>
+
+      <!-- CONVERGENCE -->
+      <div id="convergence">
+        <span class="section-label">Convergence of Momentum Methods</span>
+        <p>
+          In the last section, we used the intuition from iterative sequences to derive the formulation of
+          momentum. One may generalize to multi-step methods, but that would make the problem more sophisticated.
+        </p>
+
+        <h3>Quadratic Loss Function</h3>
+        <p>
+          This is perhaps the simplest explanation of why momentum is useful in practice. Consider the convex
+          quadratic model, which appears in many settings. If \( f \) is twice differentiable, by Taylor expansion:
+          \[
+            f(x + \Delta x) = f(x) + \langle \nabla f(x), \Delta x \rangle + \Delta x^T H(x)\Delta x + o(\|\Delta x\|^2)
+          \]
+          where \( H(x) \) is the Hessian matrix (symmetric, invertible, and positive semi-definite). Dropping
+          higher-order terms and setting \( A = H(x) \), \( b = -\nabla f(x) \), \( w = \Delta x \), the
+          solution is \( w^\star = A^{-1}b \). The gradient is \( \nabla F(w) = Aw - b \), and GD and GD with
+          momentum update respectively:
+          \[
+            w_{n+1} = w_n - \alpha(Aw_n - b), \quad
+            w_{n+1} = w_n(1 + \beta) - \beta w_{n-1} - \alpha(Aw_n - b)
+          \]
+          The analysis for these two methods is fully described in
+          <a class="cite" href="#ref-goh2017">[Goh, 2017]</a>. Briefly, with optimal parameters and condition
+          number \( k \) of \( A \), the convergence rates are:
+          \[
+            \gamma_{\mathrm{GDM}} = \frac{\sqrt{k} - 1}{\sqrt{k} + 1} \quad (\text{Momentum}),
+            \qquad \gamma_{\mathrm{GD}} = \frac{k - 1}{k + 1} \quad (\text{GD})
+          \]
+          Since \( k > 1 \) and \( \sqrt{k} < k \), we have \( \gamma_{\mathrm{GDM}} < \gamma_{\mathrm{GD}} \).
+          In particular, when the problem is ill-conditioned (very large condition number), GD with momentum
+          is highly more effective than GD.
+        </p>
+
+        <h3>Convergence for Strongly Convex Optimization</h3>
+        <p>
+          In the last subsection, we discussed the convergence rate via the structure of the Hessian. However,
+          we do not always have access to Hessian information. We now extend our analysis to a broader class
+          of functions.
+        </p>
+        <p>
+          <strong>\( \mu \)-strong convexity.</strong> A function \( f : \mathbb{R}^d \to \mathbb{R} \) is
+          \( \mu \)-strongly convex if \( \mathrm{dom}(f) \) is convex and for all \( \lambda \in (0,1) \)
+          and \( x, y \in \mathrm{dom}(f) \):
+          \[
+            f(\lambda x + (1-\lambda)y) \leq \lambda f(x) + (1-\lambda)f(y) - \frac{1}{2}\lambda(1-\lambda)\|x-y\|^2
+          \]
+          A well-known consequence for differentiable strongly convex \( f \) is:
+          \[
+            \forall\, x, y \in \mathrm{dom}(f): f(x) \geq f(y) + \langle \nabla f(y), x-y \rangle + \frac{\mu}{2}\|x-y\|^2
+          \]
+        </p>
+        <p>
+          <strong>\( L \)-smoothness.</strong> A differentiable function \( f \) is \( L \)-smooth if its
+          gradient is \( L \)-Lipschitz:
+          \[
+            \forall\, x, y \in \mathrm{dom}(f): \|\nabla f(x) - \nabla f(y)\| \leq L\|x-y\|
+          \]
+          which gives the quadratic upper bound:
+          \[
+            f(x) \leq f(y) + \langle \nabla f(y), x-y \rangle + \frac{L}{2}\|x-y\|^2
+          \]
+        </p>
+        <p>
+          <strong>GD without momentum.</strong> For classical gradient descent \( x_{n+1} = x_n - \alpha\nabla f(x_n) \),
+          by \( L \)-smoothness:
+          \begin{align*}
+            f(x_{n+1}) &\leq f(x_n) - \alpha\|\nabla f(x_n)\|^2 + \frac{L\alpha^2}{2}\|\nabla f(x_n)\|^2
+            = f(x_n) + \alpha\|\nabla f(x_n)\|^2\left(\frac{L\alpha}{2} - 1\right)
+          \end{align*}
+          We need \( 0 < \alpha < 2/L \) to ensure a descent direction. The optimal \( \alpha \) minimizing
+          the bound is \( 1/L \). By Theorem 2.1.15 in <a class="cite" href="#ref-nesterov2018">[Nesterov, 2018]</a>:
+        </p>
+
+        <div class="theorem">
+          <div class="theorem-label">Theorem — Convergence of GD</div>
+          If \( f \) is \( L \)-smooth and \( \mu \)-strongly convex and \( 0 < \alpha \leq \dfrac{2}{\mu + L} \),
+          then GD generates a sequence \( \{x_k\} \) such that:
+          \[
+            \|x_k - x^\star\|^2 \leq \left(1 - \frac{2\alpha\mu L}{\mu + L}\right)^k \|x_0 - x^\star\|^2
+          \]
+        </div>
+
+        <p>
+          <strong>GD with momentum.</strong> The first analysis for global convergence of GD with momentum
+          is fully described in <a class="cite" href="#ref-ghadimi2015">[Ghadimi et al., 2015]</a>. I will
+          prove the convergence result for the weighted average of iterates:
+          \[
+            \frac{1}{T}\sum_{i=0}^{T-1} f(x_i) - f^\star
+          \]
+          Let \( z_k = x_k + \dfrac{\beta}{1-\beta}(x_k - x_{k-1}) \), so:
+          \[
+            z_{k+1} = z_k - \frac{\alpha}{1-\beta}\nabla f(x_k), \quad z_0 = x_0
+          \]
+          Let \( x^\star \) be a global minimizer of \( f \) and \( r_k = \|z_k - x^\star\| \). Then:
+          \begin{align*}
+            r_{k+1}^2 &= r_k^2 - \frac{2\alpha}{1-\beta}\langle \nabla f(x_k), x_k - x^\star \rangle
+            - \frac{2\alpha\beta}{(1-\beta)^2}\langle \nabla f(x_k), x_k - x_{k-1} \rangle
+            + \frac{\alpha^2}{(1-\beta)^2}\|\nabla f(x_k)\|^2
+          \end{align*}
+          By convexity:
+          \[
+            \langle \nabla f(x_k), x_k - x^\star \rangle \geq f(x_k) - f^\star,
+            \quad \langle \nabla f(x_k), x_k - x_{k-1} \rangle \geq f(x_k) - f(x_{k-1})
+          \]
+          Using \( L \)-smoothness: \( \|\nabla f(x_k)\|^2 \leq L\langle x_k - x^\star, \nabla f(x_k) \rangle \).
+          Assuming \( \alpha < \dfrac{2(1-\beta)}{L} \):
+          \begin{align*}
+            r_{k+1}^2 \leq r_k^2 - \left(\frac{2\alpha}{1-\beta} - \frac{L\alpha^2}{(1-\beta)^2}\right)(f(x_k) - f^\star)
+            - \frac{2\alpha\beta}{(1-\beta)^2}(f(x_k) - f(x_{k-1}))
+          \end{align*}
+          Summing over \( T \) iterations with \( \gamma = \dfrac{2\alpha}{1-\beta} - \dfrac{L\alpha^2}{(1-\beta)^2} > 0 \),
+          \( \lambda = \dfrac{2\alpha\beta}{(1-\beta)^2} > 0 \), and using \( f(x_{T-1}) \geq f^\star \):
+          \[
+            r_T^2 \leq r_0^2 - \gamma\sum_{i=0}^{T-1}(f(x_k) - f^\star) - \lambda(f(x_{T-1}) - f(x_0))
+          \]
+          \begin{align*}
+            &\gamma\sum_{i=0}^{T-1}(f(x_k) - f^\star) \leq r_0^2 - r_T^2 - \lambda(f(x_{T-1}) - f(x_0))
+            \leq r_0^2 - \lambda(f^\star - f(x_0)) \\
+            &\implies f(\bar{x}_T) - f^\star \leq \frac{\|x_0 - x^\star\|^2}{T\gamma} + \frac{\lambda(f(x_0) - f^\star)}{T\gamma}
+          \end{align*}
+          The final implication comes from the convexity of \( f \):
+          \[
+            \frac{1}{T}\sum_{i=1}^{T-1} f(x_i) \leq f\!\left(\frac{1}{T}\sum_{i=1}^{T-1} x_i\right) = f(\bar{x}_T)
+          \]
+        </p>
+
+        <h3>Stochastic GD with Momentum</h3>
+        <p>
+          Stochastic gradient descent exploits the robustness of first-order methods, as high precision is
+          not always required in machine learning. The main idea is to replace the exact gradient by a random
+          estimate called the stochastic gradient. Note that a gradient estimate is not necessarily a descent
+          direction. Let \( f \) be the function to optimize and \( g(\theta, x) \) a stochastic gradient
+          where \( \theta \) follows a probability distribution. We make two standard assumptions:
+        </p>
+        <p>
+          <strong>Assumption 1 — Unbiasedness:</strong>
+          \( \mathbb{E}_\theta[g(\theta, x)] = \nabla f(x) \)
+        </p>
+        <p>
+          <strong>Assumption 2 — Bounded variance:</strong>
+          \( \mathbb{E}_\theta[\|g(\theta, x)\|^2] < B \)
+        </p>
+        <p>The SGD update rule is \( x_{n+1} = x_n - \alpha_n g(\theta, x_n) \).</p>
+
+        <div class="theorem">
+          <div class="theorem-label">Theorem — Convergence of SGD</div>
+          Assume \( f \) is \( L \)-smooth and the two assumptions above hold. For an initial guess \( x_0 \),
+          the SGD iterates \( x_t \) with constant step-size \( \alpha \) satisfy:
+          \[
+            \frac{1}{T}\,\mathbb{E}_\theta\!\left[\sum_{t=0}^{T-1}\|\nabla f(x_t)\|^2\right]
+            \leq \frac{f(x_0) - f^\star}{T\alpha} + \frac{\alpha LB}{2}
+          \]
+        </div>
+
+        <div class="proof">
+          <div class="theorem-label">Proof</div>
+          <p>By \( L \)-smoothness:</p>
+          \begin{align*}
+            f(x_{n+1}) &\leq f(x_n) - \alpha\langle \nabla f(x_n), g(\theta, x_n) \rangle + \frac{\alpha^2 L}{2}\|g(\theta, x_n)\|^2
+          \end{align*}
+          <p>Taking expectation and using the two assumptions:</p>
+          \[
+            \mathbb{E}_\theta[f(x_{n+1})] \leq \mathbb{E}_\theta[f(x_n)] - \alpha\|\nabla f(x_n)\|^2 + \frac{\alpha^2 LB}{2}
+          \]
+          <p>Summing over \( T \) iterations:</p>
+          \[
+            f^\star \leq \mathbb{E}_\theta[f(x_T)] \leq f(x_0) - \alpha\sum_{t=0}^{T-1}\|\nabla f(x_t)\|^2 + \frac{\alpha^2 LBT}{2}
+          \]
+          <p>Rearranging gives the result.</p>
+          <div class="proof-end">□</div>
+        </div>
+
+        <p>
+          With a constant step-size, this gives convergence up to a ball of radius \( \alpha LB/2 \). With
+          more assumptions (such as convexity) and suitable step-size strategies, one can establish global
+          convergence for SGD.
+        </p>
+
+        <p>
+          <strong>SGD with momentum.</strong> Suppose \( f \) satisfies the expectation and bounded variance
+          assumptions. We use the same technique as in the GD with momentum analysis, with the second sequence
+          \( z_k = x_k + \dfrac{\beta}{1-\beta}(x_k - x_{k-1}) \), so:
+          \[
+            z_{k+1} = z_k - \frac{\alpha}{1-\beta}g(\theta, x_k)
+          \]
+          Following the same steps and taking expectations:
+          \begin{align*}
+            \mathbb{E}[r_{k+1}^2] &\leq \mathbb{E}[r_k^2] - \frac{2\alpha}{1-\beta}\mathbb{E}[f(x_k) - f^\star]
+            - \frac{2\alpha\beta}{(1-\beta)^2}\mathbb{E}[f(x_k) - f(x_{k-1})] + \frac{\alpha^2 B}{(1-\beta)^2}
+          \end{align*}
+          Summing over \( T \) iterations:
+          \begin{align*}
+            \mathbb{E}\left[\sum_{i=0}^{T-1}(f(x_k) - f^\star)\right]
+            \leq \frac{(1-\beta)\|x_0 - x^\star\|^2}{2\alpha}
+            + \frac{\beta}{1-\beta}(f(x_0) - f^\star) + \frac{TB\alpha}{2(1-\beta)}
+          \end{align*}
+          Using convexity, the convergence for the weighted average of iterates is:
+          \[
+            \mathbb{E}[f(\bar{x}_T) - f^\star] \leq \frac{(1-\beta)\|x_0 - x^\star\|^2}{2\alpha T}
+            + \frac{\beta}{T(1-\beta)}(f(x_0) - f^\star) + \frac{B\alpha}{2(1-\beta)}
+          \]
+          With a constant step-size, this gives convergence up to a ball. A cleverly adaptive step-size
+          strategy can improve the convergence further, but I will reserve this for another post.
+        </p>
+      </div>
+
+      <!-- CONCLUSION -->
+      <div id="conclusion">
+        <span class="section-label">Conclusion</span>
+        <p>
+          Together, we have seen momentum from the perspective of a multi-step method for solving an equation.
+          Furthermore, we have carried out convergence analyses of momentum in optimization, specifically in
+          the \( L \)-smooth and convex setting. The situation will likely change in other regimes, especially
+          in the non-convex setting where most problems in deep learning arise. However, I do not feel fully
+          satisfied ending this post here, since there are many interesting stories around accelerated methods
+          that I could not cover — such as Nesterov acceleration or averaging techniques.
+        </p>
+      </div>
+
+      <!-- BIBLIOGRAPHY -->
+      <div id="bibliography">
+        <span class="section-label">References</span>
+        <ol class="bibliography">
+          <li id="ref-polyak1962">
+            [1] Polyak, P. T. (1962). Some methods of speeding up the convergence of iteration methods.
+            <em>Zh. Vych. Mat.</em>
+            <a href="https://www.sciencedirect.com/science/article/abs/pii/0041555364901375" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-goh2017">
+            [2] Goh, G. (2017). Why momentum really works. <em>Distill</em>.
+            <a href="http://distill.pub/2017/momentum" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-nesterov2018">
+            [3] Nesterov, Y. (2018). Lectures on Convex Optimization. <em>Springer Nature</em>.
+            <a href="https://link.springer.com/book/10.1007/978-3-319-91578-4" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-ghadimi2015">
+            [4] Ghadimi, E., Feyzmahdavian, H. R., &amp; Johansson, M. (2015). Global convergence of the
+            Heavy-ball method for convex optimization. <em>IEEE</em>.
+            <a href="https://arxiv.org/abs/1412.7457" target="_blank">↗ Link</a>
+          </li>
+        </ol>
+      </div>
+
+      <a class="back-link" href="../index.html">← Back to all posts</a>
+    </main>
+
+    <aside class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#existence">Existence &amp; Uniqueness</a></li>
+        <li><a href="#iterative">Iterative Methods</a></li>
+        <li><a href="#convergence">Convergence</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#bibliography">References</a></li>
+      </ol>
+    </aside>
+  </div>
+
+  <footer>© 2026 onis's blog</footer>
+
+  <script>
+    const sections = document.querySelectorAll('#intro, #existence, #iterative, #convergence, #conclusion, #bibliography');
+    const tocLinks = document.querySelectorAll('.toc a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+      tocLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
