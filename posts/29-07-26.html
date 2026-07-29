@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>around some concentration inequalities and their applications – onis's blog</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e8e8e8;
+      line-height: 1.8;
+    }
+
+    header {
+      border-bottom: 1px solid #1a3a3a;
+      padding: 20px 0;
+      text-align: center;
+      background: #0d2626;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+    header h1 a {
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    nav {
+      margin-top: 8px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #aaaaaa;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    main {
+      flex: 1;
+      max-width: 680px;
+      min-width: 0;
+    }
+
+    .post-meta {
+      font-size: 0.85rem;
+      color: #666666;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 28px;
+      color: #ffffff;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      margin: 28px 0 12px 0;
+      color: #dddddd;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1a1a1a;
+      background: #e8e8e8;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      margin-top: 28px;
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: #cccccc;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 14px 24px;
+      color: #cccccc;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .theorem {
+      background: #222222;
+      border-left: 3px solid #e8e8e8;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #e8e8e8;
+    }
+
+    .theorem-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #aaaaaa;
+      margin-bottom: 8px;
+    }
+
+    .definition {
+      background: #1e2233;
+      border-left: 3px solid #7eb8f7;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .definition-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7eb8f7;
+      margin-bottom: 8px;
+    }
+
+    .lemma {
+      background: #1e261e;
+      border-left: 3px solid #7ecf7e;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .lemma-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7ecf7e;
+      margin-bottom: 8px;
+    }
+
+    .proof {
+      background: #1f1f1f;
+      border-left: 3px solid #444444;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .proof p {
+      color: #cccccc;
+      margin-top: 10px;
+    }
+
+    .proof-end {
+      text-align: right;
+      font-size: 1.1rem;
+      color: #666666;
+      margin-top: 8px;
+    }
+
+    .remark {
+      background: #1f1f1f;
+      border-left: 3px solid #888;
+      padding: 14px 18px;
+      margin: 14px 0;
+      border-radius: 0 4px 4px 0;
+      color: #bbbbbb;
+      font-size: 0.95rem;
+    }
+
+    .bibliography {
+      list-style: none;
+      padding-left: 0;
+      color: #bbbbbb;
+      font-size: 0.92rem;
+    }
+
+    .bibliography li {
+      margin-bottom: 10px;
+      padding-left: 28px;
+      text-indent: -28px;
+      line-height: 1.6;
+    }
+
+    .bibliography a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .bibliography a:hover {
+      text-decoration: underline;
+    }
+
+    a.cite {
+      color: #7eb8f7;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+
+    a.cite:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
+
+    .toc {
+      width: 200px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 40px;
+      background: #222222;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-size: 0.85rem;
+    }
+
+    .toc-title {
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .toc ol {
+      padding-left: 16px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .toc a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      color: #ffffff;
+    }
+
+    .toc a.active {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    footer {
+      border-top: 1px solid #2a2a2a;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #555555;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="../index.html">onis's blog</a></h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="page-wrapper">
+    <main>
+      <p class="post-meta">July 15, 2026</p>
+      <h2>around some concentration inequalities and their applications</h2>
+
+      <!-- INTRODUCTION -->
+      <div id="intro">
+        <span class="section-label">Introduction</span>
+        <p>
+          In this post, we will study some popular and basic concentration inequalities. We will use this
+          framework to provide some concentration guarantees of minimizers obtained via Empirical Risk
+          Minimization. Roughly speaking, we try to understand the high-probability behaviour of the
+          empirical minimizers around the true minimizer. Furthermore, I will also re-introduce the notion
+          of algorithmic stability and deduce a simple convergence rate under stability conditions by using
+          concentration inequalities.
+        </p>
+      </div>
+
+      <!-- CLASSICAL INEQUALITIES -->
+      <div id="classical">
+        <span class="section-label">Classical Inequalities</span>
+
+        <h3>Markov's Inequality</h3>
+        <p>
+          We begin with the most elegant, yet powerful Markov inequality. Then we will see how this
+          inequality can be applied in several modern inequalities.
+        </p>
+
+        <div class="theorem">
+          <div class="theorem-label">Theorem — Markov's Inequality</div>
+          Let \( X \) be a non-negative integrable random variable. Then for all \( t \geq 0 \):
+          \[
+          \mathbb{P}(X \geq t) \leq \frac{\mathbb{E}[X]}{t}
+          \]
+        </div>
+
+        <div class="proof">
+          <div class="theorem-label">Proof</div>
+          <p>We have:</p>
+          \[
+          \mathbb{E}[X] = \int_0^{+\infty} x\, d\mathbb{P}(x) = \int_0^t x\, d\mathbb{P}(x)
+          + \int_t^{+\infty} x\, d\mathbb{P}(x) \geq 0 + t\int_t^{+\infty} d\mathbb{P}(x)
+          = t\,\mathbb{P}(X \geq t)
+          \]
+          <p>This is equivalent to the inequality in the statement.</p>
+          <div class="proof-end">□</div>
+        </div>
+
+        <p>
+          Some of us (including me) may feel more familiar with Chebyshev's inequality, but it is actually
+          a direct consequence of Markov's inequality. Let \( Y \) be an integrable random variable.
+          Replacing \( X \) by \( |Y - \mathbb{E}[Y]| \) in Markov's inequality:
+          \[
+          \mathbb{P}(|Y - \mathbb{E}[Y]| \geq t) = \mathbb{P}((Y - \mathbb{E}[Y])^2 \geq t^2)
+          \leq \frac{\mathbb{E}[(Y - \mathbb{E}[Y])^2]}{t^2} = \frac{\mathrm{Var}(Y)}{t^2}
+          \]
+        </p>
+        <p>
+          Now we come with Chernoff's trick (which will be used frequently for further inequalities) to
+          get exponential bounds that work well for all types of random variables. Since \( e^x \) is
+          positive and strictly increasing, for any \( \lambda > 0 \):
+          \[
+          \mathbb{P}(X \geq t) = \mathbb{P}(e^{\lambda X} \geq e^{\lambda t}) \leq e^{-\lambda t}\mathbb{E}[e^{\lambda
+          X}]
+          \]
+          The remaining task is to bound \( \mathbb{E}[e^{\lambda X}] \) and then find the value of
+          \( \lambda \) giving the optimal bound. Some examples:
+        </p>
+        <p>
+          <strong>Example 1.</strong> Let \( X \sim \mathcal{N}(\mu, \sigma^2) \). We have:
+          \[
+          \mathbb{E}[e^{\lambda X}] = e^{\lambda^2\sigma^2/2 + \lambda\mu}
+          \implies \mathbb{P}(X \geq t) \leq e^{\lambda^2\sigma^2/2 + \lambda(\mu - t)}
+          \]
+          The optimal \( \lambda \) is \( \lambda = (t - \mu)/\sigma^2 \), giving:
+          \[
+          \mathbb{P}(X \geq t) \leq \exp\!\left(-\frac{(t-\mu)^2}{2\sigma^2}\right)
+          \]
+        </p>
+        <p>
+          <strong>Example 2.</strong> Let \( X_1, X_2, \ldots, X_n \) be i.i.d. \( \mathcal{N}(\mu, \sigma^2) \)
+          and \( S = X_1 + \cdots + X_n \). Applying Chernoff's trick and independence:
+          \[
+          \mathbb{P}(S - \mathbb{E}[S] \geq t) \leq \exp(-\lambda t)\prod_{i=1}^n \mathbb{E}[e^{\lambda X_i -
+          \mathbb{E}[\lambda X_i]}]
+          \]
+          Using the previous example:
+          \[
+          \mathbb{E}[e^{\lambda X_i - \mathbb{E}[\lambda X_i]}] = \exp\!\left(\frac{\lambda^2\sigma^2}{2}\right)
+          \implies \mathbb{P}(S - \mathbb{E}[S] \geq t) \leq \exp\!\left(-\lambda t +
+          \frac{n\lambda^2\sigma^2}{2}\right)
+          \]
+          Optimizing at \( \lambda = t/(n\sigma^2) \):
+          \[
+          \mathbb{P}(S - \mathbb{E}[S] \geq t) \leq \exp\!\left(-\frac{t^2}{2n\sigma^2}\right)
+          \]
+        </p>
+
+        <h3>Hoeffding's Inequality</h3>
+        <p>
+          In Chernoff's trick, if we do not have access to the distribution of \( X \), we cannot compute
+          \( \mathbb{E}[e^{\lambda X}] \) explicitly. Therefore, finding a bound for this term is a
+          reasonable option. We begin with Hoeffding's lemma, which is the key to the final inequality.
+        </p>
+
+        <div class="lemma">
+          <div class="lemma-label">Lemma — Hoeffding's Lemma</div>
+          Let \( X \) be a real-valued random variable with zero expectation (\( \mathbb{E}[X] = 0 \))
+          and \( a \leq X \leq b \) with probability 1. Then for all \( \lambda > 0 \):
+          \[
+          \mathbb{E}[e^{\lambda X}] \leq \exp\!\left(\frac{\lambda^2(b-a)^2}{8}\right)
+          \]
+        </div>
+
+        <div class="proof">
+          <div class="theorem-label">Proof</div>
+          <p>
+            Write \( X = (1-t)a + tb \) where \( t \in [0,1] \) and \( t = (X-a)/(b-a) \). Since \( e^x \)
+            is convex:
+          </p>
+          \[
+          \exp(\lambda X) = \exp((1-t)\lambda a + t\lambda b) \leq (1-t)\exp(\lambda a) + t\exp(\lambda b)
+          \]
+          <p>Taking expectations:</p>
+          \[
+          \mathbb{E}[\exp(\lambda X)] \leq \exp(\lambda a)\mathbb{E}[1-t] + \exp(\lambda b)\mathbb{E}[t]
+          = \exp(\lambda a)\frac{b}{b-a} + \exp(\lambda b)\frac{-a}{b-a}
+          \]
+          <p>
+            Let \( \gamma = -a/(b-a) \) and \( u = (b-a)\lambda \). Then:
+          </p>
+          \[
+          \log(\mathbb{E}[\exp(\lambda X)]) \leq \lambda a + \log(1 - \gamma + \gamma e^u)
+          =: \phi(u)
+          \]
+          <p>
+            By Taylor's theorem, there exists \( x \in [0, u] \) such that
+            \( \phi(u) = \phi(0) + u\phi'(0) + \frac{u^2}{2}\phi''(x) \).
+            We compute \( \phi(0) = 0 \), \( \phi'(0) = 0 \), and:
+          </p>
+          \[
+          \phi''(x) = \frac{\gamma(1-\gamma)e^u}{(1-\gamma+\gamma e^u)^2} \leq \frac{1}{4}
+          \]
+          <p>where the final inequality comes from the AM-GM inequality. Therefore:</p>
+          \[
+          \log(\mathbb{E}[\exp(\lambda X)]) \leq \frac{\lambda^2(b-a)^2}{8}
+          \]
+          <div class="proof-end">□</div>
+        </div>
+
+        <div class="theorem">
+          <div class="theorem-label">Theorem — Hoeffding's Inequality</div>
+          Let \( X_1, X_2, \ldots, X_n \) be \( n \) independent random variables with \( X_i \in [a_i, b_i] \),
+          and \( S_n = X_1 + \cdots + X_n \). Then:
+          \[
+          \mathbb{P}(S_n - \mathbb{E}[S_n] \geq t)
+          \leq \exp\!\left(\frac{-2t^2}{\sum_{i=1}^n(b_i - a_i)^2}\right)
+          \]
+        </div>
+
+        <div class="proof">
+          <div class="theorem-label">Proof</div>
+          <p>Using Chernoff's trick and Hoeffding's lemma:</p>
+          \begin{align*}
+          \mathbb{P}(S_n - \mathbb{E}[S_n] \geq t)
+          &\leq \exp\!\left(-\lambda t + \sum_{i=1}^n \log(\mathbb{E}[e^{\lambda(X_i - \mathbb{E}[X_i])}])\right) \\
+          &\leq \exp\!\left(-\lambda t + \lambda^2\sum_{i=1}^n \frac{(b_i - a_i)^2}{8}\right)
+          \end{align*}
+          <p>
+            The minimum of the right-hand side is at \( \lambda = 4t / \sum_{i=1}^n(b_i - a_i)^2 \), giving:
+          </p>
+          \[
+          \mathbb{P}(S_n - \mathbb{E}[S_n] \geq t)
+          \leq \exp\!\left(-\frac{2t^2}{\sum_{i=1}^n(b_i - a_i)^2}\right)
+          \]
+          <div class="proof-end">□</div>
+        </div>
+
+        <p>
+          However, Hoeffding's inequality ignores second-order information such as variance. In the next
+          subsections, we will consider inequalities that bring second-order information into play. The
+          bound may become tighter or not depending on the variance of the random variable considered.
+        </p>
+
+        <h3>Bennett's Inequality</h3>
+
+        <div class="theorem">
+          <div class="theorem-label">Theorem — Bennett's Inequality</div>
+          Let \( X_1, \ldots, X_n \) be independent real-valued random variables with zero mean and
+          \( |X_i| \leq 1 \) with probability 1. Then for any \( t > 0 \):
+          \[
+          \mathbb{P}(S_n \geq t) \leq \exp\!\left(-v\, h\!\left(\frac{t}{v}\right)\right)
+          \]
+          where \( S_n = X_1 + \cdots + X_n \), \( v = \sum_{i=1}^n \mathbb{E}[X_i^2] \), and
+          \( h(u) = (1+u)\log(1+u) - u \).
+        </div>
+
+        <div class="proof">
+          <div class="theorem-label">Proof</div>
+          <p><strong>Step 1.</strong> We prove that \( \log(\mathbb{E}[e^{\lambda S}]) \leq v(e^\lambda - \lambda - 1)
+            \).</p>
+          <p>
+            Since \( u \mapsto (e^u - u - 1)/u^2 \) is increasing and \( X_1 \leq 1 \):
+            \[
+            e^{\lambda X_1} \leq \lambda X_1 + 1 + X_1^2(e^\lambda - \lambda - 1)
+            \]
+            Taking expectations:
+            \[
+            \mathbb{E}[e^{\lambda X_1}] \leq 1 + \mathbb{E}[X_1^2](e^\lambda - \lambda - 1)
+            \]
+            Therefore, using concavity of \( \log(1+u) \) and \( \log(1+u) \leq u \):
+            \[
+            \log(\mathbb{E}[e^{\lambda S}]) \leq \sum_{i=1}^n \log(1 + \mathbb{E}[X_i^2](e^\lambda - \lambda - 1))
+            \leq n\log\!\left(1 + \frac{v}{n}(e^\lambda - \lambda - 1)\right) \leq v(e^\lambda - \lambda - 1)
+            \]
+          </p>
+          <p><strong>Step 2.</strong> Using Chernoff's trick:</p>
+          \[
+          \mathbb{P}(S_n \geq t) \leq e^{-\lambda t} \mathbb{E}[e^{\lambda S_n}]
+          \leq \exp(-\lambda t + v(e^\lambda - \lambda - 1))
+          \]
+          <p>
+            The right-hand side is minimized at \( \lambda = \log(1 + t/v) \), giving:
+            \[
+            \mathbb{P}(S_n \geq t) \leq \exp\!\left(-vh\!\left(\frac{t}{v}\right)\right)
+            \]
+          </p>
+          <div class="proof-end">□</div>
+        </div>
+
+        <h3>Bernstein's Inequality</h3>
+        <p>
+          Bernstein's inequality is obtained by further bounding the function \( h \) in Bennett's inequality.
+          Indeed:
+          \[
+          h(u) = (1+u)\log(1+u) - u \geq \frac{3u^2}{2(u+3)}
+          \]
+          The proof is simple: consider the derivative of their difference and show it is always non-negative.
+          Therefore, Bernstein's inequality is:
+          \[
+          \mathbb{P}(S_n \geq t) \leq \exp\!\left(-vh\!\left(\frac{t}{v}\right)\right)
+          \leq \exp\!\left(\frac{-3t^2}{2t + 6v}\right)
+          \]
+          Bernstein's inequality is essentially a user-friendly approximation of Bennett's inequality.
+          In the applications section, we will see how Bernstein-type inequalities improve the rate of
+          convergence of empirical minimizers.
+        </p>
+        <p>
+          The above result works under the same conditions as Bennett's inequality. Alternatively, it
+          still holds under a weaker condition than the boundedness assumption:
+          \[
+          \forall\, k \geq 3: \mathbb{E}[(X_+)^k] \leq \frac{1}{2} k!\, \mathbb{E}[X^2] b^{k-2}
+          \]
+          where \( X_+ = \max(X, 0) \) and \( b \) is a parameter. In this case:
+          \[
+          \mathbb{P}(S_n \geq t) \leq \exp\!\left(\frac{-3t^2}{2bt + 6v}\right)
+          \]
+        </p>
+
+        <h3>McDiarmid's Inequality</h3>
+
+        <div class="theorem">
+          <div class="theorem-label">Theorem — McDiarmid's Inequality</div>
+          Let \( X_1, \ldots, X_n \) be independent random variables taking values in \( \mathcal{X} \).
+          Let \( f : \mathcal{X}^n \to \mathbb{R} \) satisfy, for all \( i \) and all
+          \( x_1, \ldots, x_n, x_i' \in \mathcal{X} \):
+          \[
+          |f(x_1, \ldots, x_{i-1}, x_i, \ldots, x_n) - f(x_1, \ldots, x_{i-1}, x_i', \ldots, x_n)| \leq c_i
+          \]
+          Then for all \( \epsilon > 0 \):
+          \[
+          \mathbb{P}(f - \mathbb{E}[f] \geq \epsilon)
+          \leq \exp\!\left(\frac{-\epsilon^2}{2\sum_{i=1}^n c_i^2}\right)
+          \]
+        </div>
+
+        <div class="proof">
+          <div class="theorem-label">Proof</div>
+          <p>The proof is based on Hoeffding's lemma. Define:</p>
+          \[
+          V_i = \mathbb{E}[f \mid X_1, \ldots, X_i] - \mathbb{E}[f \mid X_1, \ldots, X_{i-1}]
+          \implies f - \mathbb{E}[f] = \sum_{i=1}^n V_i
+          \]
+          <p>
+            We cannot use independence directly to decompose the Chernoff bound. Instead, we apply
+            Azuma's inequality (the martingale version of Hoeffding's inequality):
+          </p>
+
+          <div class="lemma" style="margin: 16px 0;">
+            <div class="lemma-label">Lemma — Azuma's Inequality</div>
+            Let \( Z_0, \ldots, Z_n \) be a martingale with respect to \( \mathcal{F}_0 \subseteq \cdots \subseteq
+            \mathcal{F}_n \)
+            such that \( |Y_i| = |Z_i - Z_{i-1}| \leq c_i \) for all \( i \). Then:
+            \[
+            \mathbb{P}[Z_n - Z_0 \geq t] \leq \exp\!\left(\frac{-t^2}{2\sum_{i=1}^n c_i^2}\right)
+            \]
+          </div>
+
+          <div class="proof" style="margin: 12px 0;">
+            <div class="theorem-label">Proof of Azuma's inequality</div>
+            <p>For any \( \lambda > 0 \), by Chernoff's bound:</p>
+            \[
+            \mathbb{P}[Z_n - Z_0 \geq t] \leq e^{-\lambda t}\mathbb{E}[e^{\lambda(Z_n - Z_0)}]
+            \]
+            <p>Conditioning on \( \mathcal{F}_{n-1} \):</p>
+            \begin{align*}
+            \mathbb{E}[e^{\lambda(Z_n - Z_0)}]
+            &= \mathbb{E}[e^{\lambda(Z_{n-1} - Z_0)}\mathbb{E}[e^{\lambda Y_n} \mid \mathcal{F}_{n-1}]]
+            \end{align*}
+            <p>
+              Using convexity of \( e^x \) with \( \alpha = Y_n/c_n \) and \( M = \lambda c_n \):
+              \[
+              e^{\lambda Y_n} \leq \left(\frac{1 + Y_n/c_n}{2}\right)e^{\lambda c_n}
+              + \left(\frac{1 - Y_n/c_n}{2}\right)e^{-\lambda c_n}
+              \]
+              Using \( \mathbb{E}[Y_n \mid \mathcal{F}_{n-1}] = 0 \) and \( (e^x + e^{-x})/2 \leq e^{x^2/2} \):
+              \[
+              \mathbb{E}[e^{\lambda Y_n} \mid \mathcal{F}_{n-1}] \leq \frac{e^{\lambda c_n} + e^{-\lambda c_n}}{2}
+              \leq e^{(\lambda c_n)^2/2}
+              \]
+            </p>
+            <p>Iterating over all steps:</p>
+            \[
+            \mathbb{P}[Z_n - Z_0 \geq t]
+            \leq \exp\!\left(-\lambda t + \frac{\lambda^2}{2}\sum_{i=1}^n c_i^2\right)
+            \]
+            <p>Optimizing over \( \lambda = t/\sum_{i=1}^n c_i^2 \) gives the result.</p>
+            <div class="proof-end">□</div>
+          </div>
+
+          <p>
+            Let \( Z_i = \mathbb{E}[f \mid X_1, \ldots, X_i] \). By the tower property of conditional
+            expectation, \( \mathbb{E}[Z_{i+1} \mid \mathcal{F}_i] = Z_i \), so \( (Z_i)_i \) is a
+            martingale. With \( V_i = Z_i - Z_{i-1} \), it remains to show the boundedness condition.
+            Indeed:
+          </p>
+          \begin{align*}
+          |V_i| &\leq \sup_{x \in \mathcal{X}} |\mathbb{E}[f(X_1,\ldots,x,\ldots,X_n) \mid X_1,\ldots,X_{i-1},X_i = x]
+          - \mathbb{E}[f \mid X_1,\ldots,X_{i-1}]| \\
+          &= \sup_{x \in \mathcal{X}} |\mathbb{E}[f(X_1,\ldots,x,\ldots,X_n) - f(X_1,\ldots,X_n) \mid
+          X_1,\ldots,X_{i-1}]|
+          \leq c_i
+          \end{align*}
+          <p>Applying Azuma's inequality gives the result.</p>
+          <div class="proof-end">□</div>
+        </div>
+      </div>
+
+      <!-- APPLICATIONS -->
+      <div id="applications">
+        <span class="section-label">Applications</span>
+        <p>
+          In this section, we focus on applications of these inequalities in providing concentration
+          guarantees, especially in the field of Statistical Learning Theory.
+        </p>
+
+        <h3>Empirical Risk Minimization (ERM)</h3>
+        <p>
+          Empirical risk minimization is a central tool in modern statistics and machine learning. We choose
+          the function \( f_n \) that minimizes the empirical risk over a class \( \mathcal{F} \):
+          \[
+          f_n \in \arg\min_{f \in \mathcal{F}} R_n = \frac{1}{n}\sum_{i=1}^n l(Z_i, f)
+          \]
+          where \( Z_1, \ldots, Z_n \) are i.i.d. from an unknown distribution \( P \) and \( l \) is the
+          loss function. For example, in least mean square problems with \( Z = (X,Y) \):
+          \( l(Z, f) = \|Y - f(X)\|^2 \).
+        </p>
+        <p>
+          The corresponding population risk is \( R(f) = \mathbb{E}[l(Z,f)] \), and
+          \( f^\star = \arg\min_{f \in \mathcal{F}} R(f) \). A key task in statistical learning is to
+          find guarantees on the excess risk \( R(f_n) - R(f^\star) \).
+        </p>
+        <p>
+          <strong>Regression.</strong> \( Z = (X,Y) \) and \( l(Z, f) = (Y - f(X))^2 \). The Bayes
+          predictor is \( f^\star(X) = \mathbb{E}[Y \mid X] \), but since the distribution of \( (X,Y) \)
+          is unknown, we restrict to a smaller class (e.g. linear functions) and use ERM on available data.
+          By the law of large numbers, the ERM minimizer converges almost surely to the true minimizer.
+        </p>
+        <p>
+          <strong>Binary classification.</strong> \( Z = (X,Y) \) with \( Y \in \{0,1\} \). We use the
+          cross-entropy loss:
+          \[
+          l(Z, f) = -Y\log f(X) - (1-Y)\log(1-f(X))
+          \]
+          The Bayes predictor is \( f^\star(x) = \mathbb{P}(Y=1 \mid X=x) \). A popular parametrization
+          uses the logistic function \( p_f(x) = 1/(1 + \exp(-f(x))) \), which gives the logistic
+          regression loss:
+          \[
+          l(Z, f) = \log(1 + \exp(-f(X))) - Yf(X)
+          \]
+        </p>
+        <p>
+          <strong>Our goal.</strong> Understand how quickly \( f_n \) approaches \( f^\star \) as \( n \)
+          grows. We will derive simple convergence rates via concentration inequalities, focusing on the
+          excess risk \( R(f_n) - R(f^\star) \).
+        </p>
+
+        <h3>Generalization Error</h3>
+        <p>
+          To bound the excess risk, we first transform it into a more convenient form. Indeed:
+          \begin{align*}
+          R(f_n) - R(f^\star) &= R(f_n) - R_n(f_n) + R_n(f_n) - R_n(f^\star) + R_n(f^\star) - R(f^\star) \\
+          &\leq \sup_{f \in \mathcal{F}} |R(f) - R_n(f)| + 0 + \sup_{f \in \mathcal{F}} |R(f) - R_n(f)| \\
+          &\leq 2\sup_{f \in \mathcal{F}} |R(f) - R_n(f)|
+          \end{align*}
+          Since \( R(f) = \mathbb{E}[R_n(f)] \), we can in principle apply the concentration inequalities
+          from the previous section. However, the difficulty comes from the supremum, which prevents
+          direct application.
+        </p>
+        <p>We overcome this by a union-of-events argument:</p>
+        \begin{align*}
+        &\left\{\sup_{f \in \mathcal{F}} |R(f) - R_n(f)| \geq t\right\} = \bigcup_{f \in \mathcal{F}} \{|R(f) - R_n(f)|
+        \geq t\} \\
+        &\implies \mathbb{P}\!\left(\sup_{f \in \mathcal{F}} |R(f) - R_n(f)| \geq t\right)
+        \leq \sum_{f \in \mathcal{F}} \mathbb{P}(|R(f) - R_n(f)| \geq t)
+        \end{align*}
+        <p>
+          The bound depends on the complexity of \( \mathcal{F} \). Suppose \( \mathcal{F} \) is finite
+          with \( |\mathcal{F}| = N \) and \( l(Z_i, f) \in [a, b] \) for all \( i \). Using the
+          two-sided Hoeffding's inequality:
+          \[
+          \mathbb{P}(|R_n(f) - R(f)| \geq t) \leq 2\exp\!\left(\frac{-2nt^2}{(b-a)^2}\right)
+          \]
+          Denoting the right-hand side by \( \delta \), with probability at least \( 1-\delta \):
+          \[
+          |R_n(f) - R(f)| \leq (b-a)\sqrt{\frac{\log(2/\delta)}{2n}}
+          \]
+          Using the union bound over \( N \) functions:
+          \[
+          \mathbb{P}\!\left(\sup_{f \in \mathcal{F}} |R(f) - R_n(f)| \geq t\right)
+          \leq 2N\exp\!\left(\frac{-2nt^2}{(b-a)^2}\right)
+          \]
+          Therefore, with probability at least \( 1-\delta \):
+          \[
+          R(f_n) - R(f^\star) \leq (b-a)\sqrt{\frac{\log(2N/\delta)}{2n}}
+          \]
+        </p>
+        <div class="remark">
+          <strong>Limitations.</strong> Hoeffding's inequality uses only the boundedness property to
+          produce a bound with convergence rate \( 1/\sqrt{n} \), but ignores variance information.
+          Bernstein-type inequalities can overcome this. Furthermore, for infinite-dimensional classes
+          \( \mathcal{F} \), the situation is more complicated — this will be addressed in a future post.
+        </div>
+
+        <h3>Fast Rate</h3>
+        <p>
+          In this subsection, we only consider bounded losses in \( [-1, 1] \), i.e.
+          \( |l(Z, f) - \mathbb{E}[l(Z,f)]| \leq 1 \) for all \( f \in \mathcal{F} \). This satisfies
+          all conditions for Bernstein's inequality:
+          \[
+          \mathbb{P}(|R_n(f) - \mathbb{E}[R_n(f)]| \geq t)
+          \leq 2\exp\!\left(\frac{-3nt^2}{2t + 6\sigma^2}\right)
+          \]
+          where \( v = \sum_{i=1}^n \mathrm{Var}(l(Z_i,f)) \) and \( \sigma^2 = v/n \). With probability
+          at least \( 1-\delta \):
+          \[
+          |R_n(f) - \mathbb{E}[R_n(f)]| \leq \frac{\log(2/\delta)}{n}
+          + \sqrt{\frac{\log(2/\delta)^2}{9n^2} + \frac{2\log(2/\delta)\sigma^2}{n}}
+          \]
+          Using the inequality \( a + \sqrt{a^2 + b} \leq 2a + \sqrt{b} \) for \( a, b \geq 0 \):
+          \[
+          |R_n(f) - \mathbb{E}[R_n(f)]| \leq \frac{2\log(2/\delta)}{n} + \sqrt{\frac{2\log(2/\delta)\sigma^2}{n}}
+          \]
+          If \( \sigma^2 \approx 0 \) as \( n \) grows, we gain a convergence rate up to \( 1/n \).
+          Understanding the noise of the losses is therefore very important in learning problems.
+        </p>
+
+        <h3>Noise Condition: Bernstein's Condition</h3>
+        <p>
+          In the last subsection, we discussed how bounded losses may produce faster convergence rates.
+          However, this condition is rather abstract. We now consider a more systematic regime: the
+          Variance-Expectation (or Bernstein's) condition.
+        </p>
+        <p>
+          <strong>Bernstein's condition.</strong> There exist \( \beta > 0 \) and \( \alpha \in [0,1] \)
+          such that for all \( f \in \mathcal{F} \):
+          \[
+          \mathrm{Var}(l(Z,f) - l(Z,f^\star)) \leq \beta\,\mathbb{E}[l(Z,f) - l(Z,f^\star)]^\alpha
+          \]
+          As \( f_n \) approaches \( f^\star \), the right-hand side converges to zero, controlling the
+          variance of \( l(Z,f_n) \):
+        </p>
+        <ul>
+          <li>If \( \alpha = 0 \), we only gain the slow rate as in Hoeffding's inequality.</li>
+          <li>If \( 0 < \alpha \leq 1 \), we get a better rate, specified in the theorem below.</li>
+        </ul>
+
+        <div class="theorem">
+          <div class="theorem-label">Theorem — Fast Rate under Bernstein's Condition</div>
+          Suppose \( \mathcal{F} = \{f_1, \ldots, f_N\} \) is a finite class with bounded losses
+          \( |l(Z,f) - l(Z,f^\star)| \leq 1 \) and satisfying Bernstein's condition with parameters
+          \( (\beta, \alpha) \). Let \( f^\star = \arg\min_{f \in \mathcal{F}} R(f) \) and \( f_n \)
+          be the ERM minimizer. Then with probability at least \( 1-\delta \):
+          \[
+          R(f_n) - R(f^\star) \leq \frac{4\log(N/\delta)}{3n}
+          + \left(\frac{2\beta\log(N/\delta)}{n}\right)^{\frac{1}{2-\alpha}}
+          \]
+        </div>
+
+        <div class="proof">
+          <div class="theorem-label">Proof</div>
+          <p>
+            Let \( X(f) = l(Z,f) - l(Z,f^\star) \), \( X_i(f) = l(Z_i,f) - l(Z_i,f^\star) \), and
+            \( \Delta l(f) = R(f) - R(f^\star) \). Define:
+            \[
+            R_X(f) = \frac{1}{n}\sum_{i=1}^n X_i(f) = R_n(f) - R_n(f^\star)
+            \]
+            By Bernstein's inequality, with probability at least \( 1-\delta \):
+            \[
+            \Delta l(f) - R_X(f) \leq \frac{2\log(1/\delta)}{3n}
+            + \sqrt{\frac{2\log(1/\delta)\,\mathrm{Var}(X(f))}{n}}
+            \leq \frac{2\log(1/\delta)}{3n} + \sqrt{\frac{2\log(1/\delta)\beta(\Delta l(f))^\alpha}{n}}
+            \]
+            Using the union bound over \( |\mathcal{F}| = N \) functions, with probability at least
+            \( 1-\delta \):
+            \[
+            \sup_{f \in \mathcal{F}} \Delta l(f) - R_X(f)
+            \leq \frac{2\log(N/\delta)}{3n} + \sqrt{\frac{2\log(N/\delta)\beta(\Delta l(f))^\alpha}{n}}
+            \]
+            Injecting \( f_n \) and using \( R_X(f_n) \leq 0 \):
+            \[
+            \Delta l(f_n) \leq \frac{2\log(N/\delta)}{3n}
+            + \sqrt{\frac{2\log(N/\delta)\beta(\Delta l(f_n))^\alpha}{n}}
+            \]
+            Let \( x = \Delta l(f_n) \), \( a = \frac{2\log(N/\delta)}{3n} \), \( b = \frac{2\log(N/\delta)\beta}{n} \).
+            We have \( x \leq a + \sqrt{bx^\alpha} \). Applying Young's inequality with
+            \( u = x^{\alpha/2} \), \( v = \sqrt{b} \), \( p = 2/\alpha \), \( q = 2/(2-\alpha) \):
+            \[
+            \sqrt{bx^\alpha} \leq \frac{\alpha x}{2} + b^{\frac{1}{2-\alpha}}\frac{2-\alpha}{2}
+            \]
+            Using \( \sqrt{bx^\alpha} \geq x - a \):
+            \[
+            x - a \leq \frac{\alpha x}{2} + b^{\frac{1}{2-\alpha}}\frac{2-\alpha}{2}
+            \implies x \leq \frac{2a}{2-\alpha} + b^{\frac{1}{2-\alpha}} \leq 2a + b^{\frac{1}{2-\alpha}}
+            \]
+            Therefore, with probability at least \( 1-\delta \):
+            \[
+            R(f_n) - R(f^\star) \leq \frac{4\log(N/\delta)}{3n}
+            + \left(\frac{2\log(N/\delta)\beta}{n}\right)^{\frac{1}{2-\alpha}}
+            \]
+            As \( n \) grows:
+            \[
+            R(f_n) - R(f^\star) \leq O\!\left(\left(\frac{\beta\log(N/\delta)}{n}\right)^{\frac{1}{2-\alpha}}\right)
+            \]
+          </p>
+          <div class="proof-end">□</div>
+        </div>
+
+        <h3>Algorithmic Stability</h3>
+
+        <p>
+          Firstly, we introduce the definition of <em>algorithmic stability</em> from
+          <a class="cite" href="#ref-bousquet2002">[Bousquet &amp; Elisseeff, 2002]</a>.
+          For convenience, we reuse the same notation throughout this section.
+          Let
+          \(S=\{z_1=(x_1,y_1),\ldots,z_n=(x_n,y_n)\}\)
+          be a collection of \(n\) independent sample points, where
+          \(\mathcal{X}\) and \(\mathcal{Y}\) denote the input and output spaces,
+          respectively.
+        </p>
+
+        <p>
+          A learning algorithm \(A\) is a mapping from
+          \((\mathcal{X}\times\mathcal{Y})^n\) to a learned predictor,
+          denoted by \(A_S\), which depends on the training set
+          \(S\in(\mathcal{X}\times\mathcal{Y})^n\).
+          Following the notation of the original paper, let
+          \(z_i'\) be an independent copy of \(z_i\), and define the modified
+          training set
+          \[
+          S_i=\{z_1,\ldots,z_i',\ldots,z_n\}.
+          \]
+        </p>
+
+        <p>
+          To evaluate the performance of the learning algorithm, we consider a
+          loss function
+          \[
+          l(Z,f)=c(f(X),Y),
+          \]
+          where
+          \(c:\mathcal{X}\times\mathcal{Y}\rightarrow\mathbb{R}\)
+          is the cost function.
+          In our setting, the learned predictor is \(A_S\), so the loss is written as
+          \[
+          l(A_S,Z)=c(A_S(X),Y).
+          \]
+        </p>
+
+        <p>
+          The empirical error over the training set \(S\) is defined as
+          \[
+          R_n(S)=\frac{1}{n}\sum_{i=1}^{n}l(A_S,z_i),
+          \]
+          while the (expected) risk is
+          \[
+          R(S)=\mathbb{E}_z[l(A_S,z)],
+          \]
+          where \(z\) is an independent sample having the same distribution as the
+          training examples.
+        </p>
+
+        <p>
+          Note that \(R(S)\) is still a random variable since it depends on the random
+          training sample \(S\). Consequently, we may take the expectation with respect
+          to \(S\). Moreover, the expected empirical error satisfies
+          \[
+          \begin{aligned}
+          \mathbb{E}_S[R_n(S)]
+          &=\frac{1}{n}\sum_{i=1}^{n}\mathbb{E}_S[l(A_S,z_i)] \\
+          &=\frac{1}{n}\sum_{i=1}^{n}\mathbb{E}_{S,z_i'}[l(A_S,z_i)] \\
+          &=\frac{1}{n}\sum_{i=1}^{n}\mathbb{E}_{S,z_i'}[l(A_{S_i},z_i')] \\
+          &=\mathbb{E}_{S,z_i'}[l(A_{S_i},z_i')].
+          \end{aligned}
+          \]
+        </p>
+
+        <div class="definition">
+          <div class="definition-label">Definition — Uniform Stability</div>
+
+          <p>
+            A learning algorithm \(A\) has <strong>uniform stability</strong>
+            \(\beta\) with respect to the loss function \(l\) if
+          </p>
+
+          \[
+          \forall\,S,\;
+          \forall\,z_i,z\in\mathcal{X}\times\mathcal{Y},
+          \qquad
+          |l(A_S,z)-l(A_{S_i},z)|
+          \le \beta.
+          \]
+
+          <p>
+            Here, \(A_S\) denotes the predictor learned from the original training set
+            \(S\), whereas \(A_{S_i}\) is the predictor obtained after replacing the
+            \(i\)-th training example by its independent copy \(z_i'\).
+          </p>
+        </div>
+
+        <p>
+          Throughout the remainder of this section, we also assume that the loss
+          function is bounded. Specifically,
+        </p>
+
+        \[
+        0\le l(A_S,z)\le M,
+        \qquad
+        \forall\,S,\;\forall\,z.
+        \]
+
+        <p>
+          Under this boundedness assumption together with the uniform stability
+          condition, our main objective is to study the high-probability behaviour of
+          the generalization error
+          \[
+          R(S)-R_n(S).
+          \]
+        </p>
+
+        <div class="theorem">
+          <div class="theorem-label">Theorem — Stability Generalization Bound</div>
+          Let \( A \) be a \( \beta \)-uniformly stable algorithm and suppose \( 0 \leq l(A_S, z) \leq M \)
+          for all \( S, z \). Then for any \( n \geq 1 \) and \( \delta \in (0,1) \), with probability
+          at least \( 1-\delta \):
+          \[
+          R_n(f) - R(f) \leq \beta + (n\beta + M)\sqrt{\frac{2\log(1/\delta)}{n}}
+          \]
+        </div>
+
+        <div class="proof">
+          <div class="theorem-label">Proof</div>
+          <p>
+            Denote \( X(S) = R_n(S) - R(S) \). We will verify some additional assumptions to be able
+            to use McDiarmid's inequality. We start by checking the boundedness condition:
+          </p>
+          \begin{align*}
+          |X(S) - X(S_i)| &\leq |R_n(S) - R_n(S_i)| + |R(S) - R(S_i)| \\
+          &\leq \frac{1}{n}\sum_{j \neq i} |l(A_S, z_j) - l(A_{S_i}, z_j)|
+          + \frac{1}{n}|l(A_S, z_i) - l(A_{S_i}, z_i')|
+          + |\mathbb{E}[l(A_S, z) - l(A_{S_i}, z)]| \\
+          &\leq \frac{(n-1)\beta}{n} + \frac{1}{n}|l(A_S, z_i) - l(A_{S_i}, z_i)|
+          + |l(A_{S_i}, z_i)| + |l(A_{S_i}, z_i')| + \beta \\
+          &\leq 2\beta + \frac{2M}{n}
+          \end{align*}
+          <p>
+            Therefore, \( c_i = 2\beta + 2M/n \) in McDiarmid's inequality, so:
+          </p>
+          \[
+          \mathbb{P}_S\!\left(X(S) - \mathbb{E}_S[X(S)] \geq t\right)
+          \leq \exp\!\left(-\frac{nt^2}{2(n\beta + M)^2}\right)
+          \]
+          <p>
+            It remains to calculate \( \mathbb{E}_S[X(S)] \), which can be bounded tightly by the
+            uniform stability property:
+          </p>
+          \begin{align*}
+          \mathbb{E}_S[X(S)] &= \mathbb{E}_S[R_n(S)] - \mathbb{E}_{S,z}[l(A_S, z)] \\
+          &= \frac{1}{n}\sum_{i=1}^n \mathbb{E}_S[l(A_S, z_i)] - \mathbb{E}_{S,z}[l(A_S, z)] \\
+          &= \frac{1}{n}\sum_{j=1}^n \mathbb{E}_{S, z_i'}[l(A_S, z_j)] - \mathbb{E}_{S,z}[l(A_S, z)] \\
+          &= \frac{1}{n}\sum_{j=1}^n \mathbb{E}_{S, z_i'}[l(A_{S_i}, z_i')] - \mathbb{E}_{S,z}[l(A_S, z)] \\
+          &= \mathbb{E}_{S, z_i'}[l(A_{S_i}, z_i')] - \mathbb{E}_{S,z}[l(A_S, z)] \\
+          &= \mathbb{E}_{S, z_i'}[l(A_{S_i}, z_i') - l(A_S, z_i')] \geq -\beta
+          \end{align*}
+          <p>Then injecting into the above inequality:</p>
+          \[
+          \mathbb{P}_S(X(S) \leq \beta + t) \geq 1 - \exp\!\left(-\frac{nt^2}{2(n\beta + M)^2}\right)
+          \]
+          <p>
+            Assigning \( \delta = \exp\!\left(-\dfrac{nt^2}{2(n\beta+M)^2}\right) \), then
+            \( t = (n\beta + M)\sqrt{\dfrac{2\log(1/\delta)}{n}} \). Finally, with probability
+            at least \( 1 - \delta \):
+          </p>
+          \[
+          R_n(f) - R(f) \leq \beta + (n\beta + M)\sqrt{\frac{2\log(1/\delta)}{n}}
+          \]
+          <div class="proof-end">□</div>
+        </div>
+
+        <p>
+          This theorem first appeared in
+          <a class="cite" href="#ref-bousquet2002">[Bousquet &amp; Elisseeff, 2002]</a>, which provided
+          the first definition of uniform stability and convergence guarantees for stable learning algorithms.
+          However, it suffers from a major limitation regarding the boundedness of the loss function, which
+          may narrow the range of applicability.
+        </p>
+      </div>
+
+      <!-- CONCLUSION -->
+      <div id="conclusion">
+        <span class="section-label">Conclusion</span>
+        <p>
+          Together, we have seen some applications of concentration inequalities in several settings such
+          as Statistical Learning Theory and Algorithmic Stability Analysis. However, most of the above
+          results assume the ERM minimizers are found over a finite class, which narrows a wide range of
+          problems. To handle the infinite case, we would need terms that measure the class complexity
+          rather than simply counting the number of functions.
+        </p>
+        <p>
+          Personally, this short post is very interesting and more exploratory than research-oriented. I
+          studied many new fantastic things and got much joy during the process of searching and reading
+          papers. Since it is a new corner of machine learning for me, it took much more time than I
+          expected — but it was worthy.
+        </p>
+      </div>
+
+      <!-- BIBLIOGRAPHY -->
+      <div id="bibliography">
+        <span class="section-label">References</span>
+        <ol class="bibliography">
+          <li id="ref-bousquet2002">
+            [1] Bousquet, O., &amp; Elisseeff, A. (2002). Stability and generalization.
+            <em>Journal of Machine Learning Research</em>.
+            <a href="https://www.jmlr.org/papers/volume2/bousquet02a/bousquet02a.pdf" target="_blank">↗ Link</a>
+          </li>
+        </ol>
+      </div>
+
+      <a class="back-link" href="../index.html">← Back to all posts</a>
+    </main>
+
+    <aside class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#classical">Classical Inequalities</a></li>
+        <li><a href="#applications">Applications</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#bibliography">References</a></li>
+      </ol>
+    </aside>
+  </div>
+
+  <footer>© 2026 onis's blog</footer>
+
+  <script>
+    const sections = document.querySelectorAll('#intro, #classical, #applications, #conclusion, #bibliography');
+    const tocLinks = document.querySelectorAll('.toc a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+      tocLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+
+</html>
