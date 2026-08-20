@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>some ideas on analyzing momentum-based methods via large deviation theory (part 1) – onis's blog</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e8e8e8;
+      line-height: 1.8;
+    }
+
+    header {
+      border-bottom: 1px solid #1a3a3a;
+      padding: 20px 0;
+      text-align: center;
+      background: #0d2626;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+    header h1 a {
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    nav {
+      margin-top: 8px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #aaaaaa;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    main {
+      flex: 1;
+      max-width: 680px;
+      min-width: 0;
+    }
+
+    .post-meta {
+      font-size: 0.85rem;
+      color: #666666;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 28px;
+      color: #ffffff;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      margin: 28px 0 12px 0;
+      color: #dddddd;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1a1a1a;
+      background: #e8e8e8;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      margin-top: 28px;
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: #cccccc;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 14px 24px;
+      color: #cccccc;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .theorem {
+      background: #222222;
+      border-left: 3px solid #e8e8e8;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #e8e8e8;
+    }
+
+    .theorem-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #aaaaaa;
+      margin-bottom: 8px;
+    }
+
+    .definition {
+      background: #1e2233;
+      border-left: 3px solid #7eb8f7;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .definition-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7eb8f7;
+      margin-bottom: 8px;
+    }
+
+    .lemma {
+      background: #1e261e;
+      border-left: 3px solid #7ecf7e;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .lemma-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7ecf7e;
+      margin-bottom: 8px;
+    }
+
+    .remark {
+      background: #1f1f1f;
+      border-left: 3px solid #888;
+      padding: 14px 18px;
+      margin: 14px 0;
+      border-radius: 0 4px 4px 0;
+      color: #bbbbbb;
+      font-size: 0.95rem;
+    }
+
+    .bibliography {
+      list-style: none;
+      padding-left: 0;
+      color: #bbbbbb;
+      font-size: 0.92rem;
+    }
+
+    .bibliography li {
+      margin-bottom: 10px;
+      padding-left: 28px;
+      text-indent: -28px;
+      line-height: 1.6;
+    }
+
+    .bibliography a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .bibliography a:hover {
+      text-decoration: underline;
+    }
+
+    a.cite {
+      color: #7eb8f7;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+
+    a.cite:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
+
+    .toc {
+      width: 200px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 40px;
+      background: #222222;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-size: 0.85rem;
+    }
+
+    .toc-title {
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .toc ol {
+      padding-left: 16px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .toc a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      color: #ffffff;
+    }
+
+    .toc a.active {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    footer {
+      border-top: 1px solid #2a2a2a;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #555555;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="../index.html">onis's blog</a></h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="page-wrapper">
+    <main>
+      <p class="post-meta">August 1, 2026</p>
+      <h2>some ideas on analyzing momentum-based methods via large deviation theory (part 1)</h2>
+
+      <!-- INTRODUCTION -->
+      <div id="intro">
+        <span class="section-label">Introduction</span>
+        <p>
+          Based on 2 interesting works on exploring Stochastic gradient descent (SGD) via large deviation
+          principles (LDP) (<a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>,
+          <a class="cite" href="#ref-azizian2025">[Azizian et al., 2025]</a>), I will try to extend
+          this theoretical framework to some momentum-based SGD. During this post, 2 approaches will be
+          introduced to analyze the LDP for SGD with momentum (SGDM). The standard iteration for SGDM
+          is given by:
+          \[
+          \begin{cases}
+          x_{n+1} = x_n + v_{n+1} \\
+          v_{n+1} = \beta v_n - \eta \nabla G(x_n, \omega_n)
+          \end{cases}
+          \]
+          where \( G(x_n, \omega_n) \) is a stochastic estimate of the gradient of the objective which
+          is assumed to be smooth; \( \beta \) is the momentum decay and \( \eta \) is the learning rate.
+          We may write that:
+          \[
+          G(x_n, \omega_n) = \nabla f(x_n) - U(x_n, \omega_n)
+          \]
+          with \( \mathbb{E}[U(x_n, \omega_n)] = 0 \) and \( \mathrm{Cov}(U(x_n, \omega_n)) \succ 0 \),
+          which are standard assumptions for SGD.
+        </p>
+
+        <p>
+          <strong>Continuous-time form of SGDM.</strong> Inspired by the spirit of
+          <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>, we provide a continuous-time
+          form for SGDM in order to analyze LDP. First, we suppose that the iterations of SGDM are a
+          discretization of a system of 2 ODEs \( (X_t, V_t) \) with time rescaling \( \Delta t = \eta \).
+          We have that:
+          \[
+          x_{n+1} - x_n = v_{n+1} \iff \frac{x_{n+1} - x_n}{\eta} = \frac{v_{n+1}}{\eta}
+          \implies \dot{X}_t = \frac{V_t}{\eta}
+          \]
+          Similarly:
+          \[
+          \frac{v_{n+1} - v_n}{\eta} = -\frac{1-\beta}{\eta}v_n - G(x_n, \omega_n)
+          \implies \dot{V}_t = -\frac{1-\beta}{\eta}V_t - G(X_t, \omega_{\lfloor t/\eta \rfloor})
+          \]
+          Finally, we get:
+          \[
+          \begin{cases}
+          \dot{X}_t = \dfrac{V_t}{\eta} \\[6pt]
+          \dot{V}_t = -\dfrac{1-\beta}{\eta}V_t - G(X_t, \omega_{\lfloor t/\eta \rfloor})
+          \end{cases}
+          \]
+          We may simplify this system by setting \( W_t = V_t / \eta \) and obtain:
+          \[
+          \begin{cases}
+          \dot{X}_t = W_t \\[6pt]
+          \dot{W}_t = \dfrac{1}{\eta}\left(-(1-\beta)W_t - G(X_t, \omega_{\lfloor t/\eta \rfloor})\right)
+          \end{cases}
+          \tag{3}
+          \]
+        </p>
+
+        <p>
+          <strong>Large deviation theory.</strong> This is a very vast field in mathematics; we cannot cover
+          all of it in such a small post. I only recall a definition that I find easy to follow. Let
+          \( (P_\epsilon)_\epsilon \) be a family of probability measures on \( (\mathcal{X}, \mathcal{B}) \).
+          Let \( I \) be a good rate function if it is a <strong>lower semicontinuous</strong> mapping
+          \( \mathcal{X} \to (0, +\infty) \) and the level sets \( \{x \mid I(x) \leq a\} \) are
+          <strong>compact subsets of \( \mathcal{X} \)</strong>.
+        </p>
+
+        <div class="definition">
+          <div class="definition-label">Definition — Large Deviation Principle</div>
+          \( \{P_\epsilon\} \) satisfies the large deviation principle with a rate function if for all
+          \( A \in \mathcal{B} \):
+          \[
+          -\inf_{x \in A^o} I(x) \leq \lim_{\epsilon \to 0}\inf\, \epsilon \log P_\epsilon(A)
+          \leq \lim_{\epsilon \to 0}\sup\, \epsilon \log P_\epsilon(A) \leq -\inf_{x \in \bar{A}} I(x)
+          \]
+          where \( A^o \) is the interior of \( A \) (the largest open subset of \( A \)) and \( \bar{A} \)
+          is the closure of \( A \) (the smallest closed set containing \( A \)). It may cause some
+          confusion; I often think informally that:
+          \[
+          \lim_{\epsilon \to 0} P_\epsilon(A) \approx \exp\!\left(-\frac{I(x)}{\epsilon}\right)
+          \]
+        </div>
+
+        <p>
+          In our situation, we study the trajectories of a random process described by the iterates of
+          SGD(M). Therefore, the problem we will deal with has the form: given a trajectory, we study the
+          probability that SGD(M) follows this trajectory. In
+          <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>, the path of SGD is given
+          by an interpolated continuous sequence and the space of trajectories is given by the space of
+          differentiable, continuous functions. They adapted the theory of
+          <a class="cite" href="#ref-wentzell1998">[Freidlin &amp; Wentzell, 1998]</a> and the further
+          analysis for SGDM will be based on their theoretical framework.
+        </p>
+      </div>
+
+      <!-- REDUCED-ODE -->
+      <div id="reduced">
+        <span class="section-label">Reduced-ODE to Approximate Path of SGDM</span>
+        <p>
+          As mentioned in (3), we set \( b_1(x,y) = y \) and
+          \( b_2(x,y) = -(1-\beta)y - G(x, \omega) \), then obtain an equivalent form:
+          \[
+          \begin{cases}
+          \dot{X}_t = b_1(X_t, W_t) \\
+          \dot{W}_t = \eta^{-1} b_2(X_t, W_t)
+          \end{cases}
+          \tag{4}
+          \]
+          The variable \( W_t \) is called the fast variable due to the term \( \eta^{-1} \), and \( X_t \)
+          is the slow variable. Inspired by some standard results for averaging principles for ODE systems in
+          <a class="cite" href="#ref-grigorios2008">[Pavliotis &amp; Stuart, 2008]</a> and Section 1, Chap.
+          7 of <a class="cite" href="#ref-wentzell1998">[Freidlin &amp; Wentzell, 1998]</a>, we may
+          approximate \( X_t \) by an ODE under some restrictive assumptions.
+        </p>
+        <p>
+          We assume that both functions \( b_1, b_2 \) are bounded and continuously differentiable. We
+          consider the fast motion \( W_t(x) \) for fixed slow variable \( x \in \mathbb{R}^d \):
+          \[
+          \dot{W}_t(x) = b_2(x, W_t(x)) = -(1-\beta)W_t(x) - G(x, \omega)
+          \]
+          Solving this simple ODE:
+          \[
+          W_t(x) = W_0(x)e^{-(1-\beta)t} - \frac{G(x,\omega)}{1-\beta}
+          \]
+          Then we prove that the following limit exists:
+          \[
+          \lim_{T \to \infty} \frac{1}{T} \int_0^T b_1(x, W_s(x))\, ds = \bar{b}_1(x)
+          \]
+          Indeed:
+          \[
+          \int_0^T b_1(x, W_s(x))\, ds = \int_0^T W_s(x)\, ds
+          = -\frac{W_0(x)}{1-\beta}e^{-(1-\beta)T} - \frac{T \cdot G(x,\omega)}{1-\beta} + \frac{W_0(x)}{1-\beta}
+          \]
+          Therefore:
+          \[
+          \bar{b}_1(x) = \lim_{T \to \infty} \frac{1}{T}\left(-\frac{W_0(x)}{1-\beta}e^{-(1-\beta)T}
+          - \frac{T \cdot G(x,\omega)}{1-\beta} + \frac{W_0(x)}{1-\beta}\right) = -\frac{G(x,\omega)}{1-\beta}
+          \]
+          Therefore, under some assumptions, the process \( X_t \) may be approximated by the solution of
+          the following ODE:
+          \[
+          \dot{x}(t) = \bar{b}_1(x(t)) = -\frac{G(x_t, \omega)}{1-\beta}
+          \]
+          The proof can be found in Chapter 8 of
+          <a class="cite" href="#ref-grigorios2008">[Pavliotis &amp; Stuart, 2008]</a>. Now, all
+          ingredients are gathered. To obtain the LDP for SGDM, we reuse the framework of
+          <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>:
+        </p>
+
+        <p>
+          <strong>The discrete "rescaled" trajectory:</strong> \( x^\eta_n = x_{n\lfloor 1/\eta \rfloor} \)
+        </p>
+        <p>
+          <strong>The continuous "interpolated" trajectory:</strong> for any \( n \geq 0 \) and
+          \( t \in [n\eta, (n+1)\eta] \):
+          \[
+          X_t = x_n + \left(\frac{t}{\eta} - n\right)(x_{n+1} - x_n)
+          \]
+        </p>
+        <p>
+          <strong>The continuous "discretized noise" trajectory:</strong> \( Z_0 = x_0 \) and for any
+          \( t > 0 \):
+          \[
+          \dot{Z}_t = -\frac{1}{1-\beta}\left(\nabla f(Z_t) - U(Z_t, \omega_{\lfloor t/\eta \rfloor})\right)
+          \]
+        </p>
+        <p>
+          As in the original work, we will obtain the LDP for \( Z_t \) then transfer to \( X_t \) and
+          finally \( x^\eta_n \). Actually, obtaining the LDP for \( Z_t \) is straightforward based on
+          the theory in <a class="cite" href="#ref-wentzell1998">[Freidlin &amp; Wentzell, 1998]</a>,
+          so the main challenge is to prove that:
+          \[
+          \mathrm{dist}_{[0,T]}(X, Z) \leq c\eta
+          \]
+          where \( c \) depends on many other parameters and
+          \( \mathrm{dist}_{[0,T]}(X, Z) = \sup_{t \in [0,T]}\|X_t - Z_t\| \). Furthermore, we also
+          reuse the blanket assumptions of the objective and the noise as in the original work. Let us
+          state an informal lemma (since I have not verified all the necessary assumptions):
+        </p>
+
+        <div class="lemma">
+          <div class="lemma-label">Lemma 1</div>
+          Fix \( \mathcal{K} \) a compact subset, \( T > 0 \), \( \eta_0 > 0 \), and \( Z_t \) at least
+          twice differentiable. There exists a constant \( c = c(T, \mathcal{K}, f, U, \eta_0) \) such that:
+          \[
+          \mathrm{dist}_{[0,T]}(X, Z) \leq c\eta
+          \]
+        </div>
+
+        <p>
+          Note that the proof is not trivially the same as Lemma C.2 of
+          <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a> due to the difference in
+          the dynamics of \( (Z_t)_{t \in [0,T]} \) and the iterates of SGDM. Motivated by the proof of
+          Theorem 3 of <a class="cite" href="#ref-kovachki2020">[Kovachki &amp; Stuart, 2020]</a>, we
+          proceed the proof of our lemma by the following steps: prove the pointwise boundedness at
+          \( (n\eta)_n \) for the distance, then use the interpolation property of \( X_t \) to extend
+          the boundedness to the remaining points. Suppose that \( T = N\eta \). The first step is already
+          done in <a class="cite" href="#ref-kovachki2020">[Kovachki &amp; Stuart, 2020]</a> (with some
+          modifications due to the noise added), i.e. there exists \( c_1 \) such that:
+          \[
+          \mathrm{dist}_{0 \leq n\eta \leq T}(X(n), Z(n)) \leq c_1\eta
+          \]
+          where \( X(n) = x_n \) and \( Z(n) = Z_{n\eta} \). Now denote
+          \( X(n+\epsilon) = X_{(n+\epsilon)\eta} = \epsilon X(n+1) + (1-\epsilon)X(n) \) and
+          \( Z(n+\epsilon) = Z_{(n+\epsilon)\eta} \) where \( \epsilon \in [0,1] \). By Taylor expansion:
+          \[
+          Z(n+\epsilon) = Z(n) + \epsilon\eta\dot{Z}(n) + M_n
+          \]
+          Since \( Z_t \) is twice differentiable, we can specify the remainder \( M_n \) by:
+          \[
+          M_n = \int_{n\eta}^{(n+\epsilon)\eta} \ddot{Z}(t)\,((n+\epsilon)\eta - t)\,dt
+          = \eta\int_0^\epsilon \ddot{Z}((n+s)\eta)(\epsilon - s)\,ds
+          \]
+          Similarly, we can get the expansion for \( Z(n+\epsilon) \) via \( Z(n+1) \):
+          \[
+          Z(n+\epsilon) = Z(n+1) - (1-\epsilon)\eta\dot{Z}(n+1)
+          + \eta\int_1^\epsilon \ddot{Z}((n+s)\eta)(\epsilon - s)\,ds
+          \]
+          Multiplying the first expression by \( 1-\epsilon \) and the second by \( \epsilon \), then
+          summing the two terms:
+          \[
+          Z(n+\epsilon) = (1-\epsilon)Z(n) + \epsilon Z(n+1)
+          + \eta\epsilon(1-\epsilon)(\dot{Z}(n) - \dot{Z}(n+1))
+          + \eta((1-\epsilon)M_n + \epsilon M_{n+1})
+          \]
+          Taking the difference between \( Z(n+\epsilon) \) and \( X(n+\epsilon) \) and using the
+          triangle inequality (note that \( e_n = \|Z(n) - X(n)\| \leq c_1\eta \)):
+          \[
+          \|Z(n+\epsilon) - X(n+\epsilon)\| \leq (1-\epsilon)e_n + \epsilon e_{n+1}
+          + \eta\left(\|\dot{Z}(n)\| + \|\dot{Z}(n+1)\| + \|M_n\| + \|M_{n+1}\|\right)
+          \]
+          Since we only work on a finite time interval, \( Z_t \) is bounded uniformly on \( [0,T] \),
+          and so are \( \dot{Z}_t \) and \( \ddot{Z}_t \). That implies a bound for
+          \( \|\dot{Z}(n)\| + \|\dot{Z}(n+1)\| + \|M_n\| + \|M_{n+1}\| \) which depends on \( T \);
+          denote it \( c_2 \). Finally, we get \( \mathrm{dist}_{[0,T]}(X,Z) \leq (c_1 + c_2)\eta \).
+        </p>
+
+        <p>
+          Before deducing the LDP for \( X_t \), we need to recalculate the Lagrangian and then the
+          action functional for the process \( Z_t \). By using the first-order ODE, we avoid the issue
+          arising in the degenerate case (3). Let
+          \( b(x,\omega) = -\frac{1}{1-\beta}(\nabla f(x) - U(x,\omega)) \). Following the theory
+          highlighted in Chapter 7.4 of
+          <a class="cite" href="#ref-wentzell1998">[Freidlin &amp; Wentzell, 1998]</a>, we first deduce
+          the LDP for the process \( Z_t \). The cumulant generating function is:
+          \[
+          H^M(x,v) = \log\mathbb{E}[\exp(\langle v, b(x,\omega)\rangle)]
+          \]
+          where
+          \( \langle v, b(x,\omega)\rangle = -\frac{1}{1-\beta}\langle v, \nabla f(x)\rangle
+          + \left\langle\frac{v}{1-\beta}, U(x,\omega)\right\rangle \).
+          Let \( \bar{H}(x,v) = \log\mathbb{E}[\exp(\langle v, U(x,\omega)\rangle)] \). Then:
+          \[
+          H^M(x,v) = \bar{H}\!\left(x, \frac{v}{1-\beta}\right)
+          - \left\langle\frac{v}{1-\beta}, \nabla f(x)\right\rangle
+          \]
+          We define the Lagrangians:
+          \begin{align*}
+          \bar{L}(x,v) &= \bar{H}(x,\cdot)^*(v) = \sup_p\{\langle p, v\rangle - \bar{H}(x,p)\} \\
+          L^M(x,v) &= H^M(x,\cdot)^*(v) = \sup_p\left\{\langle p, v\rangle
+          - \left(\bar{H}\!\left(x,\frac{p}{1-\beta}\right)
+          - \left\langle\frac{p}{1-\beta}, \nabla f(x)\right\rangle\right)\right\}
+          \end{align*}
+          By simplifying:
+          \[
+          L^M(x,v) = \sup_p\left\{\left\langle\frac{\nabla f(x)}{1-\beta} + v,\, p\right\rangle
+          - \bar{H}\!\left(x, \frac{p}{1-\beta}\right)\right\}
+          = \bar{L}(x,\, v(1-\beta) + \nabla f(x))
+          \]
+          Then the action functional is
+          \( S^M_{[0,T]}(\phi) = \int_0^T L^M(\phi(t), \dot{\phi}(t))\,dt \) if \( \phi \) is absolutely
+          continuous, and \( +\infty \) otherwise.
+        </p>
+
+        <p>
+          <strong>Some comparison to Vanilla SGD (SGDV).</strong> The Lagrangian and action functional
+          will be denoted by \( L^V(x,v) \) and \( S^V_{[0,T]}(\phi) \). Note that \( \bar{L}(x,v) \)
+          is the same for both SGDV and SGDM. At first sight, we may realize that:
+          \[
+          L^M(x,v) = L^V(x,(1-\beta)v) \quad \text{and} \quad
+          S^M_{[0,T]}(\phi) = \int_0^T L^V(\phi(t),(1-\beta)\dot{\phi}(t))\,dt
+          \]
+        </p>
+
+        <p>
+          <strong>Informal results.</strong> From Lemma 1 as the foundation, we follow the same steps in
+          Appendix C of <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a> to deduce the
+          LDP for the accelerated sequence \( (x^\eta_n)_n \).
+        </p>
+        <p>
+          As in the definition of the large deviation principle stated above, we need 2 properties to have
+          a good rate function: compactness of the level sets and lower semicontinuity of the action
+          functional. Indeed, this holds for sure by extending the proof in the original work. From that,
+          we could deduce the LDP for the interpolated process \( X_t \):
+        </p>
+
+        <div class="lemma">
+          <div class="lemma-label">Lemma 2</div>
+          Fix \( T > 0 \). For any \( \delta, \varepsilon \geq 0 \), \( \mathcal{K} \subset \mathcal{X} \)
+          compact, there exists \( \eta_0 > 0 \) such that for any \( \eta \in (0, \eta_0] \) and any
+          \( x_0 \in \mathcal{K} \):
+          \begin{align*}
+          \mathbb{P}_{x_0}\!\left(\mathrm{dist}_{[0,T]}(X,\gamma) < \delta\right) &\geq
+            \exp\!\left(-\frac{\mathcal{S}^M_{[0,T]}(\gamma) + \varepsilon}{\eta}\right) \\
+            \mathbb{P}_{x_0}\!\left(\mathrm{dist}_{[0,T]}\!\left(X, \Gamma_{[0,T]}^{\{x_0\}}(s)\right)> \delta\right)
+            &< \exp\!\left(-\frac{s - \varepsilon}{\eta}\right) \end{align*} for all \( \gamma \in
+              \Gamma_{[0,T]}^{\{x_0\}}(s) :=\{\gamma \in C([0,T], \mathcal{X}) : \gamma_0=x_0,\, S_{[0,T]}(\gamma) \leq
+              s\} \). </div>
+
+              <p>
+                Next, we obtain the LDP for the accelerated sequence. Let \( x, y \in \mathcal{X}^\mathbb{N} \),
+                and define the metric:
+                \[
+                \mathrm{dist}_T(x,y) = \max_{0 \leq n \leq N-1}\|x_n - y_n\|
+                \]
+                To connect the LDP for \( x^\eta_n \) from the continuous interpolated process \( X_t \), we
+                need to bound the difference between the discrete sequence and the interpolation. We yield the
+                same conclusion as Lemma C.4 of
+                <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>: for any
+                \( \eta_0 \geq 0 \) and \( N \geq 1 \), fix \( \mathcal{K} \subset \mathcal{X} \). Then there
+                exists a constant \( c = c(\mathcal{K}, \eta_0, N, f) \) such that for any \( x_0 \in \mathcal{K} \)
+                and \( \eta \in [0, \eta_0] \):
+                \[
+                \mathrm{dist}_N(x^\eta, (X_n)_{0 \leq n \leq N-1})
+                = \max_{0 \leq n \leq N-1}\|x_n^\eta - X_n\| \leq c\eta
+                \]
+                Then we mimic the next steps in this section and get the LDP for the rescaled sequence
+                \( (x^\eta_n)_n \).
+              </p>
+
+              <div class="remark">
+                <strong>Discussion.</strong> The key role is played by Lemma 1, from which we can refine the
+                analysis and possibly deduce the LDP for the discrete rescaled sequence. However, this may suffer
+                some limitations caused by the fact that we obtained the LDP via a reduced first-order ODE. This
+                may help us avoid complicated computations due to degenerate effects and take advantage of the
+                available base theories of <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>.
+                I believe that obtaining the LDP directly from the system (3) is better and would generally
+                enrich the theories of large deviations in SGD. We will discuss this in the next section (or
+                next post).
+              </div>
+
+              <p>
+                <strong>Invariant measure.</strong> We associate a certain transition cost to each pair of
+                critical points. First, we define the quasi-potential between 2 points \( x, x' \in \mathcal{X} \):
+                \[
+                B(x,x') = \inf\{S_T[\gamma] : \gamma \in C_T(x,x'),\, T \in \mathbb{N}\}
+                \]
+                Then the corresponding quasi-potential between 2 sets is:
+                \[
+                B(K,K') = \inf\{B(x,x') : x \in K,\, x' \in K'\}
+                \]
+                Let us inject our situation. We had that:
+                \[
+                S^M_T(\phi) = \int_0^T L^V(\phi(t),(1-\beta)\dot{\phi}(t))\,dt
+                = (1-\beta)\int_0^{T/(1-\beta)} L^V(\phi(\tau(1-\beta)),\,\dot{\phi}(\tau(1-\beta)))\,d\tau
+                = (1-\beta)S^V_{T/(1-\beta)}(\gamma)
+                \]
+                where \( \gamma(t) = \phi(t(1-\beta)) \). Then the quasi-potential of the 2 variants of SGD
+                are related by:
+                \[
+                B^M(x,x') \approx (1-\beta)B^V(x,x')
+                \]
+                The approximation appears in this relationship because we define the quasi-potential as the
+                infimum over finite time. For the energy of the component \( K_i \), it is simply the energy
+                of SGDV scaled by \( 1-\beta \):
+                \[
+                E^M_i \approx (1-\beta)E^V_i, \quad \forall\, i
+                \]
+                Therefore, the invariant measure of SGD with momentum in a critical component of \( f \) is
+                defined informally as:
+                \[
+                \mu^M(\mathcal{U}_i) \propto \exp\!\left(-\frac{E^M_i}{\eta}\right)
+                \approx \exp\!\left(-\frac{(1-\beta)E^V_i}{\eta}\right)
+                \propto \mu^V(\mathcal{U}_i)^{1-\beta}
+                \]
+              </p>
+
+              <div class="remark">
+                <strong>Conclusion.</strong> From the previous expression on the invariant measure of the
+                iterates of SGD with momentum, we can state that after a long run, the iterates of SGDM
+                concentrate more heavily than SGDV on stable minima of the objective. As stated in
+                <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>, the long-run behaviour
+                of SGD tends to avoid saddle points (unstable minima), and so does SGDM. From that point,
+                we could conclude that the iterates of SGDM tend to find local minima more quickly than
+                vanilla SGD. However, we cannot recover another well-known result of momentum methods: better
+                avoidance of saddle points or faster exit from a local minimum, which would be equivalent to
+                finding global minima more quickly.
+              </div>
+        </div>
+
+        <!-- BIBLIOGRAPHY -->
+        <div id="bibliography">
+          <span class="section-label">References</span>
+          <ol class="bibliography">
+            <li id="ref-azizian2024">
+              [1] Azizian, W., Iutzeler, F., Malick, J., &amp; Mertikopoulos, P. (2024).
+              What is the long-run distribution of stochastic gradient descent? A large deviation analysis.
+              <em>ICML</em>.
+              <a href="https://arxiv.org/pdf/2406.09241" target="_blank">↗ Link</a>
+            </li>
+            <li id="ref-azizian2025">
+              [2] Azizian, W., Iutzeler, F., Malick, J., &amp; Mertikopoulos, P. (2025).
+              The global convergence time of stochastic gradient descent in non-convex landscapes:
+              Sharp estimates via large deviations. <em>ICML</em>.
+              <a href="https://arxiv.org/abs/2503.16398" target="_blank">↗ Link</a>
+            </li>
+            <li id="ref-wentzell1998">
+              [3] Freidlin, M. I., &amp; Wentzell, A. D. (1998).
+              <em>Random Perturbations of Dynamical Systems</em>. Springer.
+              <a href="https://link.springer.com/book/10.1007/978-3-642-25847-3" target="_blank">↗ Link</a>
+            </li>
+            <li id="ref-grigorios2008">
+              [4] Pavliotis, G. A., &amp; Stuart, A. M. (2008).
+              <em>Multiscale Methods: Averaging and Homogenization</em>. Springer.
+              <a href="https://link.springer.com/book/10.1007/978-0-387-73829-1" target="_blank">↗ Link</a>
+            </li>
+            <li id="ref-kovachki2020">
+              [5] Kovachki, N. B., &amp; Stuart, A. M. (2020).
+              Continuous time analysis of momentum methods.
+              <em>Journal of Machine Learning Research</em>.
+              <a href="https://arxiv.org/abs/1906.04285" target="_blank">↗ Link</a>
+            </li>
+          </ol>
+        </div>
+
+        <a class="back-link" href="../index.html">← Back to all posts</a>
+    </main>
+
+    <aside class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#reduced">Reduced-ODE Approach</a></li>
+        <li><a href="#bibliography">References</a></li>
+      </ol>
+    </aside>
+  </div>
+
+  <footer>© 2026 onis's blog</footer>
+
+  <script>
+    const sections = document.querySelectorAll('#intro, #reduced, #bibliography');
+    const tocLinks = document.querySelectorAll('.toc a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+      tocLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+
+</html>
