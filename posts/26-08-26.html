@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>some ideas on analyzing momentum-based methods via large deviation theory (part 2) – onis's blog</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e8e8e8;
+      line-height: 1.8;
+    }
+
+    header {
+      border-bottom: 1px solid #1a3a3a;
+      padding: 20px 0;
+      text-align: center;
+      background: #0d2626;
+    }
+    header h1 { font-size: 1.8rem; }
+    header h1 a { text-decoration: none; color: #ffffff; }
+    nav { margin-top: 8px; }
+    nav a { margin: 0 12px; text-decoration: none; color: #aaaaaa; font-size: 0.95rem; }
+    nav a:hover { color: #ffffff; }
+
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    main { flex: 1; max-width: 680px; min-width: 0; }
+
+    .post-meta { font-size: 0.85rem; color: #666666; margin-bottom: 12px; }
+    h2 { font-size: 1.7rem; margin-bottom: 28px; color: #ffffff; }
+    h3 { font-size: 1.15rem; margin: 28px 0 12px 0; color: #dddddd; }
+
+    .section-label {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1a1a1a;
+      background: #e8e8e8;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      margin-top: 28px;
+    }
+
+    p { margin-bottom: 14px; color: #cccccc; }
+    ul, ol { margin: 0 0 14px 24px; color: #cccccc; }
+    li { margin-bottom: 6px; }
+
+    .theorem {
+      background: #222222;
+      border-left: 3px solid #e8e8e8;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #e8e8e8;
+    }
+    .theorem-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #aaaaaa;
+      margin-bottom: 8px;
+    }
+
+    .definition {
+      background: #1e2233;
+      border-left: 3px solid #7eb8f7;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+    .definition-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7eb8f7;
+      margin-bottom: 8px;
+    }
+
+    .lemma {
+      background: #1e261e;
+      border-left: 3px solid #7ecf7e;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+    .lemma-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7ecf7e;
+      margin-bottom: 8px;
+    }
+
+    .proposition {
+      background: #26201e;
+      border-left: 3px solid #e8a87e;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+    .proposition-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #e8a87e;
+      margin-bottom: 8px;
+    }
+
+    .remark {
+      background: #1f1f1f;
+      border-left: 3px solid #888;
+      padding: 14px 18px;
+      margin: 14px 0;
+      border-radius: 0 4px 4px 0;
+      color: #bbbbbb;
+      font-size: 0.95rem;
+    }
+
+    .bibliography { list-style: none; padding-left: 0; color: #bbbbbb; font-size: 0.92rem; }
+    .bibliography li { margin-bottom: 10px; padding-left: 28px; text-indent: -28px; line-height: 1.6; }
+    .bibliography a { color: #7eb8f7; text-decoration: none; }
+    .bibliography a:hover { text-decoration: underline; }
+
+    a.cite { color: #7eb8f7; text-decoration: none; font-size: 0.9em; }
+    a.cite:hover { text-decoration: underline; }
+
+    .back-link { display: inline-block; margin-top: 40px; font-size: 0.9rem; color: #7eb8f7; text-decoration: none; }
+    .back-link:hover { color: #ffffff; }
+
+    .toc {
+      width: 200px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 40px;
+      background: #222222;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-size: 0.85rem;
+    }
+    .toc-title { font-weight: bold; color: #ffffff; margin-bottom: 10px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .toc ol { padding-left: 16px; }
+    .toc li { margin-bottom: 6px; line-height: 1.4; }
+    .toc a { color: #7eb8f7; text-decoration: none; }
+    .toc a:hover { color: #ffffff; }
+    .toc a.active { color: #ffffff; font-weight: bold; }
+
+    footer { border-top: 1px solid #2a2a2a; text-align: center; padding: 20px; font-size: 0.85rem; color: #555555; margin-top: 60px; }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="../index.html">onis's blog</a></h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="page-wrapper">
+    <main>
+      <p class="post-meta">August 10, 2026</p>
+      <h2>some ideas on analyzing momentum-based methods via large deviation theory (part 2)</h2>
+
+      <!-- INTRODUCTION -->
+      <div id="intro">
+        <span class="section-label">Introduction</span>
+      </div>
+
+      <!-- REDUCED ODE -->
+      <div id="reduced">
+        <span class="section-label">Reduced-ODE to Approximate Path of SGDM</span>
+      </div>
+
+      <!-- GENERAL FRAMEWORK -->
+      <div id="framework">
+        <span class="section-label">A General Framework</span>
+        <p>
+          Before diving into the LDP, we introduce the iterates of SGDM:
+          \[
+            \begin{cases}
+              x_{n+1} = x_n + \eta v_{n+1} \\
+              v_{n+1} = \beta v_n - \nabla G(x_n, \omega_n) = \beta v_n - \nabla f(x_n) + U(x_n, \omega_n) \\
+              x_0, v_0 \in \mathbb{R}^d
+            \end{cases}
+            \tag{1}
+          \]
+          and the continuous-time form of SGDM is defined in part 1:
+          \[
+            \begin{cases}
+              \dot{X}_t = W_t \\[6pt]
+              \dot{W}_t = \dfrac{1}{\eta}\left(-(1-\beta)W_t - G(X_t, \omega_{\lfloor t/\eta \rfloor})\right)
+            \end{cases}
+            \tag{2}
+          \]
+        </p>
+        <p>
+          In the work of <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>, they rely on
+          the foundational work of <a class="cite" href="#ref-wentzell1998">[Freidlin &amp; Wentzell, 1998]</a>
+          to derive the LDP for iterates of SGD. However, their theory cannot fully describe the situation
+          where the fast motion (the noise in SGD) depends on the slow motion and the previous states —
+          roughly speaking, when the slow variable is frozen, the fast variable becomes a Markov chain on
+          an infinite state space. In the previous post, we overcame this issue by refining the proof, but
+          I believe that it does not represent perfectly the dynamics or the benefits brought by momentum.
+          In this post, we focus on the theory of large deviations for a more general system of
+          discrete-time processes with averaging. For the base works, I refer to
+          <a class="cite" href="#ref-kifer2008">[Kifer, 2008]</a> and
+          <a class="cite" href="#ref-gulinsky1993">[Gulinsky &amp; Veretennikov, 1993]</a>. My objective
+          is to deduce the LDP for the following general system of discrete-time processes with averaging:
+          \[
+            \begin{cases}
+              x_{n+1} = x_n + \eta\, g(x_n, v_{n+1}) \\
+              v_{n+1} = v_n + a(x_n, v_n) + b(x_n, v_n)W_n =: P(v_n, x_n, W_n)
+            \end{cases}
+            \tag{3}
+          \]
+          This is not the standard form in the main results of either
+          <a class="cite" href="#ref-gulinsky1993">[Gulinsky &amp; Veretennikov, 1993]</a> or
+          <a class="cite" href="#ref-kifer2008">[Kifer, 2008]</a>, but we will refine the analysis
+          to obtain the LDP for this system. One more special feature of system (3): it covers the
+          iterates of vanilla SGD, SGDM, or even NAG. Focusing on SGDM, we choose \( g(x,y) = y \),
+          \( a(x,y) = -(1-\beta)y - \nabla f(x) \), \( b(x,y) = \mathrm{Cov}(U(x,\omega)) \); and
+          \( \beta = 0 \) adapts to vanilla SGD. So if we find a method for this system, this new
+          framework will be more general than
+          <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a> and represents a promising
+          direction.
+        </p>
+
+        <h3>Averaging Principle</h3>
+        <p>
+          Define the frozen Markov chain \( (v_n^x)_n \) by:
+          \[
+            v_{n+1}^x = \beta v_n^x - \nabla f(x) + U(x, \omega_n)
+          \]
+          It is obviously a Markov chain with infinite state space. We assume that \( (v_n^x)_n \) has
+          an invariant measure \( \mu \). In a general setting, we can proceed with results about
+          averaging methods without figuring out the invariant measure explicitly. But in our problem, it
+          is better if we know the exact formula, as it will serve further analysis. Let
+          \( (\mathbb{R}^d, \mathcal{P}(\mathbb{R}^d)) \) be the measurable space we work on. Based on
+          the chain defined above, we introduce the transition probability kernel:
+          \[
+            K^x(a, A) = \mathbb{P}(U(x, \omega_n) \in \{y - \beta a + \nabla f(x) \mid y \in A\})
+          \]
+          so the invariant measure is given by:
+          \[
+            \mu^x(A) = \int K(a, A)\,\mu^x(da), \quad \forall\, A \in \mathcal{P}(\mathbb{R}^d)
+          \]
+          And define the function:
+          \[
+            h(x) = \int g(x,v)\,\mu^x(dv) = \int v\,\mu^x(dv) = \mathbb{E}^x[V]
+          \]
+          if \( V \) follows the invariant measure. However, we can compute this function another way:
+          since the above Markov chain is defined linearly, we simply take expectations on both sides.
+          If \( v_0^x \sim \mu^x \) then so does \( v_{n+1}^x \). Then:
+          \[
+            \mathbb{E}[v_{n+1}^x] = \mathbb{E}[v_n^x] - \nabla f(x)
+            \iff \mathbb{E}[V] = \mathbb{E}[v_{n+1}^x] = \mathbb{E}[v_n^x]
+            = -\frac{1}{1-\beta}\nabla f(x)
+          \]
+          Therefore \( h(x) = -\frac{1}{1-\beta}\nabla f(x) \) and the averaged system is
+          \( \dot{\bar{x}}(t) = h(\bar{x}(t)) \). We then define the linearly interpolated process:
+          \[
+            X(t) = (t-n)x_{n+1} + (n+1-t)x_n, \quad \forall\, t \in [n, n+1], \quad x(t) = X(t/\eta)
+          \]
+          Then for \( T > 0 \), under necessary assumptions:
+          \[
+            \lim_{\eta \to 0} \mathbb{E}\!\left[\sup_{0 \leq t \leq T} |x(t) - \bar{x}(t)|\right] = 0
+          \]
+          In Chap. 6 of <a class="cite" href="#ref-gulinsky1993">[Gulinsky &amp; Veretennikov, 1993]</a>,
+          a high-level set of assumptions for the above result is listed. Specifically, we need \( v_n \)
+          to belong to a compact set, which happens when the noise also obeys this property. If we can
+          prove that \( x_n \) belongs to a compact set, then a growth condition on the noise is
+          sufficient. This is similar in spirit to the set of assumptions in
+          <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>.
+        </p>
+
+        <h3>Action Functional</h3>
+        <p>
+          Now suppose that \( v_n \) belongs to a compact set, meaning it is bounded by some constant
+          \( K \). Obviously \( g(x,y) = y \) is 1-Lipschitz. Recall that \( U(x,\omega) \) is
+          uniformly non-degenerate, i.e. its covariance is positive definite and satisfies a quadratic
+          growth condition. We define the Hamiltonian:
+        </p>
+
+        <div class="proposition">
+          <div class="proposition-label">Proposition</div>
+          Let \( (v_n)_n \) be defined as above. Under the above conditions, the following limit exists
+          uniformly in \( x, x' \) over a compact set:
+          \[
+            H(x, x', \alpha) = \lim_{k \to +\infty} \frac{1}{k}
+            \log\mathbb{E}\!\left[\exp\!\left\langle\alpha, \sum_{j=1}^k g(x', v_j^x)\right\rangle\right]
+            = \lim_{k \to +\infty} \frac{1}{k}
+            \log\mathbb{E}\!\left[\exp\!\left\langle\alpha, \sum_{j=1}^k v_j^x\right\rangle\right]
+          \]
+        </div>
+
+        <p>
+          The proof of this proposition is based on Proposition 2.2.11 of
+          <a class="cite" href="#ref-kifer2008">[Kifer, 2008]</a>. Note that there is a small difference
+          in the statement, but this is not a major issue: we can bound the expectation in the limit by a
+          standard expression and then use the available result in Proposition 2.2.11 of Kifer's work to
+          demonstrate the existence of the limit.
+        </p>
+
+        <div class="remark">
+          <strong>Connection to <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>.</strong>
+          In the absence of the momentum effect (\( \beta = 0 \)),
+          \( v_{n+1}^x = -\nabla f(x) + U(x, \omega_n) \) is independent of all previous states, so:
+          \[
+            H(x, \alpha) = \lim_{k \to +\infty} \frac{1}{k}
+            \log\mathbb{E}\!\left[\exp\!\left\langle\alpha, \sum_{j=1}^k v_j^x\right\rangle\right]
+            = \log\mathbb{E}\!\left[\exp\!\left\langle\alpha, -\nabla f(x) + U(x,\omega)\right\rangle\right]
+          \]
+          which recovers the Hamiltonians in their work. However, in our case, this seems impossible to
+          compute exactly. But the existence is sufficient for further analysis.
+        </div>
+
+        <p>
+          The Lagrangian is given as the convex conjugate of the Hamiltonian:
+          \[
+            L(x, \gamma) = \sup_\alpha\left(\langle\alpha, \gamma\rangle - H(x, x, \alpha)\right)
+          \]
+          Finally, the action functional is as usual and similar to
+          <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>:
+          \[
+            S_{0T}(\phi) = \int_0^T L(\phi_t, \dot{\phi}_t)\, dt
+          \]
+          This functional is zero if \( \phi_t \) is a solution of the averaged system listed in the
+          averaging principle section, and different from 0 for any other path. Note that this functional
+          is taken from the continuous-time process, which may cause some issues for the discrete analysis.
+          We could define a "discretized" version of the action functional as mentioned in the previous
+          post (in the book <em>Random Perturbations of Dynamical Systems</em> by Y. Kifer). However, we
+          hope that when \( \eta \to 0 \), we can use \( S_{0T} \) directly to obtain the LDP.
+        </p>
+
+        <h3>Large Deviation Principles</h3>
+        <p>
+          Recall that the process we work on is the continuous interpolated process \( x_t \) given by:
+          \[
+            x_t = \left(\frac{t}{\eta} - n\right)(x_{n+1} - x_n) + x_n,
+            \quad \forall\, t \in [n\eta, (n+1)\eta]
+          \]
+        </p>
+
+        <div class="definition">
+          <div class="definition-label">Definition — Laplace Principle</div>
+          Let \( \{X^n, n \in \mathbb{N}\} \) be a sequence of random variables taking values in a Polish
+          space \( \mathcal{X} \) and let \( I \) be a rate function on \( \mathcal{X} \). We say that
+          \( \{X^n, n \in \mathbb{N}\} \) satisfies a Laplace principle with rate function \( I \) if for
+          every bounded continuous function \( h : \mathcal{X} \to \mathbb{R} \):
+          \[
+            \lim_{n \to \infty} \frac{1}{n}\log\mathbb{E}\!\left[\exp(-nh(X^n))\right]
+            = -\inf_{x \in \mathcal{X}}\{h(x) + I(x)\}
+          \]
+        </div>
+
+        <p>
+          In some settings, the Laplace principle is equivalent to the LDP. So an interesting approach is
+          to first prove the Laplace principle for \( x_t \) then transfer to the LDP. An interesting
+          reference here is <a class="cite" href="#ref-michelle2000">[Boué et al., 2000]</a>.
+        </p>
+        <p>
+          Another research direction to prove the LDP for the interpolated process \( x_t \) is to
+          refine the analysis in
+          <a class="cite" href="#ref-kifer2008">[Kifer, 2008]</a> and
+          <a class="cite" href="#ref-gulinsky1993">[Gulinsky &amp; Veretennikov, 1993]</a>, since our
+          recursion is not in the standard form of their analysis. However, their proof of the LDP is
+          built upon the structure of the Lagrangians and Hamiltonians, so if we can demonstrate their
+          existence and main functional properties, the refinement should not be too hard (I believe).
+        </p>
+      </div>
+
+      <!-- CONCLUSION -->
+      <div id="conclusion">
+        <span class="section-label">Conclusion</span>
+        <p>
+          Until now, we have studied 2 ways to analyze stochastic momentum-based methods:
+        </p>
+        <ul>
+          <li>
+            Building directly upon the framework of
+            <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>, we could prove an
+            informal result (if all necessary assumptions are verified): the invariant measure of SGDM
+            around stable minima is larger than that of vanilla SGD. This explains an empirical
+            observation: SGDM has a better ability in finding stable minima.
+          </li>
+          <li>
+            Providing a more general framework that could recover several types of SGD as in (3):
+            Heavy-ball (momentum), Nesterov gradient descent, vanilla SGD, etc.
+          </li>
+        </ul>
+
+        <p>
+          <strong>Challenges.</strong> A more general system would require more assumptions: compactness
+          for \( v_n \), the noise, etc. Another difficulty is to adjust the proof of the LDP, which is
+          quite challenging, and to prove the existence and functional properties of the Hamiltonians
+          (convexity, regularity, ...) — properties that are not directly available due to a small change
+          in the standard system. Besides that, analyzing attractors and transitions between attractors is
+          also interesting, but I have not touched this sub-field yet. Although there are some efforts to
+          work with attractors for (2) in continuous time, there are not many such works for discrete-time
+          processes.
+        </p>
+      </div>
+
+      <!-- BIBLIOGRAPHY -->
+      <div id="bibliography">
+        <span class="section-label">References</span>
+        <ol class="bibliography">
+          <li id="ref-azizian2024">
+            [1] Azizian, W., Iutzeler, F., Malick, J., &amp; Mertikopoulos, P. (2024).
+            What is the long-run distribution of stochastic gradient descent? A large deviation analysis.
+            <em>ICML</em>.
+            <a href="https://arxiv.org/pdf/2406.09241" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-wentzell1998">
+            [2] Freidlin, M. I., &amp; Wentzell, A. D. (1998).
+            <em>Random Perturbations of Dynamical Systems</em>. Springer.
+            <a href="https://link.springer.com/book/10.1007/978-3-642-25847-3" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-kifer2008">
+            [3] Kifer, Y. (2008).
+            <em>Large Deviations and Adiabatic Transitions for Dynamical Systems and Markov Processes
+            in Fully Coupled Averaging</em>. American Mathematical Society.
+          </li>
+          <li id="ref-gulinsky1993">
+            [4] Gulinsky, O., &amp; Veretennikov, A. (1993).
+            <em>Large Deviations for Discrete-Time Processes with Averaging</em>. VSP.
+          </li>
+          <li id="ref-michelle2000">
+            [5] Boué, M., Hernández-Hernández, D., &amp; Ellis, R. S. (2000).
+            Large deviations for a random walk model with state-dependent noise.
+            <em>arXiv</em>.
+            <a href="https://www.cimat.mx/BiblioAdmin/RTAdmin/reportes/enlinea/I-00-30.pdf" target="_blank">↗ Link</a>
+          </li>
+        </ol>
+      </div>
+
+      <a class="back-link" href="../index.html">← Back to all posts</a>
+    </main>
+
+    <aside class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#reduced">Reduced-ODE</a></li>
+        <li><a href="#framework">General Framework</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#bibliography">References</a></li>
+      </ol>
+    </aside>
+  </div>
+
+  <footer>© 2026 onis's blog</footer>
+
+  <script>
+    const sections = document.querySelectorAll('#intro, #reduced, #framework, #conclusion, #bibliography');
+    const tocLinks = document.querySelectorAll('.toc a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+      tocLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
