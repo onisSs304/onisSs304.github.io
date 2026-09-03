@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>some ideas on analyzing momentum-based methods via large deviation theory (part 3) – onis's blog</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e8e8e8;
+      line-height: 1.8;
+    }
+
+    header {
+      border-bottom: 1px solid #1a3a3a;
+      padding: 20px 0;
+      text-align: center;
+      background: #0d2626;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+    header h1 a {
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    nav {
+      margin-top: 8px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #aaaaaa;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    main {
+      flex: 1;
+      max-width: 680px;
+      min-width: 0;
+    }
+
+    .post-meta {
+      font-size: 0.85rem;
+      color: #666666;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 28px;
+      color: #ffffff;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      margin: 28px 0 12px 0;
+      color: #dddddd;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1a1a1a;
+      background: #e8e8e8;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      margin-top: 28px;
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: #cccccc;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 14px 24px;
+      color: #cccccc;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .theorem {
+      background: #222222;
+      border-left: 3px solid #e8e8e8;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #e8e8e8;
+    }
+
+    .theorem-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #aaaaaa;
+      margin-bottom: 8px;
+    }
+
+    .definition {
+      background: #1e2233;
+      border-left: 3px solid #7eb8f7;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .definition-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7eb8f7;
+      margin-bottom: 8px;
+    }
+
+    .lemma {
+      background: #1e261e;
+      border-left: 3px solid #7ecf7e;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+
+    .lemma-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7ecf7e;
+      margin-bottom: 8px;
+    }
+
+    .remark {
+      background: #1f1f1f;
+      border-left: 3px solid #888;
+      padding: 14px 18px;
+      margin: 14px 0;
+      border-radius: 0 4px 4px 0;
+      color: #bbbbbb;
+      font-size: 0.95rem;
+    }
+
+    .bibliography {
+      list-style: none;
+      padding-left: 0;
+      color: #bbbbbb;
+      font-size: 0.92rem;
+    }
+
+    .bibliography li {
+      margin-bottom: 10px;
+      padding-left: 28px;
+      text-indent: -28px;
+      line-height: 1.6;
+    }
+
+    .bibliography a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .bibliography a:hover {
+      text-decoration: underline;
+    }
+
+    a.cite {
+      color: #7eb8f7;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+
+    a.cite:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
+
+    .toc {
+      width: 200px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 40px;
+      background: #222222;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-size: 0.85rem;
+    }
+
+    .toc-title {
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .toc ol {
+      padding-left: 16px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .toc a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      color: #ffffff;
+    }
+
+    .toc a.active {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    footer {
+      border-top: 1px solid #2a2a2a;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #555555;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="../index.html">onis's blog</a></h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="page-wrapper">
+    <main>
+      <p class="post-meta">August 15, 2026</p>
+      <h2>some ideas on analyzing momentum-based methods via large deviation theory (part 3)</h2>
+
+      <!-- INTRO / ASSUMPTIONS -->
+      <div id="assumptions">
+        <span class="section-label">Assumptions</span>
+        <p>
+          Following the previous posts, we will introduce some necessary assumptions to be able to obtain
+          the LDP for the iterates of Stochastic Gradient Descent with Momentum. Specifically, we need a
+          clean handle for regularity, boundedness for the loss, compactness for the iterates, and
+          probably the information of the noise. However, the details for the LDP proof will not be
+          presented here since they already appear in several earlier works
+          <a class="cite" href="#ref-michelle2000">[Boué et al., 2000]</a>,
+          <a class="cite" href="#ref-paul1988">[Dupuis, 1988]</a>, or
+          <a class="cite" href="#ref-gulinsky1993">[Gulinsky &amp; Veretennikov, 1993]</a>.
+        </p>
+        <p>First, we recall the iterates of SGDM:</p>
+        \[
+        \begin{cases}
+        x_{n+1} = x_n + \eta v_{n+1} \\
+        v_{n+1} = \beta v_n - \nabla G(x_n, \omega) = \beta v_n - \nabla f(x_n) + U(x_n, \omega_n) \\
+        x_0, v_0 \in \mathbb{R}^d
+        \end{cases}
+        \tag{1}
+        \]
+
+        <p>
+          <strong>Loss objective.</strong> We reuse the same assumptions as in
+          <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>:
+        </p>
+        <ul>
+          <li><strong>Coercivity:</strong> \( f(x) \to \infty \) as \( \|x\| \to \infty \).</li>
+          <li>
+            <strong>Smoothness:</strong> \( f \) is \( C^2 \)-differentiable and its gradient is
+            \( L \)-Lipschitz continuous, that is:
+            \[
+            \|\nabla f(x') - \nabla f(x)\| \leq L\|x - x'\|
+            \]
+          </li>
+          <li>
+            <strong>Critical set regularity:</strong> the critical set
+            \( \mathrm{crit}\, f := \{x \in \mathcal{X} : \nabla f(x) = 0\} \) consists of a finite
+            number of smoothly connected components \( \mathcal{K}_i \).
+          </li>
+        </ul>
+
+        <p><strong>Information of the noise.</strong></p>
+        <ul>
+          <li>
+            \( \mathbb{E}[U(x,\omega)] = 0 \), \( \mathrm{Cov}(U(x,\omega)) \succ 0 \), and the
+            covariance is continuous with respect to \( x \).
+          </li>
+          <li>
+            <strong>Smooth growth:</strong> \( U(x,\omega) \) is \( C^2 \)-differentiable and satisfies
+            the growth condition:
+            \[
+            \sup_{x,\omega} \frac{\|U(x,\omega)\|}{1 + \|x\|} < \infty \] </li>
+          <li>
+            This is the different point from the original work: we need a transition kernel condition for
+            the Markov chain \( v_n^x \) defined by:
+            \[
+            v_{n+1}^x = \beta v_n^x - \nabla f(x) + U(x, \omega_n) \tag{2}
+            \]
+            The transition kernel has a density with respect to a fixed measure \( \lambda \), defined by
+            \( P^x(v, dv') = p^x(v, v')\lambda(dv') \). Inspired by
+            <a class="cite" href="#ref-paul1988">[Dupuis, 1988]</a> and
+            <a class="cite" href="#ref-michelle2000">[Boué et al., 2000]</a>, the sufficient condition
+            should be: there exist \( 0 < a \leq A < \infty \) such that, given a compact set \( F \) and \( x \)
+              belonging to it, we have \( a \leq p^x(v, v') \leq A \), and \( p^x(v, v') \) is continuous in \( x \),
+              uniformly in \( v, v' \) in a compact set. </li>
+        </ul>
+
+        <p>
+          <strong>Discussion of assumptions.</strong> Except for the transition kernel condition, all
+          remaining assumptions are already considered carefully in
+          <a class="cite" href="#ref-azizian2024">[Azizian et al., 2024]</a>. Therefore, we should take
+          a careful look at the transition kernel. Suppose the fixed measure \( \lambda \) is the Lebesgue
+          measure. Note that the above condition is stated in a general form; we will now go into the
+          details for SGDM. Given the Markov chain (2) and a frozen \( x \), the transition probability is:
+          \[
+          P^x(v, dv') = \mathbb{P}(\beta v - \nabla f(x) + U(x,\omega) \in dv')
+          = f_x(v' + \nabla f(x) - \beta v)\, dv'
+          \]
+          where \( U(x,\omega) \) has a density \( f_x(\cdot) \) with respect to the Lebesgue measure.
+          Then \( p^x(v,v') = f_x(v' + \nabla f(x) - \beta v) \). Given compact sets \( E, F \) and the
+          continuity of \( \nabla f \), for all \( x \in F \) and \( v, v' \in E \), the quantity
+          \( v' + \nabla f(x) - \beta v \) also belongs to a compact set. To guarantee that
+          \( f_x(v' + \nabla f(x) - \beta v) \) is always positive on every compact set, we consider some
+          types of distribution for \( U(x,\omega) \):
+        </p>
+        <ul>
+          <li>
+            <strong>Discrete distribution:</strong> the state space is finite and the density may be zero
+            at some points.
+          </li>
+          <li>
+            <strong>Globally continuous distribution:</strong> the density is nonzero and continuous at
+            all points; this type of distribution essentially satisfies our condition.
+          </li>
+          <li>
+            <strong>Bounded continuous distribution</strong> such as the Uniform law or Truncated
+            Gaussian: this may be more complicated. If we can prove that the iterates \( x_n \) and
+            \( v_n \) belong to a compact set (which should be true), the domain of the distribution
+            should be large enough to cover
+            \( \{v' + \nabla f(x) - \beta v : x, v, v' \text{ belong to a certain compact set}\} \).
+          </li>
+        </ul>
+      </div>
+
+      <!-- COMPACTNESS -->
+      <div id="compactness">
+        <span class="section-label">Compactness of the Iterates</span>
+
+        <div class="lemma">
+          <div class="lemma-label">Lemma — Growth of \( x_n \)</div>
+          For any \( x_0 \in \mathcal{X} = \mathbb{R}^d \), \( \eta_0 > 0 \), for every
+          \( \eta \in (0, \eta_0) \), for any \( N \geq 1 \) and
+          \( 0 \leq n \leq N(\lfloor\eta^{-1}\rfloor + 1) \), there exist constants
+          \( c_1(x_0, x_1, \eta, \beta) \) and \( c_2(x_0, x_1, \eta, \beta) \) such that:
+          \[
+          \|x_n\| \leq c_1 + c_2 \exp\!\left(\frac{2MN(1+\eta_0)}{2+\beta}\right)({\beta + 2})^n
+          \]
+        </div>
+
+        <p>
+          This is the best bound I could find; the proof is based on solving an inequality recursion
+          problem. Let me recall a simple version of SGDM:
+          \[
+          \begin{cases}
+          x_{n+1} = x_n + \beta(x_n - x_{n-1}) - \eta\nabla f(x_n) + U(x_n, \omega_n) \\
+          x_0,\quad x_1 = x_0 - \eta\nabla f(x_0)
+          \end{cases}
+          \tag{3}
+          \]
+          The assumptions above imply the existence of a positive number \( M \) such that:
+          \[
+          \|\nabla f(x)\| \leq M(1+\|x\|), \quad \|U(x,\omega)\| \leq M(1+\|x\|), \quad \forall\, x \in \mathcal{X}
+          \]
+          The second inequality comes from the growth condition of the noise, while the first is deduced
+          from the \( L \)-Lipschitz gradient condition. Taking the norm and using the triangle inequality:
+          \begin{align*}
+          \|x_{n+1}\| &\leq (1+\beta)\|x_n\| + \beta\|x_{n-1}\|
+          + \eta(\|\nabla f(x_n)\| + \|U(x_n, \omega_n)\|) \\
+          &\leq (1+\beta+2M\eta)\|x_n\| + \beta\|x_{n-1}\| + 2M\eta
+          \end{align*}
+          Let \( y_n = \|x_n\| + \dfrac{M\eta}{\beta + M\eta} \), then
+          \( y_{n+1} \leq (1+\beta+2M\eta)y_n + \beta y_{n-1} \). One can show that:
+          \[
+          y_n \leq ap^n + bq^n
+          \]
+          where \( pq = -\beta \) and \( p + q = 1 + \beta + 2M\eta > 1 \). Since \( 0 \leq \beta < 1 \), we can assume
+            \( -1 < p < -\beta \) and \( q> 1 \). The exact form of \( a \) and \( b \)
+            will depend on the initial conditions and parameters, specifically \( x_0, x_1, \beta, \eta \).
+            Then:
+            \begin{align*}
+            y_n &\leq |a| + |b| \cdot q^n = |a| + |b|(1+\beta+2M\eta-p)^n
+            \leq |a| + |b|(2+\beta+2M\eta)^n \\
+            &= |a| + |b| \cdot (2+\beta)^n\left(1 + \frac{2M\eta}{2+\beta}\right)^n
+            \leq |a| + |b| \cdot (2+\beta)^n \exp\!\left(\frac{2M\eta n}{2+\beta}\right) \\
+            &\leq |a| + |b| \cdot (2+\beta)^n \exp\!\left(\frac{2MN(1+\eta)}{2+\beta}\right)
+            \end{align*}
+            This concludes the lemma. It shows that in finite time and for every constant \( \eta \), the
+            iterates \( x_n \) belong to a compact set. However, I think that this bound can be improved
+            since the term \( (2+\beta)^n \) is quite dangerous.
+        </p>
+        <p>
+          Now suppose that for \( N \geq 1 \), the sequence \( (x_n)_{n \leq N} \) lies in a compact set,
+          i.e. its norm is bounded by some positive number. We have:
+          \[
+          \|v_{n+1}\| \leq \beta\|v_n\| + \|\nabla f(x_n)\| + \|U(x_n, \omega_n)\|
+          \leq \beta\|v_n\| + 2M(1+\|x_n\|) \leq \beta\|v_n\| + K
+          \]
+          We can solve this recursion easily and prove that \( (v_n)_{n \leq N} \) lies in a ball with
+          radius depending on the boundedness of \( (x_n)_{n \leq N} \).
+        </p>
+      </div>
+
+      <!-- LDP -->
+      <div id="ldp">
+        <span class="section-label">Large Deviation Principle</span>
+
+        <p>
+          <strong>The existence of the Hamiltonian.</strong> Following the work of
+          <a class="cite" href="#ref-paul1988">[Dupuis, 1988]</a> and
+          <a class="cite" href="#ref-iscoe1985">[Iscoe, Ney &amp; Nummelin, 1985]</a>, the assumptions
+          above and the compactness of the iterates \( (x_n) \) and \( (v_n) \) in finite time ensure the
+          existence of the Hamiltonian stated in the previous post.
+        </p>
+        <p>
+          <strong>Laplace principle.</strong> Then by the proof in
+          <a class="cite" href="#ref-michelle2000">[Boué et al., 2000]</a>, we can conclude that the
+          continuous interpolated, piecewise linear process formed by \( (x_n)_{n \leq N} \) satisfies
+          the Laplace principle (also stated in the previous post). Furthermore, the iterates
+          \( (x_n)_{n \leq N} \) act on a compact set, which is essentially a Polish space. So the
+          Laplace principle is equivalent to the Large Deviation Principle.
+        </p>
+      </div>
+
+      <!-- BIBLIOGRAPHY -->
+      <div id="bibliography">
+        <span class="section-label">References</span>
+        <ol class="bibliography">
+          <li id="ref-azizian2024">
+            [1] Azizian, W., Iutzeler, F., Malick, J., &amp; Mertikopoulos, P. (2024).
+            What is the long-run distribution of stochastic gradient descent? A large deviation analysis.
+            <em>ICML</em>.
+            <a href="https://arxiv.org/pdf/2406.09241" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-michelle2000">
+            [2] Boué, M., Hernández-Hernández, D., &amp; Ellis, R. S. (2000).
+            Large deviations for a random walk model with state-dependent noise.
+            <a href="https://www.cimat.mx/BiblioAdmin/RTAdmin/reportes/enlinea/I-00-30.pdf" target="_blank">↗ Link</a>
+          </li>
+          <li id="ref-paul1988">
+            [3] Dupuis, P. (1988). Large deviations analysis of some recursive algorithms with
+            state-dependent noise. <em>The Annals of Probability</em>.
+          </li>
+          <li id="ref-gulinsky1993">
+            [4] Gulinsky, O., &amp; Veretennikov, A. (1993).
+            <em>Large Deviations for Discrete-Time Processes with Averaging</em>. VSP.
+          </li>
+          <li id="ref-kifer2008">
+            [5] Kifer, Y. (2008).
+            <em>Large Deviations and Adiabatic Transitions for Dynamical Systems and Markov Processes
+              in Fully Coupled Averaging</em>. American Mathematical Society.
+          </li>
+          <li id="ref-iscoe1985">
+            [6] Iscoe, I., Ney, P., &amp; Nummelin, E. (1985). Large deviations of uniformly recurrent
+            Markov additive processes. <em>Advances in Applied Mathematics</em>.
+          </li>
+        </ol>
+      </div>
+
+      <a class="back-link" href="../index.html">← Back to all posts</a>
+    </main>
+
+    <aside class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#assumptions">Assumptions</a></li>
+        <li><a href="#compactness">Compactness</a></li>
+        <li><a href="#ldp">LDP</a></li>
+        <li><a href="#bibliography">References</a></li>
+      </ol>
+    </aside>
+  </div>
+
+  <footer>© 2026 onis's blog</footer>
+
+  <script>
+    const sections = document.querySelectorAll('#assumptions, #compactness, #ldp, #bibliography');
+    const tocLinks = document.querySelectorAll('.toc a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+      tocLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+
+</html>
