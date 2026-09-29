@@ -9,7 +9,11 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -24,11 +28,30 @@
       text-align: center;
       background: #0d2626;
     }
-    header h1 { font-size: 1.8rem; }
-    header h1 a { text-decoration: none; color: #ffffff; }
-    nav { margin-top: 8px; }
-    nav a { margin: 0 12px; text-decoration: none; color: #aaaaaa; font-size: 0.95rem; }
-    nav a:hover { color: #ffffff; }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+    header h1 a {
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    nav {
+      margin-top: 8px;
+    }
+
+    nav a {
+      margin: 0 12px;
+      text-decoration: none;
+      color: #aaaaaa;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
 
     .page-wrapper {
       display: flex;
@@ -40,11 +63,29 @@
       padding: 0 20px;
     }
 
-    main { flex: 1; max-width: 680px; min-width: 0; }
+    main {
+      flex: 1;
+      max-width: 680px;
+      min-width: 0;
+    }
 
-    .post-meta { font-size: 0.85rem; color: #666666; margin-bottom: 12px; }
-    h2 { font-size: 1.7rem; margin-bottom: 28px; color: #ffffff; }
-    h3 { font-size: 1.15rem; margin: 28px 0 12px 0; color: #dddddd; }
+    .post-meta {
+      font-size: 0.85rem;
+      color: #666666;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 28px;
+      color: #ffffff;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      margin: 28px 0 12px 0;
+      color: #dddddd;
+    }
 
     .section-label {
       display: inline-block;
@@ -60,9 +101,20 @@
       margin-top: 28px;
     }
 
-    p { margin-bottom: 14px; color: #cccccc; }
-    ul, ol { margin: 0 0 14px 24px; color: #cccccc; }
-    li { margin-bottom: 6px; }
+    p {
+      margin-bottom: 14px;
+      color: #cccccc;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 14px 24px;
+      color: #cccccc;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
 
     .theorem {
       background: #222222;
@@ -72,6 +124,7 @@
       border-radius: 0 4px 4px 0;
       color: #e8e8e8;
     }
+
     .theorem-label {
       font-weight: bold;
       font-size: 0.8rem;
@@ -91,16 +144,50 @@
       font-size: 0.95rem;
     }
 
-    .bibliography { list-style: none; padding-left: 0; color: #bbbbbb; font-size: 0.92rem; }
-    .bibliography li { margin-bottom: 10px; padding-left: 28px; text-indent: -28px; line-height: 1.6; }
-    .bibliography a { color: #7eb8f7; text-decoration: none; }
-    .bibliography a:hover { text-decoration: underline; }
+    .bibliography {
+      list-style: none;
+      padding-left: 0;
+      color: #bbbbbb;
+      font-size: 0.92rem;
+    }
 
-    a.cite { color: #7eb8f7; text-decoration: none; font-size: 0.9em; }
-    a.cite:hover { text-decoration: underline; }
+    .bibliography li {
+      margin-bottom: 10px;
+      padding-left: 28px;
+      text-indent: -28px;
+      line-height: 1.6;
+    }
 
-    .back-link { display: inline-block; margin-top: 40px; font-size: 0.9rem; color: #7eb8f7; text-decoration: none; }
-    .back-link:hover { color: #ffffff; }
+    .bibliography a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .bibliography a:hover {
+      text-decoration: underline;
+    }
+
+    a.cite {
+      color: #7eb8f7;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+
+    a.cite:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: #ffffff;
+    }
 
     .toc {
       width: 200px;
@@ -113,14 +200,47 @@
       padding: 16px 18px;
       font-size: 0.85rem;
     }
-    .toc-title { font-weight: bold; color: #ffffff; margin-bottom: 10px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; }
-    .toc ol { padding-left: 16px; }
-    .toc li { margin-bottom: 6px; line-height: 1.4; }
-    .toc a { color: #7eb8f7; text-decoration: none; }
-    .toc a:hover { color: #ffffff; }
-    .toc a.active { color: #ffffff; font-weight: bold; }
 
-    footer { border-top: 1px solid #2a2a2a; text-align: center; padding: 20px; font-size: 0.85rem; color: #555555; margin-top: 60px; }
+    .toc-title {
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .toc ol {
+      padding-left: 16px;
+    }
+
+    .toc li {
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .toc a {
+      color: #7eb8f7;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      color: #ffffff;
+    }
+
+    .toc a.active {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    footer {
+      border-top: 1px solid #2a2a2a;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.85rem;
+      color: #555555;
+      margin-top: 60px;
+    }
   </style>
 </head>
 
@@ -136,7 +256,7 @@
 
   <div class="page-wrapper">
     <main>
-      <p class="post-meta">September 26, 2026</p>
+      <p class="post-meta">September 29, 2026</p>
       <h2>Riemannian structure of hypersphere kernels</h2>
 
       <!-- INTRO -->
@@ -172,7 +292,7 @@
           variables with respectively \( C_1, \ldots, C_m \) levels. For the \( i \)-th categorical
           variable, the set of levels is \( Z_i = [1, \ldots, C_i] \), and the input space is:
           \[
-            W = \mathbb{R}^n \times Z_1 \times Z_2 \times \cdots \times Z_m
+          W = \mathbb{R}^n \times Z_1 \times Z_2 \times \cdots \times Z_m
           \]
           Given a set of \( N \) observations \( ((w_1, y_1), \ldots, (w_N, y_N)) \in W^N \), we consider
           a Gaussian process regression defined on \( W \). Furthermore, we assume that
@@ -183,7 +303,7 @@
           \( Z_1 \times Z_2 \times \cdots \times Z_m \). Standard combinations are product and sum. In
           this post, I only consider the product:
           \[
-            k((x,z),(x',z')) = k_{\mathrm{cont}}(x,x') \cdot k_{\mathrm{cat}}(z,z')
+          k((x,z),(x',z')) = k_{\mathrm{cont}}(x,x') \cdot k_{\mathrm{cat}}(z,z')
           \]
           From now, suppose that \( m = 1 \) and we will only be interested in defining the kernel of
           the categorical variable \( k_{\mathrm{cat}}(\cdot,\cdot) \). Since the number of levels is
@@ -206,102 +326,99 @@
           First, we rewrite \( T = LL^T \) where \( L \) is the lower triangular matrix. This matrix can
           be parametrized by the following heteroscedastic hypersphere (HE) decomposition:
           \begin{align*}
-            &L_{1,1} = \theta_{1,0} \\
-            &L_{i,1} = \theta_{i,0}\cos(\theta_{i,1}), \quad \forall\, 2 \leq i \leq C \\
-            &L_{i,i} = \theta_{i,0}\prod_{l=1}^{i-1}\sin(\theta_{i,l}), \quad \forall\, 2 \leq i \leq C \\
-            &L_{i,j} = \theta_{i,0}\cos(\theta_{i,j})\prod_{l=1}^{j-1}\sin(\theta_{i,l}),
-            \quad \forall\, 2 \leq j < i \leq C
-          \end{align*}
-          Furthermore, we assume that \( \theta_{i,j} \in (0,\pi) \) for \( 1 \leq j < i \leq C \)
-          and \( \theta_{i,0} > 0 \) for \( 1 \leq i \leq C \). So the matrix \( L \) has positive
-          diagonal and is described by the hyperparameter
-          \( \theta = (\theta_{i,j})_{0 \leq j < i \leq C} \). We typically need
-          \( \frac{C(C+1)}{2} \) parameters. One can then prove that there is a one-to-one correspondence
-          between the set of SPD matrices and the set of all possible values of \( \theta \). Indeed, for
-          every SPD matrix, there exists a unique lower triangular matrix with positive diagonal \( L \)
-          satisfying the Cholesky decomposition, and \( L \) is uniquely determined by a hyperparameter
-          \( \theta \).
-        </p>
-        <p>
-          From the hyperparameter estimation perspective, instead of estimating \( \theta \), we compute
-          an estimate of the corresponding SPD matrix. We denote \( \mathrm{Sym}^+(n) \) the set of SPD
-          matrices and \( \mathrm{GL}(n) \) the set of invertible matrices.
-        </p>
-        <p>
-          First, note that \( \mathrm{GL}(n) \) equipped with the Frobenius inner product forms a smooth
-          Riemannian manifold. We want to prove that \( \mathrm{Sym}^+(n) \) is a smooth quotient manifold
-          of \( \mathrm{GL}(n) \) through an equivalence relation. <strong>First</strong>, we need to
-          define an equivalence relation on \( \mathrm{GL}(n) \) such that the quotient space
-          \( \mathrm{GL}(n)/{\sim} \) is isomorphic to \( \mathrm{Sym}^+(n) \).
-          <strong>Second</strong>, we need to define a natural projection from \( \mathrm{GL}(n) \) to
-          \( \mathrm{Sym}^+(n) \) that is a smooth submersion. In fact, we proceed the second point first,
-          defining the following projection:
-          \[
-            \pi : A \in \mathrm{GL}(n) \mapsto \frac{1}{4}AA^T \in \mathrm{Sym}^+(n)
-          \]
-          \( \pi \) is a submersion iff at each \( A \in \mathrm{GL}(n) \) the differential map
-          \( D_\pi(A) \) is surjective. We calculate its differential explicitly:
-          \[
-            \pi(A + H) = \frac{1}{4}(A+H)(A+H)^T = \pi(A) + \frac{1}{4}(AH^T + HA^T) + \frac{HH^T}{4}
-          \]
-          So the differential map is:
-          \[
-            D_\pi(A)H = \frac{1}{4}(AH^T + HA^T)
-          \]
-          Remark that the tangent space of \( \mathrm{Sym}^+(n) \) is exactly \( \mathrm{Sym}(n) \), the
-          space of symmetric matrices. Indeed, \( \mathrm{Sym}^+(n) \) is an open subset of the vector
-          space \( \mathrm{Sym}(n) \), so for each \( X \in \mathrm{Sym}^+(n) \), the tangent space
-          \( T_X\mathrm{Sym}^+(n) = \mathrm{Sym}(n) \).
-        </p>
-        <p>
-          For the submersion part: for each \( X \in \mathrm{Sym}(n) \), let \( H = 2XA^{-T} \), then
-          \( D_\pi(A)H = X \), where \( 2XA^{-T} \) can be understood as multiplying each element of
-          \( X \) by 2. So \( \pi \) is a smooth submersion. By the projection, we define an equivalence
-          relation \( \sim \) on \( \mathrm{GL}(n) \) by \( A \sim B \) iff \( AA^T = BB^T \). Then the
-          quotient space \( \mathrm{GL}(n)/{\sim} \) is
-          \( \{[A] \mid [A] = \{X \in \mathrm{GL}(n) : XX^T = AA^T\}\} \), and \( AA^T \) is exactly an
-          element in \( \mathrm{Sym}^+(n) \), so there is a one-to-one correspondence between
-          \( \mathrm{GL}(n)/{\sim} \) and \( \mathrm{Sym}^+(n) \), i.e.
-          \( \mathrm{Sym}^+(n) \cong \mathrm{GL}(n)/{\sim} \). We can conclude that
-          \( \mathrm{Sym}^+(n) \) is a quotient manifold of \( \mathrm{GL}(n) \).
-        </p>
-        <p>
-          Next, we need to define a Riemannian metric on \( \mathrm{Sym}^+(n) \) as well as the
-          Riemannian distance with the corresponding Riemannian metric. In fact, there are several choices
-          for the smooth Riemannian metric that lead to different distance formulas. Let us discuss some
-          common choices (I will not go deeply into the construction or the intuition, but give a brief
-          introduction about the definition and formula). The Riemannian metric is an inner product defined
-          on the tangent space at each point of \( \mathrm{Sym}^+(n) \). Let \( X \) be a symmetric
-          positive definite matrix; for \( U, V \in \mathrm{Sym}(n) \) seen as points on the tangent
-          space at \( X \):
-        </p>
-        <ul>
-          <li>
-            <strong>Affine invariant:</strong>
-            \( \langle U, V\rangle_{X,\mathrm{AI}} = \mathrm{Tr}(X^{-1}UX^{-1}V) \)
-          </li>
-          <li>
-            <strong>Bures–Wasserstein:</strong>
-            \( \langle U, V\rangle_{X,\mathrm{BW}} = \frac{1}{2}\mathrm{Tr}(L_X(U)V) \),
-            where \( L_X(U) \) is the solution to the matrix linear system
-            \( L_X(U)X + XL_X(U) = U \).
-            It has shown many benefits in Riemannian optimization for several problems; for a reference
-            see <a class="cite" href="#ref-andi2021">[Han et al., 2021]</a>.
-          </li>
-          <li>
-            <strong>Log-Euclidean:</strong>
-            \( \langle U, V\rangle_{X,\mathrm{LE}} = \langle D\mathrm{Log}_X(U), D\mathrm{Log}_X(V)\rangle_F \),
-            where \( D\mathrm{Log}_X \) is the differential map at \( X \) and \( \mathrm{Log} \) is the
-            function from \( \mathrm{Sym}^+(n) \) to \( \mathrm{Sym}(n) \), seen as the inverse of the
-            \( \mathrm{Exp} \) function.
-          </li>
-        </ul>
+          &L_{1,1} = \theta_{1,0} \\
+          &L_{i,1} = \theta_{i,0}\cos(\theta_{i,1}), \quad \forall\, 2 \leq i \leq C \\
+          &L_{i,i} = \theta_{i,0}\prod_{l=1}^{i-1}\sin(\theta_{i,l}), \quad \forall\, 2 \leq i \leq C \\
+          &L_{i,j} = \theta_{i,0}\cos(\theta_{i,j})\prod_{l=1}^{j-1}\sin(\theta_{i,l}),
+          \quad \forall\, 2 \leq j < i \leq C \end{align*} Furthermore, we assume that \( \theta_{i,j} \in (0,\pi) \)
+            for \( 1 \leq j < i \leq C \) and \( \theta_{i,0}> 0 \) for \( 1 \leq i \leq C \). So the matrix \( L \) has
+            positive
+            diagonal and is described by the hyperparameter
+            \( \theta = (\theta_{i,j})_{0 \leq j < i \leq C} \). We typically need \( \frac{C(C+1)}{2} \) parameters.
+              One can then prove that there is a one-to-one correspondence between the set of SPD matrices and the set
+              of all possible values of \( \theta \). Indeed, for every SPD matrix, there exists a unique lower
+              triangular matrix with positive diagonal \( L \) satisfying the Cholesky decomposition, and \( L \) is
+              uniquely determined by a hyperparameter \( \theta \). </p>
+              <p>
+                From the hyperparameter estimation perspective, instead of estimating \( \theta \), we compute
+                an estimate of the corresponding SPD matrix. We denote \( \mathrm{Sym}^+(n) \) the set of SPD
+                matrices and \( \mathrm{GL}(n) \) the set of invertible matrices.
+              </p>
+              <p>
+                First, note that \( \mathrm{GL}(n) \) equipped with the Frobenius inner product forms a smooth
+                Riemannian manifold. We want to prove that \( \mathrm{Sym}^+(n) \) is a smooth quotient manifold
+                of \( \mathrm{GL}(n) \) through an equivalence relation. <strong>First</strong>, we need to
+                define an equivalence relation on \( \mathrm{GL}(n) \) such that the quotient space
+                \( \mathrm{GL}(n)/{\sim} \) is isomorphic to \( \mathrm{Sym}^+(n) \).
+                <strong>Second</strong>, we need to define a natural projection from \( \mathrm{GL}(n) \) to
+                \( \mathrm{Sym}^+(n) \) that is a smooth submersion. In fact, we proceed the second point first,
+                defining the following projection:
+                \[
+                \pi : A \in \mathrm{GL}(n) \mapsto \frac{1}{4}AA^T \in \mathrm{Sym}^+(n)
+                \]
+                \( \pi \) is a submersion iff at each \( A \in \mathrm{GL}(n) \) the differential map
+                \( D_\pi(A) \) is surjective. We calculate its differential explicitly:
+                \[
+                \pi(A + H) = \frac{1}{4}(A+H)(A+H)^T = \pi(A) + \frac{1}{4}(AH^T + HA^T) + \frac{HH^T}{4}
+                \]
+                So the differential map is:
+                \[
+                D_\pi(A)H = \frac{1}{4}(AH^T + HA^T)
+                \]
+                Remark that the tangent space of \( \mathrm{Sym}^+(n) \) is exactly \( \mathrm{Sym}(n) \), the
+                space of symmetric matrices. Indeed, \( \mathrm{Sym}^+(n) \) is an open subset of the vector
+                space \( \mathrm{Sym}(n) \), so for each \( X \in \mathrm{Sym}^+(n) \), the tangent space
+                \( T_X\mathrm{Sym}^+(n) = \mathrm{Sym}(n) \).
+              </p>
+              <p>
+                For the submersion part: for each \( X \in \mathrm{Sym}(n) \), let \( H = 2XA^{-T} \), then
+                \( D_\pi(A)H = X \), where \( 2XA^{-T} \) can be understood as multiplying each element of
+                \( X \) by 2. So \( \pi \) is a smooth submersion. By the projection, we define an equivalence
+                relation \( \sim \) on \( \mathrm{GL}(n) \) by \( A \sim B \) iff \( AA^T = BB^T \). Then the
+                quotient space \( \mathrm{GL}(n)/{\sim} \) is
+                \( \{[A] \mid [A] = \{X \in \mathrm{GL}(n) : XX^T = AA^T\}\} \), and \( AA^T \) is exactly an
+                element in \( \mathrm{Sym}^+(n) \), so there is a one-to-one correspondence between
+                \( \mathrm{GL}(n)/{\sim} \) and \( \mathrm{Sym}^+(n) \), i.e.
+                \( \mathrm{Sym}^+(n) \cong \mathrm{GL}(n)/{\sim} \). We can conclude that
+                \( \mathrm{Sym}^+(n) \) is a quotient manifold of \( \mathrm{GL}(n) \).
+              </p>
+              <p>
+                Next, we need to define a Riemannian metric on \( \mathrm{Sym}^+(n) \) as well as the
+                Riemannian distance with the corresponding Riemannian metric. In fact, there are several choices
+                for the smooth Riemannian metric that lead to different distance formulas. Let us discuss some
+                common choices (I will not go deeply into the construction or the intuition, but give a brief
+                introduction about the definition and formula). The Riemannian metric is an inner product defined
+                on the tangent space at each point of \( \mathrm{Sym}^+(n) \). Let \( X \) be a symmetric
+                positive definite matrix; for \( U, V \in \mathrm{Sym}(n) \) seen as points on the tangent
+                space at \( X \):
+              </p>
+              <ul>
+                <li>
+                  <strong>Affine invariant:</strong>
+                  \( \langle U, V\rangle_{X,\mathrm{AI}} = \mathrm{Tr}(X^{-1}UX^{-1}V) \)
+                </li>
+                <li>
+                  <strong>Bures–Wasserstein:</strong>
+                  \( \langle U, V\rangle_{X,\mathrm{BW}} = \frac{1}{2}\mathrm{Tr}(L_X(U)V) \),
+                  where \( L_X(U) \) is the solution to the matrix linear system
+                  \( L_X(U)X + XL_X(U) = U \).
+                  It has shown many benefits in Riemannian optimization for several problems; for a reference
+                  see <a class="cite" href="#ref-andi2021">[Han et al., 2021]</a>.
+                </li>
+                <li>
+                  <strong>Log-Euclidean:</strong>
+                  \( \langle U, V\rangle_{X,\mathrm{LE}} = \langle D\mathrm{Log}_X(U), D\mathrm{Log}_X(V)\rangle_F \),
+                  where \( D\mathrm{Log}_X \) is the differential map at \( X \) and \( \mathrm{Log} \) is the
+                  function from \( \mathrm{Sym}^+(n) \) to \( \mathrm{Sym}(n) \), seen as the inverse of the
+                  \( \mathrm{Exp} \) function.
+                </li>
+              </ul>
 
-        <div class="remark">
-          <strong>Summary.</strong> The HE parametrization for the kernel is a smooth manifold that can
-          be equipped with several types of Riemannian metrics: Log-Euclidean, Affine Invariant,
-          Bures–Wasserstein, etc.
-        </div>
+              <div class="remark">
+                <strong>Summary.</strong> The HE parametrization for the kernel is a smooth manifold that can
+                be equipped with several types of Riemannian metrics: Log-Euclidean, Affine Invariant,
+                Bures–Wasserstein, etc.
+              </div>
       </div>
 
       <!-- HOMOSCEDASTIC -->
@@ -340,7 +457,7 @@
           the following symmetric scaling: for each
           \( [A] \in \mathrm{Sym}^+(n)/\mathrm{Diag}^+(n) \):
           \[
-            p([A]) = \mathrm{Diag}(A)^{-1/2}\, A\, \mathrm{Diag}(A)^{-1/2}
+          p([A]) = \mathrm{Diag}(A)^{-1/2}\, A\, \mathrm{Diag}(A)^{-1/2}
           \]
           Actually, the bijectivity of this map can be proved as follows. This map is injective: if there
           exist \( A, B \in \mathrm{Sym}^+(n) \) such that
@@ -351,21 +468,21 @@
           surjectivity, let \( B \in \mathrm{Cor}^+(n) \) and for all \( i \), \( a_{ii} > 0 \); then
           we can construct a matrix \( A \) satisfying:
           \[
-            A_{ii} = a_{ii}, \quad A_{ij} = B_{ij}\sqrt{a_{ii} a_{jj}}
+          A_{ii} = a_{ii}, \quad A_{ij} = B_{ij}\sqrt{a_{ii} a_{jj}}
           \]
           To prove that \( A \in \mathrm{Sym}^+(n) \), we rely on the definition of symmetric positive
           definite. We have \( B = \mathrm{Diag}(A)^{-1/2} A \mathrm{Diag}(A)^{-1/2} \) and
           \( \langle Bx, x\rangle > 0 \) for all \( x \neq 0 \), then:
           \[
-            \langle \mathrm{Diag}(A)^{-1/2} A \mathrm{Diag}(A)^{-1/2} x, x\rangle
-            = \langle A\, \mathrm{Diag}(A)^{-1/2} x,\, \mathrm{Diag}(A)^{-1/2} x\rangle
-            = \langle By, y\rangle > 0
+          \langle \mathrm{Diag}(A)^{-1/2} A \mathrm{Diag}(A)^{-1/2} x, x\rangle
+          = \langle A\, \mathrm{Diag}(A)^{-1/2} x,\, \mathrm{Diag}(A)^{-1/2} x\rangle
+          = \langle By, y\rangle > 0
           \]
           The above inequality uses the symmetry of diagonal matrices and the positivity of diagonal
           entries (which implies \( y \neq 0 \)). To conclude, this map is bijective, so a natural
           projection is defined as:
           \[
-            \pi(A) = \mathrm{Diag}(A)^{-1/2}\, A\, \mathrm{Diag}(A)^{-1/2}
+          \pi(A) = \mathrm{Diag}(A)^{-1/2}\, A\, \mathrm{Diag}(A)^{-1/2}
           \]
           Now, to define the Riemannian metric as well as the corresponding distance for numerical
           implementations: most works on Riemannian metrics are only useful in theory and seem
@@ -381,16 +498,14 @@
         <span class="section-label">Conclusion</span>
         <p>
           Besides the 2 parametrizations of the kernel discussed above, we may consider a low-rank
-          version, i.e. \( T = LL^T \) where \( L \in \mathbb{R}^{n \times q} \), \( q < n \), of rank
-          \( q \). This could lead to a reduction in computational complexity, but I will reserve it for
-          the future.
-        </p>
-        <p>
-          Together, we studied that 2 parametrizations of the kernel admit a Riemannian manifold
-          structure. In terms of GP with categorical inputs, the problem of estimating kernels could
-          become an optimization problem over a matrix manifold — i.e. symmetric positive definite
-          matrices — which has been an active research field in recent years.
-        </p>
+          version, i.e. \( T = LL^T \) where \( L \in \mathbb{R}^{n \times q} \), \( q < n \), of rank \( q \). This
+            could lead to a reduction in computational complexity, but I will reserve it for the future. </p>
+            <p>
+              Together, we studied that 2 parametrizations of the kernel admit a Riemannian manifold
+              structure. In terms of GP with categorical inputs, the problem of estimating kernels could
+              become an optimization problem over a matrix manifold — i.e. symmetric positive definite
+              matrices — which has been an active research field in recent years.
+            </p>
       </div>
 
       <!-- BIBLIOGRAPHY -->
@@ -454,4 +569,5 @@
   </script>
 
 </body>
+
 </html>
