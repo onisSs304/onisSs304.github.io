@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>a closed-form expression of Riemannian metric, Riemannian gradient and exponential map for space of symmetric positive definite matrices with unit diagonal – onis's blog</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #e8e8e8;
+      line-height: 1.8;
+    }
+
+    header {
+      border-bottom: 1px solid #1a3a3a;
+      padding: 20px 0;
+      text-align: center;
+      background: #0d2626;
+    }
+    header h1 { font-size: 1.8rem; }
+    header h1 a { text-decoration: none; color: #ffffff; }
+    nav { margin-top: 8px; }
+    nav a { margin: 0 12px; text-decoration: none; color: #aaaaaa; font-size: 0.95rem; }
+    nav a:hover { color: #ffffff; }
+
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    main { flex: 1; max-width: 680px; min-width: 0; }
+
+    .post-meta { font-size: 0.85rem; color: #666666; margin-bottom: 12px; }
+    h2 { font-size: 1.7rem; margin-bottom: 28px; color: #ffffff; }
+    h3 { font-size: 1.15rem; margin: 28px 0 12px 0; color: #dddddd; }
+
+    .section-label {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1a1a1a;
+      background: #e8e8e8;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 8px;
+      margin-top: 28px;
+    }
+
+    p { margin-bottom: 14px; color: #cccccc; }
+    ul, ol { margin: 0 0 14px 24px; color: #cccccc; }
+    li { margin-bottom: 8px; }
+
+    .theorem {
+      background: #222222;
+      border-left: 3px solid #e8e8e8;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #e8e8e8;
+    }
+    .theorem-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #aaaaaa;
+      margin-bottom: 8px;
+    }
+
+    .remark {
+      background: #1f1f1f;
+      border-left: 3px solid #888;
+      padding: 14px 18px;
+      margin: 14px 0;
+      border-radius: 0 4px 4px 0;
+      color: #bbbbbb;
+      font-size: 0.95rem;
+    }
+
+    .summary-box {
+      background: #1e2233;
+      border-left: 3px solid #7eb8f7;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      color: #cccccc;
+    }
+    .summary-label {
+      font-weight: bold;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7eb8f7;
+      margin-bottom: 10px;
+    }
+
+    .bibliography { list-style: none; padding-left: 0; color: #bbbbbb; font-size: 0.92rem; }
+    .bibliography li { margin-bottom: 10px; padding-left: 28px; text-indent: -28px; line-height: 1.6; }
+    .bibliography a { color: #7eb8f7; text-decoration: none; }
+    .bibliography a:hover { text-decoration: underline; }
+
+    a.cite { color: #7eb8f7; text-decoration: none; font-size: 0.9em; }
+    a.cite:hover { text-decoration: underline; }
+
+    .back-link { display: inline-block; margin-top: 40px; font-size: 0.9rem; color: #7eb8f7; text-decoration: none; }
+    .back-link:hover { color: #ffffff; }
+
+    .toc {
+      width: 200px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 40px;
+      background: #222222;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 16px 18px;
+      font-size: 0.85rem;
+    }
+    .toc-title { font-weight: bold; color: #ffffff; margin-bottom: 10px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .toc ol { padding-left: 16px; }
+    .toc li { margin-bottom: 6px; line-height: 1.4; }
+    .toc a { color: #7eb8f7; text-decoration: none; }
+    .toc a:hover { color: #ffffff; }
+    .toc a.active { color: #ffffff; font-weight: bold; }
+
+    footer { border-top: 1px solid #2a2a2a; text-align: center; padding: 20px; font-size: 0.85rem; color: #555555; margin-top: 60px; }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="../index.html">onis's blog</a></h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <div class="page-wrapper">
+    <main>
+      <p class="post-meta">October 7, 2026</p>
+      <h2>a closed-form expression of Riemannian metric, Riemannian gradient and exponential map for space of symmetric positive definite matrices with unit diagonal</h2>
+
+      <!-- INTRO -->
+      <div id="intro">
+        <span class="section-label">Introduction</span>
+        <p>
+          As discussed in the previous post, the space \( \mathrm{Cor}^+(n) \) admits a quotient
+          structure, that is \( \mathrm{Cor}^+(n) \cong \mathrm{Sym}^+(n)/\mathrm{Diag}^+(n) \). The
+          full proof can be found in <a class="cite" href="#ref-paul2019">[David &amp; Gu, 2019]</a>.
+          Also in their work, to proceed the optimization procedure over this space, they used the same
+          Riemannian metric (affine invariant) as for \( \mathrm{Sym}^+(n) \). However, in this post,
+          we will try to derive another form of Riemannian metric under the effect of the quotient
+          structure. The base theory we rely on comes from Chapter 9 of the book
+          <em>Introduction to Optimization on Smooth Manifolds</em> by Nicolas Boumal. The flow of this
+          post is:
+        </p>
+        <ul>
+          <li>Natural projection and its differential map</li>
+          <li>Vertical and horizontal spaces, then defining the horizontal lift</li>
+          <li>Derive the form of the Riemannian metric, Riemannian gradient, and exponential map</li>
+        </ul>
+      </div>
+
+      <!-- NATURAL PROJECTION -->
+      <div id="projection">
+        <span class="section-label">Natural Projection</span>
+        <p>
+          As in the previous post, we define the natural projection from \( \mathrm{Sym}^+(n) \) to
+          \( \mathrm{Cor}^+(n) \) as follows:
+          \[
+            \pi(A) = \mathrm{Diag}(A)^{-1/2}\, A\, \mathrm{Diag}(A)^{-1/2}, \quad \forall\, A \in \mathrm{Sym}^+(n)
+          \]
+          Note that this projection defines a bijection between \( \mathrm{Cor}^+(n) \) and
+          \( \mathrm{Cor}^+(n) \cong \mathrm{Sym}^+(n)/\mathrm{Diag}^+(n) \) and satisfies:
+          \[
+            \pi(A) = \pi(DAD), \quad \forall\, A \in \mathrm{Sym}^+(n),\, D \in \mathrm{Diag}^+(n)
+          \]
+        </p>
+        <p>
+          <strong>Differential map.</strong> Let \( A \in \mathrm{Sym}^+(n) \) and
+          \( H \in T_A\mathrm{Sym}^+(n) \). The differential map \( D\pi(A) \) maps from
+          \( T_A\mathrm{Sym}^+(n) \) to \( T_{\pi(A)}\mathrm{Cor}^+(n) \). Note that:
+          \[
+            \forall\, K \in \mathrm{Cor}^+(n), \quad
+            T_K\mathrm{Cor}^+(n) = \{H \in \mathrm{Sym}(n) \mid \mathrm{diag}(H) = 0_n\}
+          \]
+          Let \( f(A) = \mathrm{Diag}(A)^{-1/2} \). We have:
+          \[
+            f(A + tH) = \mathrm{Diag}(A + tH)^{-1/2}
+            = \mathrm{Diag}\!\left((A_{ii} + tH_{ii})^{-1/2}_{1 \leq i \leq n}\right)
+          \]
+          Then:
+          \begin{align*}
+            Df(A)[H] &= \frac{d}{dt} f(A + tH)\Big|_{t=0}
+            = \mathrm{Diag}\!\left(\frac{d}{dt}(A_{ii} + tH_{ii})^{-1/2}_{1 \leq i \leq n}\right)\Big|_{t=0} \\
+            &= \mathrm{Diag}\!\left(-\tfrac{1}{2}A_{ii}^{-3/2}H_{ii}\right)_{1 \leq i \leq n}
+            = -\tfrac{1}{2}\mathrm{Diag}(A)^{-3/2}\mathrm{Diag}(H)
+          \end{align*}
+          Therefore \( f(A + H) = f(A) - \frac{1}{2}\mathrm{Diag}(A)^{-3/2}\mathrm{Diag}(H) + O(H^2) \).
+          Then:
+          \begin{align*}
+            \pi(A + H) &= f(A+H)(A+H)f(A+H) \\
+            &= \left(f(A) - \tfrac{1}{2}\mathrm{Diag}(A)^{-3/2}\mathrm{Diag}(H) + O(H^2)\right)
+               (A+H)
+               \left(f(A) - \tfrac{1}{2}\mathrm{Diag}(A)^{-3/2}\mathrm{Diag}(H) + O(H^2)\right) \\
+            &= \pi(A) + DHD - \tfrac{1}{2}D^3\mathrm{Diag}(H)AD - \tfrac{1}{2}DAD^3\mathrm{Diag}(H) + O(H^2)
+          \end{align*}
+          where \( D = \mathrm{Diag}(A)^{-1/2} \). Therefore:
+          \[
+            D\pi(A)[H] = DHD - \tfrac{1}{2}D^3\mathrm{Diag}(H)AD - \tfrac{1}{2}DAD^3\mathrm{Diag}(H)
+          \]
+        </p>
+      </div>
+
+      <!-- VERTICAL AND HORIZONTAL SPACES -->
+      <div id="spaces">
+        <span class="section-label">Vertical and Horizontal Spaces</span>
+
+        <p>
+          <strong>Vertical space.</strong> According to Definition 9.24 in Boumal's book, the vertical
+          space is defined at each \( A \in \mathrm{Sym}^+(n) \) as:
+          \[
+            \mathcal{V}_A = \ker D\pi(A) = \{H \in \mathrm{Sym}(n) \mid D\pi(A)[H] = 0\}
+          \]
+          The differential map seems complicated, but we can compute the explicit form of the vertical
+          space. Using the fact that two diagonal matrices commute, so
+          \( D^3\mathrm{Diag}(H) = \mathrm{Diag}(H)D^3 \), we proceed as:
+          \begin{align*}
+            &DHD - \tfrac{1}{2}D^3\mathrm{Diag}(H)AD - \tfrac{1}{2}DAD^3\mathrm{Diag}(H) = 0 \\
+            &\iff H - \tfrac{1}{2}D^{-1}D^3\mathrm{Diag}(H)ADD^{-1} - \tfrac{1}{2}D^{-1}DAD^3\mathrm{Diag}(H)D^{-1} = 0 \\
+            &\iff H - \tfrac{1}{2}\mathrm{Diag}(H)D^2A - \tfrac{1}{2}AD^2\mathrm{Diag}(H) = 0 \\
+            &\iff H - \tfrac{1}{2}\mathrm{Diag}(H)\mathrm{Diag}(A)^{-1}A - \tfrac{1}{2}A\mathrm{Diag}(A)^{-1}\mathrm{Diag}(H) = 0
+          \end{align*}
+          Taking equations entry by entry:
+          \[
+            H_{ij} = \frac{1}{2}A_{ij}\!\left(\frac{H_{ii}}{A_{ii}} + \frac{H_{jj}}{A_{jj}}\right)
+          \]
+          Let \( s_{ii} = \frac{H_{ii}}{2A_{ii}} \), then \( H = AS + SA \) where \( S = \mathrm{Diag}(s) \).
+          Finally, the vertical space is:
+          \[
+            \mathcal{V}_A = \{AS + SA \mid S = \mathrm{Diag}(s),\, s \in \mathbb{R}^n\}
+          \]
+        </p>
+
+        <p>
+          <strong>Horizontal space.</strong> The horizontal space is defined as:
+          \[
+            \mathcal{H}_A = (\mathcal{V}_A)^\perp
+            = \{K \in \mathrm{Sym}(n) \mid \langle K, H\rangle = 0,\, \forall\, H \in \mathcal{V}_A\}
+          \]
+          Since \( \mathrm{Sym}^+(n) \) is equipped with the affine invariant metric, we need to find:
+          \[
+            \mathcal{H}_A = \{K \in \mathrm{Sym}(n) \mid \mathrm{Tr}(A^{-1}KA^{-1}H) = 0,\, \forall\, H \in \mathcal{V}_A\}
+          \]
+          Substituting \( H = AS + SA \):
+          \begin{align*}
+            \mathrm{Tr}(A^{-1}KA^{-1}(SA + AS))
+            &= \mathrm{Tr}(A^{-1}KA^{-1}SA) + \mathrm{Tr}(A^{-1}KA^{-1}AS) \\
+            &= \mathrm{Tr}(KA^{-1}S) + \mathrm{Tr}(A^{-1}KS) \\
+            &= \mathrm{Tr}((KA^{-1} + A^{-1}K)S) = 0
+          \end{align*}
+          This holds iff \( \mathrm{diag}(KA^{-1} + A^{-1}K) = 0 \). Since \( A^{-1} \) and \( K \)
+          are symmetric, \( \mathrm{diag}(KA^{-1}) = \mathrm{diag}(A^{-1}K) \). So the horizontal space is:
+          \[
+            \mathcal{H}_A = \{K \in \mathrm{Sym}(n) \mid \mathrm{diag}(KA^{-1}) = 0\}
+          \]
+        </p>
+
+        <p>
+          <strong>Horizontal lift.</strong> Let \( A \in \mathrm{Sym}^+(n) \) and
+          \( V \in T_{\pi(A)}\mathrm{Cor}^+(n) \). The horizontal lift \( \mathrm{lift}_A(V) \) of
+          \( V \) at \( A \) is the element in \( \mathcal{H}_A \) such that
+          \( D\pi(A)[\mathrm{lift}_A(V)] = V \), i.e.:
+          \[
+            \mathrm{lift}_A(V) = (D\pi(A)|_{\mathcal{H}_A})^{-1}[V]
+          \]
+          In our situation, this is equivalent to solving:
+          \[
+            D\pi(A)[H] = DHD - \tfrac{1}{2}D^3\mathrm{Diag}(H)AD - \tfrac{1}{2}DAD^3\mathrm{Diag}(H) = V
+          \]
+          with \( D = \mathrm{Diag}(A)^{-1/2} \) and \( H \in \mathcal{H}_A \). We have
+          \( \mathrm{diag}(V) = 0_n \). A key observation: if \( A \in \mathrm{Cor}^+(n) \), then:
+          \[
+            D\pi(A)[V] = \mathrm{Diag}(A)^{-1/2}V\,\mathrm{Diag}(A)^{-1/2} = V
+          \]
+          Following this, if \( A \) is an arbitrary matrix in \( \mathrm{Sym}^+(n) \), we may compute
+          \( D\pi(A)[\mathrm{Diag}(A)^{1/2}V\,\mathrm{Diag}(A)^{1/2}] \). It is like an inverse map of
+          the natural projection and fortunately we have:
+          \[
+            \mathrm{Diag}(\mathrm{Diag}(A)^{1/2}V\,\mathrm{Diag}(A)^{1/2}) = 0
+          \]
+          This implies:
+          \[
+            D\pi(A)[\mathrm{Diag}(A)^{1/2}V\,\mathrm{Diag}(A)^{1/2}]
+            = D\,\mathrm{Diag}(A)^{1/2}V\,\mathrm{Diag}(A)^{1/2}D = V
+          \]
+          Therefore, \( \bar{V} := \mathrm{Diag}(A)^{1/2}V\,\mathrm{Diag}(A)^{1/2} \) is a
+          well-defined lift of \( V \) at \( A \), but it does not belong to the horizontal space. The
+          next step is to decompose this lift into two parts belonging to the vertical and horizontal
+          spaces respectively. We write:
+          \[
+            \bar{V} = AS + SA + K_V
+          \]
+          where \( AS + SA \in \mathcal{V}_A \) and \( K_V \in \mathcal{H}_A \). Using the condition
+          of the horizontal space:
+          \[
+            \mathrm{diag}(A^{-1}K_V) = \mathrm{diag}(A^{-1}\bar{V} - S - A^{-1}SA)
+            = \mathrm{diag}(A^{-1}\bar{V}) - \mathrm{diag}(S) - \mathrm{diag}(A^{-1}SA) = 0
+          \]
+          Let \( S = \mathrm{Diag}(s) \). Then:
+          \[
+            (A^{-1}SA)_{ii} = \sum_{j=1}^n (A^{-1})_{ij}s_j A_{ij} = \sum_{j=1}^n (A^{-1})_{ij}A_{ij}s_j
+          \]
+          Therefore \( \mathrm{diag}(A^{-1}SA) = (A^{-1} \circ A)s \), where \( \circ \) is the
+          elementwise product. So:
+          \[
+            \mathrm{diag}(A^{-1}\bar{V}) = (\mathrm{Id} + (A^{-1} \circ A))s
+            \implies s = (\mathrm{Id} + (A^{-1} \circ A))^{-1}\mathrm{diag}(A^{-1}\bar{V})
+          \]
+          Therefore, the horizontal lift of \( V \) at \( A \) is explicitly:
+          \[
+            \mathrm{lift}_A(V) = \bar{V} - AS - SA
+          \]
+          where \( \bar{V} = \mathrm{Diag}(A)^{1/2}V\,\mathrm{Diag}(A)^{1/2} \),
+          \( S = \mathrm{Diag}(s) \) with
+          \( s = (\mathrm{Id} + (A^{-1} \circ A))^{-1}\mathrm{diag}(A^{-1}\bar{V}) \).
+        </p>
+      </div>
+
+      <!-- RIEMANNIAN METRIC, GRADIENT, EXPONENTIAL MAP -->
+      <div id="formulas">
+        <span class="section-label">Riemannian Metric, Gradient and Exponential Map</span>
+        <p>
+          Let \( A \in \mathrm{Sym}^+(n) \) and \( U, V \in T_{\pi(A)}\mathrm{Cor}^+(n) \). We define
+          the following inner product:
+          \[
+            \langle U, V\rangle_{\pi(A)} = \langle \mathrm{lift}_A(U), \mathrm{lift}_A(V)\rangle_A
+          \]
+          To verify that this is a well-defined Riemannian metric, we need to check that if \( A \sim B \)
+          (i.e. there exists \( D \in \mathrm{Diag}^+(n) \) such that \( A = DBD \)), then:
+          \[
+            \langle \mathrm{lift}_A(U), \mathrm{lift}_A(V)\rangle_A
+            = \langle \mathrm{lift}_B(U), \mathrm{lift}_B(V)\rangle_B
+          \]
+          Instead of proving this by hand, it is better to apply Theorem 9.38 in Boumal's book, which
+          applies directly to our problem. In
+          <a class="cite" href="#ref-paul2019">[David &amp; Gu, 2019]</a>, they proved that
+          \( \mathrm{Cor}^+(n) \cong \mathrm{Sym}^+(n)/\mathrm{Diag}^+(n) \) through the group action
+          \( \phi : \mathrm{Diag}^+(n) \times \mathrm{Sym}^+(n) \to \mathrm{Sym}^+(n) \) defined by
+          \( \phi(D, A) = DAD \), which acts smoothly, freely, and properly. To prove that this group
+          action is isometric, we show that for all \( D \in \mathrm{Diag}^+(n) \), the map
+          \( F(A) = DAD \) is isometric:
+          \[
+            \forall\, A \in \mathrm{Cor}^+(n),\, \forall\, U, V \in T_A\mathrm{Cor}^+(n): \quad
+            \langle DF(A)[U], DF(A)[V]\rangle_{F(A)} = \langle U, V\rangle_A
+          \]
+          In fact, \( DF(A)[U] = DUD \) for all \( U \in T_A\mathrm{Cor}^+(n) \), so:
+          \begin{align*}
+            \langle DF(A)[U], DF(A)[V]\rangle_{F(A)}
+            &= \mathrm{Tr}((DAD)^{-1}DUD(DAD)^{-1}DVD) \\
+            &= \mathrm{Tr}(D^{-1}A^{-1}UA^{-1}VD) \\
+            &= \mathrm{Tr}(A^{-1}UA^{-1}V) = \langle U, V\rangle_A
+          \end{align*}
+          Together, we are ready to apply Theorem 9.38 and obtain that the above inner product is a
+          Riemannian metric.
+        </p>
+        <p>
+          Now we derive an explicit form for the Riemannian metric. Since the metric is invariant in an
+          equivalence class, we can suppose \( A \in \mathrm{Cor}^+(n) \), so the horizontal lift
+          simplifies to:
+          \[
+            \mathrm{lift}_A(V) = V - AS_V - S_VA
+          \]
+          where \( S_V = \mathrm{Diag}(s_V) \) and \( s_V = \Sigma^{-1}\mathrm{diag}(A^{-1}V) \),
+          with \( \Sigma = \mathrm{Id} + A^{-1} \circ A \).
+        </p>
+
+        <div class="remark">
+          <strong>Key observation.</strong> Let \( U, V \in T_A\mathrm{Cor}^+(n) \). Since
+          \( \mathrm{lift}_A(\cdot) \) belongs to the horizontal space and
+          \( V - \mathrm{lift}_A(V) \) is in the vertical space:
+          \[
+            \langle \mathrm{lift}_A(U),\, V - \mathrm{lift}_A(V)\rangle_A = 0
+            \implies \langle \mathrm{lift}_A(U), \mathrm{lift}_A(V)\rangle_A
+            = \langle \mathrm{lift}_A(U), V\rangle_A
+          \]
+        </div>
+
+        <p>We continue the computation:</p>
+        \[
+          \langle \mathrm{lift}_A(U), V\rangle_A
+          = \mathrm{Tr}(A^{-1}VA^{-1}(U - AS_U - S_UA))
+          = \mathrm{Tr}(A^{-1}VA^{-1}U) - \mathrm{Tr}(A^{-1}VA^{-1}(AS_U + S_UA))
+        \]
+        <p>
+          Note that \( \mathrm{Tr}(A^{-1}VA^{-1}AS_U) = \mathrm{Tr}(A^{-1}VS_U) = \mathrm{Tr}(VA^{-1}S_U) = \mathrm{Tr}(A^{-1}VA^{-1}S_UA) \).
+          This follows from the cyclic and product properties of the trace. Therefore:
+        </p>
+        \begin{align*}
+          \langle \mathrm{lift}_A(U), V\rangle_A
+          &= \mathrm{Tr}(A^{-1}VA^{-1}U) - 2\mathrm{Tr}(A^{-1}VS_U) \\
+          &= \mathrm{Tr}(A^{-1}VA^{-1}U) - 2\,\mathrm{diag}(A^{-1}V)^\top S_U \\
+          &= \mathrm{Tr}(A^{-1}VA^{-1}U) - 2\,\mathrm{diag}(A^{-1}V)^\top \Sigma^{-1}\mathrm{diag}(A^{-1}U) \\
+          &= \langle U, V\rangle_A - 2\,\mathrm{diag}(A^{-1}V)^\top \Sigma^{-1}\mathrm{diag}(A^{-1}U)
+        \end{align*}
+
+        <p>
+          <strong>Riemannian gradient.</strong> Let \( f : \mathrm{Cor}^+(n) \to \mathbb{R} \) be a
+          smooth function. Define its lift:
+          \[
+            \bar{f} = f \circ \pi : \mathrm{Sym}^+(n) \to \mathbb{R}
+          \]
+          Let \( A \in \mathrm{Sym}^+(n) \) and \( V \in T_A\mathrm{Cor}^+(n) \). By Proposition 9.39:
+          \[
+            \mathrm{lift}_A(\mathrm{grad}\, f(\pi(A))) = \mathrm{grad}\, \bar{f}(A)
+          \]
+          Applying \( D\pi(A) \) to both sides:
+          \[
+            \mathrm{grad}\, f(\pi(A)) = D\pi(A)[\mathrm{grad}\, \bar{f}(A)]
+          \]
+          Without loss of generality, suppose \( A \in \mathrm{Cor}^+(n) \). Then:
+          \[
+            \mathrm{grad}\, f(A) = \mathrm{grad}\, \bar{f}(A)
+            - \tfrac{1}{2}\mathrm{Diag}(\mathrm{grad}\, \bar{f}(A))\, A
+            - \tfrac{1}{2}A\, \mathrm{Diag}(\mathrm{grad}\, \bar{f}(A))
+          \]
+        </p>
+
+        <p>
+          <strong>Exponential map.</strong> A potential candidate specified in Boumal's book is, for
+          \( A \in \mathrm{Sym}^+(n) \) and \( V \in T_{\pi(A)}\mathrm{Cor}^+(n) \):
+          \[
+            R_{\pi(A)}(V) = \pi(\bar{R}_A(\mathrm{lift}_A(V)))
+          \]
+          where \( \bar{R} \) is the retraction (often chosen as the exponential map) of
+          \( \mathrm{Sym}^+(n) \). Since our objective is to work in \( \mathrm{Cor}^+(n) \), we can
+          suppose \( A \in \mathrm{Cor}^+(n) \) to simplify computations. In this case:
+          \[
+            R_A(V) = \pi(\bar{R}_A(\mathrm{lift}_A(V))) = \pi(\bar{R}_A(V - AS_V - S_VA))
+          \]
+          The retraction for \( \mathrm{Sym}^+(n) \) is chosen as:
+          \[
+            \bar{R}_A(U) = \mathrm{Exp}_A(U)
+            = A^{1/2}\exp(A^{-1/2}UA^{-1/2})A^{1/2}
+          \]
+          Replacing \( U \) by \( V - AS_V - S_VA \):
+          \[
+            R_A(V) = \pi\!\left(A^{1/2}\exp\!\left(A^{-1/2}(V - S_VA - AS_V)A^{-1/2}\right)A^{1/2}\right)
+          \]
+          This is also an exponential map corresponding to the Riemannian metric. We can check that
+          \( R_A(0) = A \) and:
+          \begin{align*}
+            DR_A(0)[V]
+            &= D\pi(\mathrm{Exp}_A(0))[D\mathrm{Exp}_A(0)[D(\mathrm{lift}_A(0))[V]]] \\
+            &= D\pi(A)[D\mathrm{Exp}_A(0)[\mathrm{lift}_A(V)]] \\
+            &= D\pi(A)[\mathrm{lift}_A(V)] = V
+          \end{align*}
+        </p>
+      </div>
+
+      <!-- CONCLUSION -->
+      <div id="conclusion">
+        <span class="section-label">Conclusion</span>
+        <p>
+          Together, we derived the necessary formulas for the space of SPD matrices with unit diagonal.
+          In brief, let \( A \in \mathrm{Cor}^+(n) \), \( U, V \in T_A\mathrm{Cor}^+(n) \), and
+          \( \Sigma = \mathrm{Id} + A^{-1} \circ A \):
+        </p>
+
+        <div class="summary-box">
+          <div class="summary-label">Summary</div>
+          <ul>
+            <li>
+              <strong>Riemannian metric:</strong>
+              \( \langle U, V\rangle_A = \mathrm{Tr}(A^{-1}UA^{-1}V) - 2\,\mathrm{diag}(A^{-1}U)^\top \Sigma^{-1}\mathrm{diag}(A^{-1}V) \)
+            </li>
+            <li>
+              <strong>Riemannian gradient:</strong>
+              \( \mathrm{grad}\, f(A) = \mathrm{grad}\, \bar{f}(A) - \frac{1}{2}\mathrm{Diag}(\mathrm{grad}\, \bar{f}(A))\,A - \frac{1}{2}A\,\mathrm{Diag}(\mathrm{grad}\, \bar{f}(A)) \),
+              where \( \bar{f} = f \circ \pi \)
+            </li>
+            <li>
+              <strong>Exponential map:</strong>
+              \( R_A(V) = \pi\!\left(A^{1/2}\exp\!\left(A^{-1/2}(V - S_VA - AS_V)A^{-1/2}\right)A^{1/2}\right) \)
+            </li>
+          </ul>
+        </div>
+
+        <p>
+          This is compatible with the work of
+          <a class="cite" href="#ref-thanwerdas2022">[Thanwerdas &amp; Pennec, 2022]</a>, especially
+          for the Riemannian metric and the exponential map.
+        </p>
+      </div>
+
+      <!-- BIBLIOGRAPHY -->
+      <div id="bibliography">
+        <span class="section-label">References</span>
+        <ol class="bibliography">
+          <li id="ref-paul2019">
+            [1] David, P., &amp; Gu, W. (2019).
+            A Riemannian structure for correlation matrices.
+            <em>Operators and Matrices</em>.
+          </li>
+          <li id="ref-thanwerdas2022">
+            [2] Thanwerdas, Y., &amp; Pennec, X. (2022).
+            Theoretically and computationally convenient geometries on full-rank correlation matrices.
+            <em>arXiv</em>.
+          </li>
+        </ol>
+      </div>
+
+      <a class="back-link" href="../index.html">← Back to all posts</a>
+    </main>
+
+    <aside class="toc">
+      <div class="toc-title">Contents</div>
+      <ol>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#projection">Natural Projection</a></li>
+        <li><a href="#spaces">Vertical &amp; Horizontal Spaces</a></li>
+        <li><a href="#formulas">Metric, Gradient, Exp Map</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#bibliography">References</a></li>
+      </ol>
+    </aside>
+  </div>
+
+  <footer>© 2026 onis's blog</footer>
+
+  <script>
+    const sections = document.querySelectorAll('#intro, #projection, #spaces, #formulas, #conclusion, #bibliography');
+    const tocLinks = document.querySelectorAll('.toc a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+      tocLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
